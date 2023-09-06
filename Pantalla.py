@@ -24,8 +24,7 @@ while True:
     screen.fill(WHITE) #Coloca el color de fondo
     
     ###Zona de dibujo o programacion 
-
-
+    print("HOLA")
     ##Zona de dibujo o programacion
 
     pygame.display.flip() #Actualiza pantalla
