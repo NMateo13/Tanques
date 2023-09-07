@@ -1,31 +1,24 @@
 import pygame, sys 
 
-#Inicializa la libreria
-pygame.init()
+class Pantalla:
 
-#Tamaño pantalla 
-size = (800, 500)
+    WHITE = (225, 225, 225)
+    BLACK = (0, 0, 0)
 
-#Definicion de colores para la pantalla
-WHITE = (225, 225, 225)
 
-#Creamos la pantalla del juego
-screen = pygame.display.set_mode(size)
+    def __init__(self, ancho, alto):
+        
+        self.ancho = ancho
+        self.alto = alto
+        self.size = []
 
-#Las pantallas se abren a traves de un ciclo
-while True:
-    for event in pygame.event.get(): #Comienza a capturar todo evento que suceda en la pantalla
-
-        #print(event) linea de codigo que nos servira para saber que eventos ocurren en la pantalla 
-
-        if event.type == pygame.QUIT: #Cierra la pantalla al presionar el cerrar
-            sys.exit()
-    
-    screen.fill(WHITE) #Coloca el color de fondo
+pantalla = Pantalla(800, 500)
+print(pantalla.ancho, pantalla.alto)
+#size = [pantalla.ancho, pantalla.alto]
     
     ###Zona de dibujo o programacion 
 
+    #(inicio, final, salto)
+
 
     ##Zona de dibujo o programacion
-
-    pygame.display.flip() #Actualiza pantalla
