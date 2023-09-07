@@ -4,7 +4,15 @@ class tanque:
     def __init__(self, x, y, numero):
         self.x = x
         self.y = y
-        self.imagen = self.load_image("Tanque4.png", "Assets", True)
+        print(numero)
+        if numero == 1:
+            self.imagen = self.load_image("Tanque1.png", "Assets", True)
+        elif numero == 2:
+            self.imagen = self.load_image("Tanque2.png", "Assets", True)
+        elif numero == 3:
+            self.imagen = self.load_image("Tanque3.png", "Assets", True)
+        elif numero == 4:
+            self.imagen = self.load_image("Tanque4.png", "Assets", True)
         self.imagen = pygame.transform.scale(self.imagen, (40, 40))
         self.rect = self.imagen.get_rect()
         self.rect.center = (self.x, self.y)
