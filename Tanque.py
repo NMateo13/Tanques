@@ -4,7 +4,6 @@ class tanque:
     def __init__(self, x, y, numero):
         self.x = x
         self.y = y
-        print(numero)
         if numero == 1:
             self.imagen = self.load_image("Tanque1.png", "Assets", True)
         elif numero == 2:

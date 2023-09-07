@@ -8,7 +8,7 @@ size = (800, 500)
 
 #Definicion de colores para la pantalla
 WHITE = (225, 225, 225)
-numero = int(input("Ingrese el numero del tanque: "))
+
 
 #Creamos la pantalla del juego
 screen = pygame.display.set_mode(size)
@@ -22,11 +22,11 @@ while True:
         if event.type == pygame.QUIT: #Cierra la pantalla al presionar el cerrar
             sys.exit()
     
+
     screen.fill(WHITE) #Coloca el color de fondo
     
     ###Zona de dibujo o programacion 
-    tanque1 = tanque(100, 100,numero)
-    screen.blit(tanque1.imagen, tanque1.rect)
+    
     ##Zona de dibujo o programacion
 
     pygame.display.flip() #Actualiza pantalla
