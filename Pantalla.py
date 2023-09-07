@@ -1,4 +1,4 @@
-import pygame, sys, os
+import pygame, sys, os, random
 from Tanque import tanque
 #Inicializa la libreria
 pygame.init()
@@ -8,6 +8,7 @@ size = (800, 500)
 
 #Definicion de colores para la pantalla
 WHITE = (225, 225, 225)
+numero = int(input("Ingrese el numero del tanque: "))
 
 #Creamos la pantalla del juego
 screen = pygame.display.set_mode(size)
@@ -16,7 +17,7 @@ screen = pygame.display.set_mode(size)
 while True:
     for event in pygame.event.get(): #Comienza a capturar todo evento que suceda en la pantalla
 
-        #print(event) linea de codigo que nos servira para saber que eventos ocurren en la pantalla 
+        #print(event) #linea de codigo que nos servira para saber que eventos ocurren en la pantalla 
 
         if event.type == pygame.QUIT: #Cierra la pantalla al presionar el cerrar
             sys.exit()
@@ -24,9 +25,8 @@ while True:
     screen.fill(WHITE) #Coloca el color de fondo
     
     ###Zona de dibujo o programacion 
-    tanque1 = tanque(100, 100)
+    tanque1 = tanque(100, 100,numero)
     screen.blit(tanque1.imagen, tanque1.rect)
-
     ##Zona de dibujo o programacion
 
     pygame.display.flip() #Actualiza pantalla

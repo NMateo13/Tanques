@@ -1,10 +1,10 @@
-import pygame, os, sys, math
+import pygame, os, sys, math, random
 
 class tanque:
-    def __init__(self, x, y):
+    def __init__(self, x, y, numero):
         self.x = x
         self.y = y
-        self.imagen = self.load_image("Tanque1.png", "Assets", True)
+        self.imagen = self.load_image("Tanque4.png", "Assets", True)
         self.imagen = pygame.transform.scale(self.imagen, (40, 40))
         self.rect = self.imagen.get_rect()
         self.rect.center = (self.x, self.y)
