@@ -16,7 +16,7 @@ class tanque:
         self.rect = self.imagen.get_rect()
         self.rect.center = (self.x, self.y)
 
-    def dibujar(self):
+    def dibujar(self, screen):
         screen.blit(self.imagen, self.rect)
 
     def load_image(self, nombre, dir_imagen, alpha_channel = False):
