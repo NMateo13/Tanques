@@ -1,5 +1,5 @@
 import pygame, sys, os
-
+from Tanque import tanque
 #Inicializa la libreria
 pygame.init()
 
@@ -24,7 +24,8 @@ while True:
     screen.fill(WHITE) #Coloca el color de fondo
     
     ###Zona de dibujo o programacion 
-
+    tanque1 = tanque(100, 100)
+    screen.blit(tanque1.imagen, tanque1.rect)
 
     ##Zona de dibujo o programacion
 

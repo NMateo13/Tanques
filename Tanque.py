@@ -1,6 +1,4 @@
 import pygame, os, sys, math
-from Pantalla import screen, WHITE
-from Bala import Balas
 
 class tanque:
     def __init__(self, x, y):
@@ -31,5 +29,3 @@ class tanque:
         bala = Balas(self.x, self.y)
         bala.dibujar()
         bala.mover(self.velocidad_x)
-
-tanque1 = tanque(100, 100)
