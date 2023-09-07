@@ -1,4 +1,4 @@
-import pygame, sys 
+import pygame, sys, os
 
 #Inicializa la libreria
 pygame.init()
