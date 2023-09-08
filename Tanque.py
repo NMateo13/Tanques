@@ -33,6 +33,9 @@ class tanque:
         return image
 
     def disparar(self):
-        bala = Balas(self.x, self.y)
-        bala.dibujar()
-        bala.mover(self.velocidad_x)
+        bala = Balas(self.x, self.y, angulo, velocidad_inicial, incremento)
+        bala.verificar()
+    
+    def verificar_imagen(self):
+        return self.imagen
+    
