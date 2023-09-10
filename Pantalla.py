@@ -1,33 +1,33 @@
-import pygame, sys, os, random
-from Tanque import tanque
-#Inicializa la libreria
-pygame.init()
+import pygame
 
-#Tamaño pantalla 
-size = (800, 500)
+class Pantalla:
 
-#Definicion de colores para la pantalla
-WHITE = (225, 225, 225)
-numero = int(input("Ingrese el numero del tanque: "))
+    WHITE = (225, 225, 225)
+    BLACK = (0, 0, 0)
+    GREEN = (0, 153, 0)
+    GRAY = (128, 139, 150)
 
-#Creamos la pantalla del juego
-screen = pygame.display.set_mode(size)
+    medidaHUD = 120
 
-#Las pantallas se abren a traves de un ciclo
-while True:
-    for event in pygame.event.get(): #Comienza a capturar todo evento que suceda en la pantalla
+    def __init__(self, ancho, alto):
+        
+        self.ancho = ancho
+        self.alto = alto
 
-        #print(event) #linea de codigo que nos servira para saber que eventos ocurren en la pantalla 
-
-        if event.type == pygame.QUIT: #Cierra la pantalla al presionar el cerrar
-            sys.exit()
     
+    def crearMatriz(self, alto, ancho):
 
-    screen.fill(WHITE) #Coloca el color de fondo
+        Pantalla.matriz = [[0] * ancho for _ in range(alto - Pantalla.medidaHUD)]
+
+    def dibujar(self, screen):
+        
+        for filas in range(0, (pantalla.alto - pantalla.medidaHUD)):
+            for columnas in range (0, pantalla.ancho):
+                if pantalla.matriz[filas][columnas] == 1:
+                    pygame.draw.rect(screen, pantalla.GREEN, (columnas, filas, 6, 6))
+
+        
+pantalla = Pantalla(1200, 660)
+matriz = []
+
     
-    ###Zona de dibujo o programacion 
-    tanque1 = tanque(100, 100, numero)
-    tanque1.dibujar(screen)
-    ##Zona de dibujo o programacion
-
-    pygame.display.flip() #Actualiza pantalla
