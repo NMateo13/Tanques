@@ -9,7 +9,7 @@ size = (Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
 screen = pygame.display.set_mode(size)
 FPS = 60
 Clock = pygame.time.Clock()
-disparo = Bala(300,350,70,300,9.8,0.03)
+disparo = Bala(300,350,20,100,9.8,0.5)
 pygame.display.set_caption("Juego de Tanques")
 
 while True:
