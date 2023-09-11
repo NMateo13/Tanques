@@ -1,6 +1,7 @@
 import Pantalla, pygame, sys, Terreno
 
 pygame.init()
+font = pygame.font.Font(None, 36)
 
 size = (Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
 screen = pygame.display.set_mode(size)
@@ -21,9 +22,10 @@ while True:
     Pantalla.pantalla.crearMatriz(Pantalla.pantalla.alto, Pantalla.pantalla.ancho)
     Terreno.terreno.genTerreno(Terreno.terreno.Xpos, Terreno.terreno.Ypos)
     Pantalla.pantalla.dibujar(screen)
+    Pantalla.pantalla.muestra_salud(screen, font)
 
     #Rectángulo con medidas del HUD
-    pygame.draw.rect(screen, Pantalla.pantalla.GRAY, (0, 540, 1200, 120))
+    #pygame.draw.rect(screen, Pantalla.pantalla.GRAY, (0, 540, 1200, 120))
 
 
     #Zona de programación

@@ -1,5 +1,6 @@
 import pygame
 
+
 class Pantalla:
 
     WHITE = (225, 225, 225)
@@ -25,6 +26,14 @@ class Pantalla:
             for columnas in range (0, pantalla.ancho):
                 if pantalla.matriz[filas][columnas] == 1:
                     pygame.draw.rect(screen, pantalla.GREEN, (columnas, filas, 6, 6))
+
+    #Funciones para mostrar información en la pantalla
+    def muestra_salud(self, screen, font): #falta agregar las variables de vida de los tanques
+        salud_texto1 = font.render(f"Vida: 100%", True, pantalla.BLACK)
+        screen.blit(salud_texto1, (10, pantalla.alto - 80))
+
+        salud_texto2 = font.render(f"Vida: 100%", True, pantalla.BLACK) 
+        screen.blit(salud_texto2, (pantalla.ancho - salud_texto2.get_width() - 10, pantalla.alto - 80))
 
         
 pantalla = Pantalla(1200, 660)
