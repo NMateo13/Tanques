@@ -4,9 +4,12 @@ pygame.init()
 
 size = (Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
 screen = pygame.display.set_mode(size)
+FPS = 60
 pygame.display.set_caption("Juego de Tanques")
 
+Clock = pygame.time.Clock()
 while True:
+    Clock.tick(FPS) #Controla la velocidad de la pantalla (FPS)
     for event in pygame.event.get(): 
 
         #print(event) linea de codigo que nos servira para saber que eventos ocurren en la pantalla 
