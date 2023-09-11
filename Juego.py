@@ -21,7 +21,6 @@ while True:
     screen.fill(Pantalla.pantalla.WHITE)
     pygame.draw.rect(screen, Pantalla.pantalla.GRAY, (0, 540, 1200, 120))
 
-
     #Zona de programación
 
     Pantalla.pantalla.crearMatriz(Pantalla.pantalla.alto, Pantalla.pantalla.ancho)
@@ -31,9 +30,6 @@ while True:
     Pantalla.pantalla.muestra_potencia(screen, font)
     Pantalla.pantalla.muestra_angulo(screen, font)
     Pantalla.pantalla.muestra_jugador(screen, font)
-
-    #Rectángulo con medidas del HUD
-    #pygame.draw.rect(screen, Pantalla.pantalla.GRAY, (0, 540, 1200, 120))
 
     #Zona de programación
 
