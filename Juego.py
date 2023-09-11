@@ -2,12 +2,13 @@ import Pantalla, pygame, sys, Terreno
 
 pygame.init()
 
+font = pygame.font.Font(None, 36)
 size = (Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
 screen = pygame.display.set_mode(size)
 FPS = 60
+Clock = pygame.time.Clock()
 pygame.display.set_caption("Juego de Tanques")
 
-Clock = pygame.time.Clock()
 while True:
     Clock.tick(FPS) #Controla la velocidad de la pantalla (FPS)
     for event in pygame.event.get(): 
@@ -27,14 +28,9 @@ while True:
     Pantalla.pantalla.dibujar(screen)
 
     #Rectángulo con medidas del HUD
-    pygame.draw.rect(screen, Pantalla.pantalla.GRAY, (0, 540, 1200, 120))
-
+    #pygame.draw.rect(screen, Pantalla.pantalla.GRAY, (0, 540, 1200, 120))
 
     #Zona de programación
 
-
     pygame.display.flip()
-
-
-
 
