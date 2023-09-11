@@ -30,6 +30,7 @@ while True:
     Pantalla.pantalla.muestra_potencia(screen, font)
     Pantalla.pantalla.muestra_angulo(screen, font)
     Pantalla.pantalla.muestra_jugador(screen, font)
+    Pantalla.pantalla.muestra_tanques(screen)
 
     #Zona de programación
 

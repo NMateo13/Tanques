@@ -7,10 +7,13 @@ class Pantalla:
     GREEN = (0, 153, 0)
     GRAY = (128, 139, 150)
 
+    #Imagenes
     IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque1.png"))
     IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque2.png"))
     Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 2, IMG_Tanque1.get_height() // 2))
     Tanque2 = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 2, IMG_Tanque2.get_height() // 2))
+    Tanque1_mini = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4))
+    Tanque2_mini = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4))
 
     medidaHUD = 120    
 
@@ -58,8 +61,12 @@ class Pantalla:
         screen.blit(jugador_texto1, (10, pantalla.alto - 110))
         jugador_texto2 = font.render(f"Jugador 2", True, pantalla.BLACK)
         screen.blit(jugador_texto2, (pantalla.ancho - jugador_texto2.get_width() - 10, pantalla.alto - 110))
-        screen.blit(pantalla.Tanque1, (250, 450))
-        screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - 250, 450))    
+
+    def muestra_tanques(self, screen):
+        screen.blit(pantalla.Tanque1, (250, 200))
+        screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - 250, 200))    
+        screen.blit(pantalla.Tanque1_mini, (250, 525))
+        screen.blit(pantalla.Tanque2_mini, (pantalla.ancho - pantalla.Tanque2_mini.get_width() - 250, 525))
         
 pantalla = Pantalla(1200, 660)
 matriz = []
