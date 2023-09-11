@@ -15,7 +15,7 @@ screen = pygame.display.set_mode(size)
 
 current_time = 0
 clock = pygame.time.Clock()
-disparo = Bala(150,500,50,100,9.8,0.03)
+disparo = Bala(150,500,70,200,9.8,0.03)
 #Las pantallas se abren a traves de un ciclo
 while True:
     for event in pygame.event.get(): #Comienza a capturar todo evento que suceda en la pantalla
@@ -32,6 +32,6 @@ while True:
     disparo.verificacion(current_time,800,500,screen,RED)
     
     clock.tick(60)
-    ##Zona de dibujo o programacion
+    #Zona de dibujo o programacion
     current_time += disparo.incremento
     pygame.display.flip() #Actualiza pantalla
