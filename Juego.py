@@ -1,14 +1,15 @@
 import Pantalla, pygame, sys, Terreno
-
+from Bala import Bala
 pygame.init()
-
+current_time = 0
+RED = (255, 0 , 0)
 font = pygame.font.Font(None, 36)
 size = (Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
 screen = pygame.display.set_mode(size)
 FPS = 60
 Clock = pygame.time.Clock()
 pygame.display.set_caption("Juego de Tanques")
-
+disparo = Bala(370,350,70,100,9.8,0.03)
 while True:
     Clock.tick(FPS) #Controla la velocidad de la pantalla (FPS)
     for event in pygame.event.get(): 
@@ -22,7 +23,7 @@ while True:
     pygame.draw.rect(screen, Pantalla.pantalla.GRAY, (0, 540, 1200, 120))
 
     #Zona de programación
-
+    disparo.verificacion(current_time,1200,600,screen,RED)
     Pantalla.pantalla.crearMatriz(Pantalla.pantalla.alto, Pantalla.pantalla.ancho)
     Terreno.terreno.genTerreno(Terreno.terreno.Xpos, Terreno.terreno.Ypos)
     Pantalla.pantalla.dibujar(screen)
@@ -31,8 +32,7 @@ while True:
     Pantalla.pantalla.muestra_angulo(screen, font)
     Pantalla.pantalla.muestra_jugador(screen, font)
     Pantalla.pantalla.muestra_tanques(screen)
-
+    current_time += disparo.incremento
     #Zona de programación
-
     pygame.display.flip()
 
