@@ -26,6 +26,9 @@ while True:
     Pantalla.pantalla.crearMatriz(Pantalla.pantalla.alto, Pantalla.pantalla.ancho)
     Terreno.terreno.genTerreno(Terreno.terreno.Xpos, Terreno.terreno.Ypos)
     Pantalla.pantalla.dibujar(screen)
+    Pantalla.pantalla.muestra_salud(screen, font)
+    Pantalla.pantalla.muestra_potencia(screen, font)
+    Pantalla.pantalla.muestra_angulo(screen, font)
 
     #Rectángulo con medidas del HUD
     #pygame.draw.rect(screen, Pantalla.pantalla.GRAY, (0, 540, 1200, 120))
