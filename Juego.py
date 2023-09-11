@@ -19,6 +19,7 @@ while True:
             sys.exit()
 
     screen.fill(Pantalla.pantalla.WHITE)
+    pygame.draw.rect(screen, Pantalla.pantalla.GRAY, (0, 540, 1200, 120))
 
 
     #Zona de programación
