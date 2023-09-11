@@ -4,6 +4,7 @@ pygame.init()
 
 size = (Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
 screen = pygame.display.set_mode(size)
+pygame.display.set_caption("Juego de Tanques")
 
 while True:
     for event in pygame.event.get(): 
