@@ -11,6 +11,7 @@ FPS = 60
 Clock = pygame.time.Clock()
 disparo = Bala(300,350,20,100,9.8,0.5)
 pygame.display.set_caption("Juego de Tanques")
+pygame.display.set_icon(Pantalla.pantalla.Explosion)
 
 while True:
     Clock.tick(FPS) #Controla la velocidad de la pantalla (FPS)
