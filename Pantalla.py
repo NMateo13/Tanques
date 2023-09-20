@@ -11,10 +11,12 @@ class Pantalla:
     IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque1.png"))
     IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque2.png"))
     Explosion = pygame.image.load(os.path.join("Assets", "boom.png"))
+    IMG_Background = pygame.image.load(os.path.join("Assets", "Background.png"))
     Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4))
     Tanque2 = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4))
     Tanque1_HUD = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 2, IMG_Tanque1.get_height() // 2))
     Tanque2_HUD = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 2, IMG_Tanque2.get_height() // 2))
+    Background = pygame.transform.scale(IMG_Background, (1200, 540))
 
     medidaHUD = 120    
 
