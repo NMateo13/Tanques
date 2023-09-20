@@ -22,11 +22,11 @@ class Bala:
         #self.trayectoria.append(posiciones)
         if 0 <= posiciones[0] < WIDTH and 0 <= posiciones[1] < HEIGHT:
             self.trayectoria.append(posiciones)
-        max_points = 10
+        max_points = 1
         if len(self.trayectoria) > max_points:
             self.trayectoria.pop(0)
         for point in self.trayectoria:
-            pygame.draw.circle(screen,color, (int(point[0]), int(point[1])), 2)
+            pygame.draw.circle(screen,color, (int(point[0]), int(point[1])), 4)
 
 
 
