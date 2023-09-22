@@ -16,7 +16,6 @@ class Terreno:
     
 
     def genTerreno(self, Xpos, Ypos):
-
         if Terreno.inicio == True:
             Ypos = Terreno.posInicio #j
             Xpos = 0 #i

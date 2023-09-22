@@ -16,11 +16,13 @@ class Pantalla:
     Tanque2_mini = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4))
 
     medidaHUD = 120    
+    matriz = []
 
     def __init__(self, ancho, alto):
         
         self.ancho = ancho
         self.alto = alto
+        
 
     
     def crearMatriz(self, alto, ancho):
@@ -69,6 +71,6 @@ class Pantalla:
         screen.blit(pantalla.Tanque2_mini, (pantalla.ancho - pantalla.Tanque2_mini.get_width() - 250, 525))
         
 pantalla = Pantalla(1200, 660)
-matriz = []
+
 
     

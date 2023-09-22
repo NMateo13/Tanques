@@ -2,13 +2,13 @@ import pygame
 import math
 
 class Bala:
-    def __init__(self,pos_inicial_x,pos_inicial_y,angulo,velocidad_inicial,gravedad,incremento):
+    def __init__(self,pos_inicial_x,pos_inicial_y,angulo,velocidad_inicial):
         self.pos_inicial_x = pos_inicial_x
         self.pos_inicial_y = pos_inicial_y
         self.angulo = math.radians(angulo) 
         self.velocidad_inicial = velocidad_inicial
-        self.gravedad = gravedad
-        self.incremento = incremento
+        self.gravedad = 9.8
+        self.incremento = 0.5
         self.trayectoria = []
 
     def calcular_posiciones(self,time):
@@ -19,7 +19,6 @@ class Bala:
     def verificacion(self,tiempo, WIDTH, HEIGHT,screen,color):
         self.tiempo = tiempo
         posiciones = self.calcular_posiciones(self.tiempo)
-        #self.trayectoria.append(posiciones)
         if 0 <= posiciones[0] < WIDTH and 0 <= posiciones[1] < HEIGHT:
             self.trayectoria.append(posiciones)
         max_points = 10

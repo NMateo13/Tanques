@@ -1,4 +1,5 @@
 import pygame, os, sys, math, random
+import Bala
 
 class tanque:
     def __init__(self, x, y, numero):
@@ -32,9 +33,11 @@ class tanque:
             image = image.convert()
         return image
 
-    def disparar(self):
-        bala = Balas(self.x, self.y, angulo, velocidad_inicial, incremento)
-        bala.verificar()
+    def disparar(self,pos_inicial_x,pos_inicial_y,angulo,velocidad_inicial):
+        bala = Bala(pos_inicial_x,pos_inicial_y,angulo,velocidad_inicial)
+    
+
+        
     
     def verificar_imagen(self):
         return self.imagen
