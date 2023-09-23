@@ -1,13 +1,14 @@
 import Pantalla, pygame, sys, Terreno
 from Bala import Bala
 pygame.init()
+
 current_time = 0
 font = pygame.font.Font(None, 36)
 size = (Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
 screen = pygame.display.set_mode(size)
 FPS = 60
 Clock = pygame.time.Clock()
-disparo = Bala(150,370,20,100)
+disparo = Bala(300,350,20,100,9.8,0.5)
 pygame.display.set_caption("Juego de Tanques")
 pygame.display.set_icon(Pantalla.pantalla.IMG_Explosion)
 
@@ -26,8 +27,9 @@ while True:
     screen.fill(Pantalla.pantalla.WHITE)
     screen.blit(Pantalla.pantalla.Background, (0, 0))
     screen.blit(Pantalla.pantalla.HUD, (0, 540))
-    if tecla_espacio_presionada:
-        disparo.verificacion(current_time,1200,600,screen,Pantalla.Pantalla.BLACK)
+
+    #Zona de programación
+    disparo.verificacion(current_time,1200,600,screen,Pantalla.pantalla.BLACK)
     Pantalla.pantalla.crearMatriz(Pantalla.pantalla.alto, Pantalla.pantalla.ancho)
     Terreno.terreno.genTerreno(Terreno.terreno.Xpos, Terreno.terreno.Ypos)
     Pantalla.pantalla.dibujar(screen)
@@ -37,7 +39,6 @@ while True:
     Pantalla.pantalla.muestra_texto(screen, font)
     Pantalla.pantalla.muestra_imagen(screen)
     current_time += disparo.incremento
-    
 
     #Zona de programación
     pygame.display.flip()

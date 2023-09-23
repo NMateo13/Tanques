@@ -1,9 +1,11 @@
 import pygame, os
 
 class Pantalla:
-
+    
+    #Colores
     WHITE = (225, 225, 225)
     BLACK = (0, 0, 0)
+    RED = (255, 0, 0)
     GREEN = (0, 153, 0)
     GRAY = (128, 139, 150)
 
