@@ -8,6 +8,7 @@ class Pantalla:
     RED = (255, 0, 0)
     GREEN = (0, 153, 0)
     GRAY = (128, 139, 150)
+    BLUE = (0,0,255)
 
     #Imagenes
     IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque1.png"))
