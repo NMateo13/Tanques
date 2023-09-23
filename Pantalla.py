@@ -10,7 +10,7 @@ class Pantalla:
     GRAY = (128, 139, 150)
 
     #Imagenes
-    IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque1.png"))
+    IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque4.png"))
     IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque2.png"))
     IMG_Background = pygame.image.load(os.path.join("Assets", "Background.png"))
     IMG_HUD = pygame.image.load(os.path.join("Assets", "hud_bg.png"))
@@ -83,10 +83,10 @@ class Pantalla:
         screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, pantalla.alto - 30))
 
     def muestra_imagen(self, screen):
-        screen.blit(pantalla.Tanque1, (250, 280))
+        screen.blit(pantalla.Tanque1, (350, 450))
         screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - 250, 280))
 
-        screen.blit(pantalla.Tanque1_HUD, (390, 460))
+        screen.blit(pantalla.Tanque1_HUD, (500, 550))
         screen.blit(pantalla.Tanque2_HUD, (pantalla.ancho - pantalla.Tanque2_HUD.get_width() - 370, 460))
 
         screen.blit(pantalla.BalaCanyon, (65, pantalla.alto - 90))
