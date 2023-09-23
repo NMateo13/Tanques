@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, random
 
 class Pantalla:
     
@@ -25,6 +25,12 @@ class Pantalla:
     BalaCanyon = pygame.transform.scale(IMG_BalaCanyon, (IMG_BalaCanyon.get_width() // 2, IMG_BalaCanyon.get_height() // 2))
     Background = pygame.transform.scale(IMG_Background, (1200, 540))
     HUD = pygame.transform.scale(IMG_HUD, (1200, 120))
+
+    #Posiciones de los tanques
+    posX_Tanque1 = random.randint(100, 400)
+    posY_Tanque1 = random.randint(250, 450)
+    posX_Tanque2 = random.randint(100, 400)
+    posY_Tanque2 = random.randint(250, 450)
 
     medidaHUD = 120    
 
@@ -82,12 +88,13 @@ class Pantalla:
         angulo_texto2 = font.render(f"Angulo: 80°", True, pantalla.WHITE)
         screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, pantalla.alto - 30))
 
-    def muestra_imagen(self, screen):
-        screen.blit(pantalla.Tanque1, (350, 450))
-        screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - 250, 280))
+    def muestra_imagen(self, screen): 
+        screen.blit(pantalla.Tanque1, (self.posX_Tanque1, self.posY_Tanque1))
+        screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - self.posX_Tanque2, self.posY_Tanque2))
 
-        screen.blit(pantalla.Tanque1_HUD, (500, 550))
-        screen.blit(pantalla.Tanque2_HUD, (pantalla.ancho - pantalla.Tanque2_HUD.get_width() - 370, 460))
+        #NO TOCAR SON ESTÁTICOS
+        screen.blit(pantalla.Tanque1_HUD, (450, 600))
+        screen.blit(pantalla.Tanque2_HUD, (pantalla.ancho - pantalla.Tanque2_HUD.get_width() - 450, 600))
 
         screen.blit(pantalla.BalaCanyon, (65, pantalla.alto - 90))
         screen.blit(pantalla.BalaCanyon, (pantalla.ancho - pantalla.BalaCanyon.get_width() - 65, pantalla.alto - 90))
