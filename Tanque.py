@@ -6,14 +6,19 @@ class tanque:
         self.y = y
         if numero == 1:
             self.imagen = self.load_image("Tanque1.png", "Assets", True)
+            self.num = 1
         elif numero == 2:
             self.imagen = self.load_image("Tanque2.png", "Assets", True)
+            self.num = 2
         elif numero == 3:
             self.imagen = self.load_image("Tanque3.png", "Assets", True)
+            self.num = 3
         elif numero == 4:
             self.imagen = self.load_image("Tanque4.png", "Assets", True)
+            self.num = 4
         self.imagen = pygame.transform.scale(self.imagen, (40, 40))
         self.rect = self.imagen.get_rect()
+        
         self.rect.center = (self.x, self.y)
 
     def dibujar(self, screen):
