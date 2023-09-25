@@ -27,6 +27,18 @@ class Pantalla:
     Background = pygame.transform.scale(IMG_Background, (1200, 540))
     HUD = pygame.transform.scale(IMG_HUD, (1200, 120))
 
+    """
+    J1_1 = (69, 266)
+    J1_2 = (156, 230)
+    J1_3 = (320, 335)
+    J1_4 = (467, 429)
+
+    J2_1 = (661, 297)
+    J2_2 = (786, 230)
+    J2_3 = (947, 335)
+    J2_4 = (1100, 430)
+    """
+
     #Posiciones de los tanques 
     posX_Tanque1 = random.randint(100, 400) 
     posY_Tanque1 = random.randint(250, 450) 
