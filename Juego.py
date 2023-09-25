@@ -79,7 +79,7 @@ while True:
                     velocidad_jugador1 = max(0, velocidad_jugador1)
                 elif event.key == pygame.K_d:
                     velocidad_jugador1 += 5
-                    velocidad_jugador1 = min(100, velocidad_jugador1)
+                    velocidad_jugador1 = min(150, velocidad_jugador1)
 
             #Controles jugador 2 
             if turno2:   
@@ -98,7 +98,7 @@ while True:
                     velocidad_jugador2 = max(0, velocidad_jugador2)
                 elif event.key == pygame.K_RIGHT:
                     velocidad_jugador2 += 5
-                    velocidad_jugador2 = min(100, velocidad_jugador2)
+                    velocidad_jugador2 = min(150, velocidad_jugador2)
     
     screen.fill(Pantalla.pantalla.WHITE)
     screen.blit(Pantalla.pantalla.Background, (0, 0))
