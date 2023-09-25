@@ -11,8 +11,8 @@ class Pantalla:
     BLUE = (0,0,255)
 
     #Imagenes
-    IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque4.png"))
-    IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque2.png"))
+    IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque4.png")) 
+    IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque2.png")) 
     IMG_Background = pygame.image.load(os.path.join("Assets", "Background.png"))
     IMG_HUD = pygame.image.load(os.path.join("Assets", "hud_bg.png"))
     IMG_Explosion = pygame.image.load(os.path.join("Assets", "boom.png"))
@@ -27,10 +27,10 @@ class Pantalla:
     Background = pygame.transform.scale(IMG_Background, (1200, 540))
     HUD = pygame.transform.scale(IMG_HUD, (1200, 120))
 
-    #Posiciones de los tanques
-    posX_Tanque1 = random.randint(100, 400)
-    posY_Tanque1 = random.randint(250, 450)
-    posX_Tanque2 = random.randint(100, 400)
+    #Posiciones de los tanques 
+    posX_Tanque1 = random.randint(100, 400) 
+    posY_Tanque1 = random.randint(250, 450) 
+    posX_Tanque2 = random.randint(100, 400) 
     posY_Tanque2 = random.randint(250, 450)
 
     medidaHUD = 120    
@@ -40,7 +40,6 @@ class Pantalla:
         self.ancho = ancho
         self.alto = alto
 
-    
     def crearMatriz(self, alto, ancho):
 
         Pantalla.matriz = [[0] * ancho for _ in range(alto - Pantalla.medidaHUD)]
@@ -75,33 +74,31 @@ class Pantalla:
         salud_texto2 = font.render(f"Vida: 100%", True, pantalla.WHITE) 
         screen.blit(salud_texto2, (pantalla.ancho - salud_texto2.get_width() - 300, pantalla.alto - 85))
 
-    def muestra_potencia(self, screen, font): #falta agregar las variables de potencia de la bala
-        potencia_texto1 = font.render(f"Potencia: 20", True, pantalla.WHITE)
+    def muestra_potencia(self, screen, font,velocidad_jugador1, velocidad_jugador2): 
+        potencia_texto1 = font.render(f"Potencia: {velocidad_jugador1}", True, pantalla.WHITE)
         screen.blit(potencia_texto1, (250, pantalla.alto - 57))
 
-        potencia_texto2 = font.render(f"Potencia: 40", True, pantalla.WHITE)
+        potencia_texto2 = font.render(f"Potencia: {velocidad_jugador2}", True, pantalla.WHITE)
         screen.blit(potencia_texto2, (pantalla.ancho - potencia_texto2.get_width() - 280, pantalla.alto - 57))
 
-    def muestra_angulo(self, screen, font): #falta agregar las variables de angulo de la bala
-        angulo_texto1 = font.render(f"Angulo: 45°", True, pantalla.WHITE)
+    def muestra_angulo(self, screen, font,angulo_jugador1, angulo_jugador2): 
+        angulo_texto1 = font.render(f"Ángulo: {angulo_jugador1}°", True, pantalla.WHITE)
         screen.blit(angulo_texto1, (250, pantalla.alto - 30))
 
-        angulo_texto2 = font.render(f"Angulo: 80°", True, pantalla.WHITE)
+        angulo_texto2 = font.render(f"Ángulo: {angulo_jugador2}°", True, pantalla.WHITE)
         screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, pantalla.alto - 30))
 
-    def muestra_imagen(self, screen): 
-        screen.blit(pantalla.Tanque1, (self.posX_Tanque1, self.posY_Tanque1))
-        screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - self.posX_Tanque2, self.posY_Tanque2))
+    def muestra_imagen(self, screen):
+        screen.blit(pantalla.Tanque1, (self.posX_Tanque1, self.posY_Tanque1)) 
+        screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - self.posX_Tanque2, self.posY_Tanque2)) 
 
-        #NO TOCAR SON ESTÁTICOS
-        screen.blit(pantalla.Tanque1_HUD, (450, 600))
-        screen.blit(pantalla.Tanque2_HUD, (pantalla.ancho - pantalla.Tanque2_HUD.get_width() - 450, 600))
+        #NO TOCAR SON ESTÁTICOS 
+        screen.blit(pantalla.Tanque1_HUD, (450, 600)) 
+        screen.blit(pantalla.Tanque2_HUD, (pantalla.ancho - pantalla.Tanque2_HUD.get_width() - 450, 600)) 
 
         screen.blit(pantalla.BalaCanyon, (65, pantalla.alto - 90))
         screen.blit(pantalla.BalaCanyon, (pantalla.ancho - pantalla.BalaCanyon.get_width() - 65, pantalla.alto - 90))
+        #NO TOCAR SON ESTÁTICOS
         
 pantalla = Pantalla(1200, 660)
 matriz = []
-
-
-    
