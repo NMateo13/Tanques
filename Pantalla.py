@@ -1,5 +1,6 @@
 import pygame, os, random
 
+
 class Pantalla:
     
     #Colores
@@ -38,12 +39,21 @@ class Pantalla:
     J2_3 = (947, 335)
     J2_4 = (1100, 430)
     """
+    J1X = [24, 140, 260, 365]
+    J1Y = [250, 210, 270, 370]
+    J2X = [10, 105, 205, 390]
+    J2Y = [390, 390, 300, 210]
 
     #Posiciones de los tanques 
-    posX_Tanque1 = random.randint(100, 400) 
-    posY_Tanque1 = random.randint(250, 450) 
-    posX_Tanque2 = random.randint(100, 400) 
-    posY_Tanque2 = random.randint(250, 450)
+
+    posTanque1 = random.randint(0, 3)
+    posTanque2 = random.randint(0, 3)
+
+    posX_Tanque1 = J1X[posTanque1]
+    posY_Tanque1 = J1Y[posTanque1]
+
+    posX_Tanque2 = J2X[posTanque2]
+    posY_Tanque2 = J2Y[posTanque2]
 
     medidaHUD = 120    
 
