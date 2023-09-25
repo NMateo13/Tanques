@@ -1,29 +1,31 @@
 import pygame, sys, os, random, math
 
 class Canon:
-    def __init__(self, tanque, canon_sprite_path):
+    def __init__(self, tanque, screen):
         if tanque.num == 1:
-            self.image = self.load_image("canon1.png", "Assets", True)
+            imagen = self.load_image("canon1.png", "Assets", True)
+            self.image = pygame.transform.scale(imagen, (imagen.get_width() // 4, imagen.get_height() // 4))
         elif tanque.num == 2:
-            self.image = self.load_image("canon2.png", "Assets", True)
+            imagen = self.load_image("canon2.png", "Assets", True)
+            self.image = pygame.transform.scale(imagen, (imagen.get_width() // 4, imagen.get_height() // 4))
         elif tanque.num == 3:
-            self.image = self.load_image("canon3.png", "Assets", True)
+            imagen = self.load_image("canon3.png", "Assets", True)
+            self.image = pygame.transform.scale(imagen, (imagen.get_width() // 4, imagen.get_height() // 4))
         elif tanque.num == 4:
-            self.image = self.load_image("canon4.png", "Assets", True)
-        self.rect = self.image.get_rect()
+            imagen = self.load_image("canon4.png", "Assets", True)
+            self.image = pygame.transform.scale(imagen, (imagen.get_width() // 4, imagen.get_height() // 4))
         self.angle = 0  # Ángulo inicial del cañón
-        self.update_position(tanque)
 
-    def update_position(self, tanque):
+    def update_position(self, tanque, screen):
         # Calcular la posición del cañón con respecto al tanque
-        self.rect.centerx = tanque.rect.centerx
-        self.rect.centery = tanque.rect.centery
+        screen.blit(self.image, (tanque.x + 20, tanque.y - 20))
 
-    def draw(self, screen):
+    def draw(self, screen, tanque, angulo):
         # Dibujar el cañón en la pantalla
-        rotated_image = pygame.transform.rotate(self.image, self.angle)
-        rotated_rect = rotated_image.get_rect(center=self.rect.center)
-        screen.blit(rotated_image, rotated_rect)
+        #self.image = pygame.transform.rotate(self.image, angulo)
+        #screen.blit(self.image,(tanque.x + 20, tanque.y - 20))
+        surf = pygame.transform.rotate(self.image, angulo)
+        offset = pygame.math.Vector2(20, -20)
 
     def load_image(self, nombre, dir_imagen, alpha_channel = False):
         ruta = os.path.join(dir_imagen, nombre)
