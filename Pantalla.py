@@ -156,10 +156,11 @@ class Pantalla:
 
     def prerotate(self, screen, num, angle, pivote):
         if num==1:
-            img, rect = Pantalla.rotate(pantalla.Canon1, angle, pivote)
+            img, rect, x, y = Pantalla.rotate(pantalla.Canon1, angle, pivote)
         elif num==2:
-            img, rect = Pantalla.rotate(pantalla.Canon2, angle, pivote)
+            img, rect, x, y = Pantalla.rotate(pantalla.Canon2, angle, pivote)
         screen.blit(img, rect)
+        return x, y
 
     
     def rotate(surface, angle, pivot):
@@ -169,6 +170,8 @@ class Pantalla:
         # Agregua el vector de desplazamiento al punto pivote para desplazar el rectangulo.
         rect = rotated_image.get_rect(center=pivot+rotated_offset)
         # Devuelve la imagen rotada y el rectangulo desplazado
-        return rotated_image, rect
+        x = rect.x
+        y = rect.y
+        return rotated_image, rect, x, y
 pantalla = Pantalla(1200, 660)
 matriz = []

@@ -31,7 +31,7 @@ class Canon:
         try:
             image = pygame.image.load(ruta)
         except:
-            print("Error, no se puede cargar la imagen: ", ruta)
+            print("Error, no se puede cargar la imagen:  ", ruta)
             sys.exit(1)
         if alpha_channel == True:
             image = image.convert_alpha()
