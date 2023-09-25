@@ -1,7 +1,7 @@
 import pygame, sys, os, random, math
 
 class Canon:
-    def __init__(self, tanque, screen):
+    def __init__(self, tanque):
         if tanque.num == 1:
             imagen = self.load_image("canon1.png", "Assets", True)
             self.image = pygame.transform.scale(imagen, (imagen.get_width() // 4, imagen.get_height() // 4))
@@ -22,10 +22,9 @@ class Canon:
 
     def draw(self, screen, tanque, angulo):
         # Dibujar el cañón en la pantalla
-        #self.image = pygame.transform.rotate(self.image, angulo)
-        #screen.blit(self.image,(tanque.x + 20, tanque.y - 20))
-        surf = pygame.transform.rotate(self.image, angulo)
-        offset = pygame.math.Vector2(20, -20)
+        self.image = pygame.transform.rotate(self.image, angulo)
+        screen.blit(self.image,(tanque.x + 20, tanque.y - 20))
+        
 
     def load_image(self, nombre, dir_imagen, alpha_channel = False):
         ruta = os.path.join(dir_imagen, nombre)
