@@ -13,7 +13,7 @@ screen = pygame.display.set_mode(size)
 FPS = 60
 terreno = Terreno(Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
 
-# Crear dos hitboxes (NO TOCAR)
+# Crear dos hitboxes
 tanque1 = Tanque(Pantalla.pantalla.posX_Tanque1, Pantalla.pantalla.posY_Tanque1 + 10, Pantalla.pantalla.RED)
 tanque2 = Tanque(Pantalla.pantalla.ancho - Pantalla.pantalla.Tanque2.get_width() - Pantalla.pantalla.posX_Tanque2, Pantalla.pantalla.posY_Tanque2 + 10, Pantalla.pantalla.RED)
 
