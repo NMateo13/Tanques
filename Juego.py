@@ -71,6 +71,7 @@ while True:
                 velocidad_jugador2 += 5
                 velocidad_jugador2 = min(100, velocidad_jugador2)
 
+    print(event)
     screen.fill(Pantalla.pantalla.WHITE)
     screen.blit(Pantalla.pantalla.Background, (0, 0))
     terreno.dibujar(screen)
