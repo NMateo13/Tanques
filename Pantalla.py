@@ -1,5 +1,6 @@
 import pygame, os, random
 
+
 class Pantalla:
     
     #Colores
@@ -10,9 +11,46 @@ class Pantalla:
     GRAY = (128, 139, 150)
     BLUE = (0,0,255)
 
+    offset = pygame.math.Vector2(0, -10)
+    #Seleccion aleatoria de los tanques
+    tank1 = random.randint(1, 4)
+    tank2 = random.randint(1, 4)
+    while tank1 == tank2:
+        tank2 = random.randint(1, 4)
+
     #Imagenes
-    IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque4.png")) 
-    IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque2.png")) 
+    if tank1 == 1:
+        IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque1.png"))
+    elif tank1 == 2:
+        IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque2.png"))
+    elif tank1 == 3:
+        IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque3.png"))
+    elif tank1 == 4:
+        IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque4.png"))  
+    if tank2 == 1:
+        IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque1.png"))
+    elif tank2 == 2:
+        IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque2.png"))
+    elif tank2 == 3:
+        IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque3.png"))
+    elif tank2 == 4:
+        IMG_Tanque2 = pygame.image.load(os.path.join("Assets", "Tanque4.png"))
+    if tank1 == 1:
+        IMG_Canon1 = pygame.image.load(os.path.join("Assets", "canon1.png"))
+    elif tank1 == 2:
+        IMG_Canon1 = pygame.image.load(os.path.join("Assets", "canon2.png"))
+    elif tank1 == 3:
+        IMG_Canon1 = pygame.image.load(os.path.join("Assets", "canon3.png"))
+    elif tank1 == 4:
+        IMG_Canon1 = pygame.image.load(os.path.join("Assets", "canon4.png"))
+    if tank2 == 1:
+        IMG_Canon2 = pygame.image.load(os.path.join("Assets", "canon1.png"))
+    elif tank2 == 2:
+        IMG_Canon2 = pygame.image.load(os.path.join("Assets", "canon2.png"))
+    elif tank2 == 3:
+        IMG_Canon2 = pygame.image.load(os.path.join("Assets", "canon3.png"))
+    elif tank2 == 4:
+        IMG_Canon2 = pygame.image.load(os.path.join("Assets", "canon4.png"))
     IMG_Background = pygame.image.load(os.path.join("Assets", "Background.png"))
     IMG_HUD = pygame.image.load(os.path.join("Assets", "hud_bg.png"))
     IMG_Explosion = pygame.image.load(os.path.join("Assets", "boom.png"))
@@ -21,12 +59,15 @@ class Pantalla:
     #Reescalado de imagenes
     Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4))
     Tanque2 = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4))
+    Canon1 = pygame.transform.scale(IMG_Canon1, (IMG_Canon1.get_width() // 4, IMG_Canon1.get_height() // 4))
+    Canon2 = pygame.transform.scale(IMG_Canon2, (IMG_Canon2.get_width() // 4, IMG_Canon2.get_height() // 4))
     Tanque1_HUD = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 2, IMG_Tanque1.get_height() // 2))
     Tanque2_HUD = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 2, IMG_Tanque2.get_height() // 2))
     BalaCanyon = pygame.transform.scale(IMG_BalaCanyon, (IMG_BalaCanyon.get_width() // 2, IMG_BalaCanyon.get_height() // 2))
     Background = pygame.transform.scale(IMG_Background, (1200, 540))
     HUD = pygame.transform.scale(IMG_HUD, (1200, 120))
 
+    
     """
     J1_1 = (69, 266)
     J1_2 = (156, 230)
@@ -38,12 +79,21 @@ class Pantalla:
     J2_3 = (947, 335)
     J2_4 = (1100, 430)
     """
+    J1X = [24, 140, 260, 365]
+    J1Y = [250, 210, 270, 370]
+    J2X = [10, 105, 205, 390]
+    J2Y = [390, 390, 300, 210]
 
     #Posiciones de los tanques 
-    posX_Tanque1 = random.randint(100, 400) 
-    posY_Tanque1 = random.randint(250, 450) 
-    posX_Tanque2 = random.randint(100, 400) 
-    posY_Tanque2 = random.randint(250, 450)
+
+    posTanque1 = random.randint(0, 3)
+    posTanque2 = random.randint(0, 3)
+
+    posX_Tanque1 = J1X[posTanque1]
+    posY_Tanque1 = J1Y[posTanque1]
+
+    posX_Tanque2 = J2X[posTanque2]
+    posY_Tanque2 = J2Y[posTanque2]
 
     medidaHUD = 120    
 
@@ -111,6 +161,26 @@ class Pantalla:
         screen.blit(pantalla.BalaCanyon, (65, pantalla.alto - 90))
         screen.blit(pantalla.BalaCanyon, (pantalla.ancho - pantalla.BalaCanyon.get_width() - 65, pantalla.alto - 90))
         #NO TOCAR SON ESTÁTICOS
-        
+    
+
+    def prerotate(self, screen, num, angle, pivote):
+        if num==1:
+            img, rect, x, y = Pantalla.rotate(pantalla.Canon1, angle, pivote)
+        elif num==2:
+            img, rect, x, y = Pantalla.rotate(pantalla.Canon2, angle, pivote)
+        screen.blit(img, rect)
+        return x, y
+
+    
+    def rotate(surface, angle, pivot):
+        rotated_image = pygame.transform.rotozoom(surface, -angle, 1)
+        #rota el vector de desplazamiento
+        rotated_offset = Pantalla.offset.rotate(angle)
+        # Agregua el vector de desplazamiento al punto pivote para desplazar el rectangulo.
+        rect = rotated_image.get_rect(center=pivot+rotated_offset)
+        # Devuelve la imagen rotada y el rectangulo desplazado
+        x = rect.x
+        y = rect.y
+        return rotated_image, rect, x, y
 pantalla = Pantalla(1200, 660)
 matriz = []
