@@ -14,8 +14,8 @@ class Tanque:
     def dibujar(self, screen):
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.ancho, self.altura))
 
-    def disparar(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tiempo, screen, color):
-        bala = Bala(pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial)
+    def disparar(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tiempo, screen, color, tipo_bala):
+        bala = Bala(pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tipo_bala  )
         bala.verificacion(tiempo, screen, color)
         return bala
 

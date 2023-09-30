@@ -150,17 +150,42 @@ class Pantalla:
         angulo_texto2 = font.render(f"Ángulo: {angulo_jugador2}°", True, pantalla.WHITE)
         screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, pantalla.alto - 30))
 
-    def muestra_imagen(self, screen):
+    def muestra_imagen(self, screen, tipo1, tipo2):
         screen.blit(pantalla.Tanque1, (self.posX_Tanque1, self.posY_Tanque1)) 
         screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - self.posX_Tanque2, self.posY_Tanque2)) 
 
         #NO TOCAR SON ESTÁTICOS 
         screen.blit(pantalla.Tanque1_HUD, (450, 600)) 
         screen.blit(pantalla.Tanque2_HUD, (pantalla.ancho - pantalla.Tanque2_HUD.get_width() - 450, 600)) 
+        if tipo1 == 1:
+            screen.blit(pantalla.BalaCanyon, (65, pantalla.alto - 90))
+        elif tipo1 == 2:
+            #cambiar imagen a bala tipo 2
+            print()
+        elif tipo1 == 3:
+            #cambiar imagen a bala tipo 3
+            print()
+        
+        if tipo2 == 1:
+            screen.blit(pantalla.BalaCanyon, (pantalla.ancho - pantalla.BalaCanyon.get_width() - 65, pantalla.alto - 90))
+        elif tipo2 == 2:
+            #cambiar imagen a bala tipo 2
+            print()
+        elif tipo2 == 3:
+            #cambiar imagen a bala tipo 3
+            print()
+        #los print son para que no tire error
 
-        screen.blit(pantalla.BalaCanyon, (65, pantalla.alto - 90))
-        screen.blit(pantalla.BalaCanyon, (pantalla.ancho - pantalla.BalaCanyon.get_width() - 65, pantalla.alto - 90))
         #NO TOCAR SON ESTÁTICOS
+    #ahora se iniciará una función para calcular la altura maxima de la bala y la distancia recorrida por la bala y se mostrará en pantalla
+    def muestra_altura(self, screen, font, altura_maxima, mostrar1, mostrar2):
+        if mostrar1:
+            altura_texto1 = font.render(f"Altura máxima J1: {altura_maxima}", True, pantalla.WHITE)
+            screen.blit(altura_texto1, (10, pantalla.alto - 150))
+        elif mostrar2:
+            altura_texto2 = font.render(f"Altura máxima J2: {altura_maxima}", True, pantalla.WHITE)
+            screen.blit(altura_texto2, (10, pantalla.alto - 150))
+    
     
 
     def prerotate(self, screen, num, angle, pivote):

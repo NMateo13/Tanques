@@ -2,7 +2,7 @@ import pygame
 import math
 
 class Bala:
-    def __init__(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial):
+    def __init__(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tipo):
         self.pos_inicial_x = pos_inicial_x
         self.pos_inicial_y = pos_inicial_y
         self.angulo = math.radians(angulo)
@@ -10,6 +10,7 @@ class Bala:
         self.gravedad = 9.8
         self.incremento = 0.05
         self.trayectoria = []
+        self.tipo = tipo
 
     def calcular_posiciones(self, time):
         x = self.pos_inicial_x + self.velocidad_inicial * math.cos(self.angulo) * time
@@ -46,4 +47,15 @@ class Bala:
             if 0 <= x < len(terreno.terreno) and y >= terreno.terreno[int(x)]:
                 return True
         return False
+    
+    def punto_maximo(self, valor=0):
+        for punto in self.trayectoria:
+            _ , y = punto
+            y = y-540
+            y = y * -1
+            if y > valor:
+                valor = y
+        valor = int(valor)
+        return valor
+
     

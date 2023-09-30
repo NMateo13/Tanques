@@ -28,6 +28,9 @@ ang_tank = [210,215,220,225,230,235,240,245,250,255,260,265,270,275,280,285,290,
 #61 en total
 canon1 = Canon(tanque1)
 canon2 = Canon(tanque2)
+#Inicio de variables para elegir el tipo de bala
+tipo_bala1 = 1
+tipo_bala2 = 1
 
 turno1 = True
 turno2 = False
@@ -36,6 +39,10 @@ extremo_canonx_1 = 0
 extremo_canony_1 = 0
 extremo_canonx_2 = 0
 extremo_canony_2 = 0
+
+mostrar_altura1 = False
+mostrar_altura2 = False
+altura_maxima = 0
 
 Clock = pygame.time.Clock()
 tecla_espacio_presionada = False
@@ -80,6 +87,13 @@ while True:
                 elif event.key == pygame.K_d:
                     velocidad_jugador1 += 5
                     velocidad_jugador1 = min(150, velocidad_jugador1)
+                #cambio de bala J1
+                elif event.key == pygame.K_1:
+                    tipo_bala1 = 1
+                elif event.key == pygame.K_2:
+                    tipo_bala1 = 2
+                elif event.key == pygame.K_3:
+                    tipo_bala1 = 3
 
             #Controles jugador 2 
             if turno2:   
@@ -99,7 +113,14 @@ while True:
                 elif event.key == pygame.K_RIGHT:
                     velocidad_jugador2 += 5
                     velocidad_jugador2 = min(150, velocidad_jugador2)
-    
+                #cambio de bala J2
+                elif event.key == pygame.K_1:
+                    tipo_bala2 = 1
+                elif event.key == pygame.K_2:
+                    tipo_bala2 = 2
+                elif event.key == pygame.K_3:
+                    tipo_bala2 = 3
+
     screen.fill(Pantalla.pantalla.WHITE)
     screen.blit(Pantalla.pantalla.Background, (0, 0))
     terreno.dibujar(screen)
@@ -109,22 +130,19 @@ while True:
 
     if tecla_espacio_presionada and turno1:
         if bala_tanque1 is None:
-            bala_tanque1 = tanque1.disparar(extremo_canonx_1, extremo_canony_1, ang_tank[angulo_jugador1], velocidad_jugador1, tiempo_transcurrido, screen, Pantalla.pantalla.BLACK)
+            mostrar_altura1 = True
+            mostrar_altura2 = False
+            altura_maxima = 0
+            bala_tanque1 = tanque1.disparar(extremo_canonx_1, extremo_canony_1, ang_tank[angulo_jugador1], velocidad_jugador1, tiempo_transcurrido, screen, Pantalla.pantalla.BLACK, tipo_bala1)
         else:
+            altura_maxima = bala_tanque1.punto_maximo(altura_maxima)
             bala_tanque1.verificacion(tiempo_transcurrido, screen, Pantalla.pantalla.BLACK)
             impacto_tanque = bala_tanque1.verificar_impacto_tanque(tanque2)
             impacto_terreno = terreno.verificar_colision(bala_tanque1)
             impacto_borde = bala_tanque1.verificar_impacto_ancho(Pantalla.pantalla.ancho)
             if impacto_tanque:
                 sys.exit()  # Cierra el programa si hubo impacto
-            elif impacto_borde:
-                bala_tanque1 = None
-                tecla_espacio_presionada = False
-                turno1 = False
-                turno2 = True
-                tiempo_transcurrido = 0
-            elif impacto_terreno:
-                tecla_espacio_presionada = False
+            elif impacto_borde or impacto_terreno:
                 bala_tanque1 = None
                 tecla_espacio_presionada = False
                 turno1 = False
@@ -135,8 +153,12 @@ while True:
 
     if tecla_espacio_presionada and turno2:
         if bala_tanque2 is None:
-            bala_tanque2 = tanque1.disparar(extremo_canonx_2, extremo_canony_2, ang_tank[angulo_jugador2], velocidad_jugador2, tiempo_transcurrido, screen, Pantalla.pantalla.BLACK)
+            mostrar_altura1 = False
+            mostrar_altura2 = True
+            altura_maxima = 0
+            bala_tanque2 = tanque1.disparar(extremo_canonx_2, extremo_canony_2, ang_tank[angulo_jugador2], velocidad_jugador2, tiempo_transcurrido, screen, Pantalla.pantalla.BLACK, tipo_bala2)
         else:
+            altura_maxima = bala_tanque2.punto_maximo(altura_maxima)
             bala_tanque2.verificacion(tiempo_transcurrido, screen, Pantalla.pantalla.BLACK)
             impacto_tanque = bala_tanque2.verificar_impacto_tanque(tanque1)
             impacto_terreno = terreno.verificar_colision(bala_tanque2)
@@ -156,7 +178,8 @@ while True:
     Pantalla.pantalla.muestra_potencia(screen, font,velocidad_jugador1,velocidad_jugador2)
     Pantalla.pantalla.muestra_angulo(screen, font,ang_tank[angulo_jugador1-30],ang_tank[angulo_jugador2-30])
     Pantalla.pantalla.muestra_texto(screen, font)
-    Pantalla.pantalla.muestra_imagen(screen)
+    Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2)
+    Pantalla.pantalla.muestra_altura(screen, font, altura_maxima, mostrar_altura1, mostrar_altura2)
     extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(ang_tank[angulo_jugador1]-90), pivote1)
     extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(ang_tank[angulo_jugador2]-90), pivote2)
     pygame.display.flip()
