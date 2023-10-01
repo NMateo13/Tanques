@@ -63,63 +63,69 @@ incremento = 0.035
 
 while True:
     Clock.tick(FPS)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
-        if event.type == pygame.KEYDOWN: #Tecla espacio para disparar 
-            if event.key == pygame.K_SPACE:
-                tecla_espacio_presionada = True
-            #Controles jugador 1
-            if turno1:
-                if event.key == pygame.K_w:
-                    if angulo_jugador1  == 66:
-                        angulo_jugador1 = 0
-                    else:
-                        angulo_jugador1 += 1
-                elif event.key == pygame.K_s:
-                    if angulo_jugador1 == 0:
-                        angulo_jugador1 = 66
-                    else:
-                        angulo_jugador1 -= 1
-                elif event.key == pygame.K_a:
-                    velocidad_jugador1 -= 5
-                    velocidad_jugador1 = max(0, velocidad_jugador1)
-                elif event.key == pygame.K_d:
-                    velocidad_jugador1 += 5
-                    velocidad_jugador1 = min(150, velocidad_jugador1)
-                #cambio de bala J1
-                elif event.key == pygame.K_1:
-                    tipo_bala1 = 1
-                elif event.key == pygame.K_2:
-                    tipo_bala1 = 2
-                elif event.key == pygame.K_3:
-                    tipo_bala1 = 3
+    
+    keys = pygame.key.get_pressed()
+    
+    if keys[pygame.K_SPACE]:
+        tecla_espacio_presionada = True
+    
+    # Controles del jugador 1
+    if turno1:
+        if keys[pygame.K_w]:
+            if angulo_jugador1 == 66:
+                angulo_jugador1 = 0
+            else:
+                angulo_jugador1 += 1
+        elif keys[pygame.K_s]:
+            if angulo_jugador1 == 0:
+                angulo_jugador1 = 66
+            else:
+                angulo_jugador1 -= 1
+        elif keys[pygame.K_a]:
+            velocidad_jugador1 -= 5
+            velocidad_jugador1 = max(0, velocidad_jugador1)
+        elif keys[pygame.K_d]:
+            velocidad_jugador1 += 5
+            velocidad_jugador1 = min(150, velocidad_jugador1)
 
-            #Controles jugador 2 
-            if turno2:   
-                if event.key == pygame.K_UP:
-                    if angulo_jugador2 == 66:
-                        angulo_jugador2 = 0
-                    else:
-                        angulo_jugador2 += 1
-                elif event.key == pygame.K_DOWN:
-                    if angulo_jugador2 == 0:
-                        angulo_jugador2 = 66
-                    else:
-                        angulo_jugador2 -= 1
-                elif event.key == pygame.K_LEFT:
-                    velocidad_jugador2 -= 5
-                    velocidad_jugador2 = max(0, velocidad_jugador2)
-                elif event.key == pygame.K_RIGHT:
-                    velocidad_jugador2 += 5
-                    velocidad_jugador2 = min(150, velocidad_jugador2)
-                #cambio de bala J2
-                elif event.key == pygame.K_1:
-                    tipo_bala2 = 1
-                elif event.key == pygame.K_2:
-                    tipo_bala2 = 2
-                elif event.key == pygame.K_3:
-                    tipo_bala2 = 3
+        # Cambio de bala J1
+        elif keys[pygame.K_1]:
+            tipo_bala1 = 1
+        elif keys[pygame.K_2]:
+            tipo_bala1 = 2
+        elif keys[pygame.K_3]:
+            tipo_bala1 = 3
+
+    # Controles del jugador 2
+    if turno2:
+        if keys[pygame.K_UP]:
+            if angulo_jugador2 == 66:
+                angulo_jugador2 = 0
+            else:
+                angulo_jugador2 += 1
+        elif keys[pygame.K_DOWN]:
+            if angulo_jugador2 == 0:
+                angulo_jugador2 = 66
+            else:
+                angulo_jugador2 -= 1
+        elif keys[pygame.K_LEFT]:
+            velocidad_jugador2 -= 5
+            velocidad_jugador2 = max(0, velocidad_jugador2)
+        elif keys[pygame.K_RIGHT]:
+            velocidad_jugador2 += 5
+            velocidad_jugador2 = min(150, velocidad_jugador2)
+            
+        # Cambio de bala J2
+        elif keys[pygame.K_1]:
+            tipo_bala2 = 1
+        elif keys[pygame.K_2]:
+            tipo_bala2 = 2
+        elif keys[pygame.K_3]:
+            tipo_bala2 = 3
 
     screen.fill(Pantalla.pantalla.WHITE)
     screen.blit(Pantalla.pantalla.Background, (0, 0))
