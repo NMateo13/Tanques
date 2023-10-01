@@ -11,6 +11,8 @@ class Bala:
         self.incremento = 0.05
         self.trayectoria = []
         self.tipo = tipo
+        self.imagen = pygame.image.load(f"Assets/bala105.png")
+        self.imagen = pygame.transform.scale(self.imagen, (self.imagen.get_width() // 7, self.imagen.get_height() // 7))
 
     def calcular_posiciones(self, time):
         x = self.pos_inicial_x + self.velocidad_inicial * math.cos(self.angulo) * time
@@ -25,8 +27,9 @@ class Bala:
         if len(self.trayectoria) > max_points:
             self.trayectoria.pop(0)
         for point in self.trayectoria:
-            pygame.draw.circle(screen, color, (int(point[0]), int(point[1])), 4)
-    
+            x, y = point
+            # Dibujar la imagen en lugar de un círculo
+            screen.blit(self.imagen, (int(x), int(y)))
 
     def verificar_impacto_ancho(self, ancho_pantalla):
         for x, _ in self.trayectoria:
