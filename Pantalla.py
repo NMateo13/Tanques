@@ -147,25 +147,28 @@ class Pantalla:
         screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - self.posX_Tanque2, self.posY_Tanque2)) 
 
         #NO TOCAR SON ESTÁTICOS 
+
         screen.blit(pantalla.Tanque1_HUD, (450, 600)) 
         screen.blit(pantalla.Tanque2_HUD, (pantalla.ancho - pantalla.Tanque2_HUD.get_width() - 450, 600)) 
         if tipo1 == 1:
+            #cambiar imagen a bala 105mm
             screen.blit(pantalla.Bala105, (50, pantalla.alto - 75))
         elif tipo1 == 2:
-            #cambiar imagen a bala tipo 2
-            screen.blit(pantalla.Bala80, (50, pantalla.alto - 75))
+            #cambiar imagen a bala 80mm
+            screen.blit(pantalla.Bala80, (60, pantalla.alto - 75))
         elif tipo1 == 3:
-            #cambiar imagen a bala tipo 3
-            screen.blit(pantalla.Bala60, (50, pantalla.alto - 75))
+            #cambiar imagen a bala 60mm
+            screen.blit(pantalla.Bala60, (70, pantalla.alto - 75))
         
         if tipo2 == 1:
+            #cambiar imagen a bala 105mm
             screen.blit(pantalla.Bala105, (pantalla.ancho - pantalla.Bala105.get_width() - 50, pantalla.alto - 75))
         elif tipo2 == 2:
-            #cambiar imagen a bala tipo 2
-            screen.blit(pantalla.Bala80, (pantalla.ancho - pantalla.Bala80.get_width() - 50, pantalla.alto - 75))
+            #cambiar imagen a bala 80mm
+            screen.blit(pantalla.Bala80, (pantalla.ancho - pantalla.Bala80.get_width() - 60, pantalla.alto - 75))
         elif tipo2 == 3:
-            #cambiar imagen a bala tipo 3
-            screen.blit(pantalla.Bala60, (pantalla.ancho - pantalla.Bala60.get_width() - 50, pantalla.alto - 75))
+            #cambiar imagen a bala 60mm
+            screen.blit(pantalla.Bala60, (pantalla.ancho - pantalla.Bala60.get_width() - 70, pantalla.alto - 75))
 
         #NO TOCAR SON ESTÁTICOS
     #ahora se iniciará una función para calcular la altura maxima de la bala y la distancia recorrida por la bala y se mostrará en pantalla

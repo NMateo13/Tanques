@@ -5,7 +5,7 @@ from Terreno import Terreno
 from Canon import Canon
 
 pygame.init()
-pygame.display.set_caption("Juego de Tanques") 
+pygame.display.set_caption("TANK WARS") 
 pygame.display.set_icon(Pantalla.pantalla.IMG_Explosion) 
 
 font = pygame.font.Font(None, 36)
@@ -118,7 +118,7 @@ while True:
         elif keys[pygame.K_RIGHT]:
             velocidad_jugador2 += 5
             velocidad_jugador2 = min(150, velocidad_jugador2)
-            
+
         # Cambio de bala J2
         elif keys[pygame.K_1]:
             tipo_bala2 = 1
