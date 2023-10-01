@@ -51,34 +51,29 @@ class Pantalla:
         IMG_Canon2 = pygame.image.load(os.path.join("Assets", "canon3.png"))
     elif tank2 == 4:
         IMG_Canon2 = pygame.image.load(os.path.join("Assets", "canon4.png"))
+
     IMG_Background = pygame.image.load(os.path.join("Assets", "Background.png"))
     IMG_HUD = pygame.image.load(os.path.join("Assets", "hud_bg.png"))
     IMG_Explosion = pygame.image.load(os.path.join("Assets", "boom.png"))
-    IMG_BalaCanyon = pygame.image.load(os.path.join("Assets", "bala_canon.png"))
+    IMG_Bala = pygame.image.load(os.path.join("Assets", "bala105.png"))
+    IMG_Bala60 = pygame.image.load(os.path.join("Assets", "bala60.png"))
+    IMG_Bala80 = pygame.image.load(os.path.join("Assets", "bala80.png"))
+    IMG_Bala105 = pygame.image.load(os.path.join("Assets", "bala105.png"))
     
     #Reescalado de imagenes
     Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4))
     Tanque2 = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4))
     Canon1 = pygame.transform.scale(IMG_Canon1, (IMG_Canon1.get_width() // 4, IMG_Canon1.get_height() // 4))
     Canon2 = pygame.transform.scale(IMG_Canon2, (IMG_Canon2.get_width() // 4, IMG_Canon2.get_height() // 4))
+    Background = pygame.transform.scale(IMG_Background, (1200, 540))
+    HUD = pygame.transform.scale(IMG_HUD, (1200, 120))    
     Tanque1_HUD = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 2, IMG_Tanque1.get_height() // 2))
     Tanque2_HUD = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 2, IMG_Tanque2.get_height() // 2))
-    BalaCanyon = pygame.transform.scale(IMG_BalaCanyon, (IMG_BalaCanyon.get_width() // 2, IMG_BalaCanyon.get_height() // 2))
-    Background = pygame.transform.scale(IMG_Background, (1200, 540))
-    HUD = pygame.transform.scale(IMG_HUD, (1200, 120))
+    Bala105 = pygame.transform.scale(IMG_Bala105, (IMG_Bala105.get_width() // 1.5, IMG_Bala105.get_height() // 1.5))
+    Bala80 = pygame.transform.scale(IMG_Bala80, (IMG_Bala80.get_width() // 1.75, IMG_Bala80.get_height() // 1.75))
+    Bala60 = pygame.transform.scale(IMG_Bala60, (IMG_Bala60.get_width() // 2, IMG_Bala60.get_height() // 2))
+    Explosion = pygame.transform.scale(IMG_Explosion, (IMG_Explosion.get_width() // 4, IMG_Explosion.get_height() // 4))
 
-    
-    """
-    J1_1 = (69, 266)
-    J1_2 = (156, 230)
-    J1_3 = (320, 335)
-    J1_4 = (467, 429)
-
-    J2_1 = (661, 297)
-    J2_2 = (786, 230)
-    J2_3 = (947, 335)
-    J2_4 = (1100, 430)
-    """
     J1X = [24, 140, 260, 365]
     J1Y = [250, 210, 270, 370]
     J2X = [10, 105, 205, 390]
@@ -155,26 +150,28 @@ class Pantalla:
         screen.blit(pantalla.Tanque2, (pantalla.ancho - pantalla.Tanque2.get_width() - self.posX_Tanque2, self.posY_Tanque2)) 
 
         #NO TOCAR SON ESTÁTICOS 
+
         screen.blit(pantalla.Tanque1_HUD, (450, 600)) 
         screen.blit(pantalla.Tanque2_HUD, (pantalla.ancho - pantalla.Tanque2_HUD.get_width() - 450, 600)) 
         if tipo1 == 1:
-            screen.blit(pantalla.BalaCanyon, (65, pantalla.alto - 90))
+            #cambiar imagen a bala 105mm
+            screen.blit(pantalla.Bala105, (50, pantalla.alto - 75))
         elif tipo1 == 2:
-            #cambiar imagen a bala tipo 2
-            print()
+            #cambiar imagen a bala 80mm
+            screen.blit(pantalla.Bala80, (60, pantalla.alto - 75))
         elif tipo1 == 3:
-            #cambiar imagen a bala tipo 3
-            print()
+            #cambiar imagen a bala 60mm
+            screen.blit(pantalla.Bala60, (70, pantalla.alto - 75))
         
         if tipo2 == 1:
-            screen.blit(pantalla.BalaCanyon, (pantalla.ancho - pantalla.BalaCanyon.get_width() - 65, pantalla.alto - 90))
+            #cambiar imagen a bala 105mm
+            screen.blit(pantalla.Bala105, (pantalla.ancho - pantalla.Bala105.get_width() - 50, pantalla.alto - 75))
         elif tipo2 == 2:
-            #cambiar imagen a bala tipo 2
-            print()
+            #cambiar imagen a bala 80mm
+            screen.blit(pantalla.Bala80, (pantalla.ancho - pantalla.Bala80.get_width() - 60, pantalla.alto - 75))
         elif tipo2 == 3:
-            #cambiar imagen a bala tipo 3
-            print()
-        #los print son para que no tire error
+            #cambiar imagen a bala 60mm
+            screen.blit(pantalla.Bala60, (pantalla.ancho - pantalla.Bala60.get_width() - 70, pantalla.alto - 75))
 
         #NO TOCAR SON ESTÁTICOS
     #ahora se iniciará una función para calcular la altura maxima de la bala y la distancia recorrida por la bala y se mostrará en pantalla
