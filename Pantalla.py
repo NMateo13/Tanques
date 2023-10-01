@@ -55,7 +55,10 @@ class Pantalla:
     IMG_Background = pygame.image.load(os.path.join("Assets", "Background.png"))
     IMG_HUD = pygame.image.load(os.path.join("Assets", "hud_bg.png"))
     IMG_Explosion = pygame.image.load(os.path.join("Assets", "boom.png"))
-    IMG_Bala = pygame.image.load(os.path.join("Assets", "bala.png"))
+    IMG_Bala = pygame.image.load(os.path.join("Assets", "bala105.png"))
+    IMG_Bala60 = pygame.image.load(os.path.join("Assets", "bala60.png"))
+    IMG_Bala80 = pygame.image.load(os.path.join("Assets", "bala80.png"))
+    IMG_Bala105 = pygame.image.load(os.path.join("Assets", "bala105.png"))
     
     #Reescalado de imagenes
     Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4))
@@ -66,9 +69,9 @@ class Pantalla:
     HUD = pygame.transform.scale(IMG_HUD, (1200, 120))    
     Tanque1_HUD = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 2, IMG_Tanque1.get_height() // 2))
     Tanque2_HUD = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 2, IMG_Tanque2.get_height() // 2))
-    Bala105 = pygame.transform.scale(IMG_Bala, (IMG_Bala.get_width() // 1.5, IMG_Bala.get_height() // 1.5))
-    Bala80 = pygame.transform.scale(IMG_Bala, (IMG_Bala.get_width() // 1.75, IMG_Bala.get_height() // 1.75))
-    Bala60 = pygame.transform.scale(IMG_Bala, (IMG_Bala.get_width() // 2, IMG_Bala.get_height() // 2))
+    Bala105 = pygame.transform.scale(IMG_Bala105, (IMG_Bala105.get_width() // 1.5, IMG_Bala105.get_height() // 1.5))
+    Bala80 = pygame.transform.scale(IMG_Bala80, (IMG_Bala80.get_width() // 1.75, IMG_Bala80.get_height() // 1.75))
+    Bala60 = pygame.transform.scale(IMG_Bala60, (IMG_Bala60.get_width() // 2, IMG_Bala60.get_height() // 2))
     Explosion = pygame.transform.scale(IMG_Explosion, (IMG_Explosion.get_width() // 4, IMG_Explosion.get_height() // 4))
 
     J1X = [24, 140, 260, 365]
