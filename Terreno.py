@@ -1,4 +1,4 @@
-import pygame
+import pygame, datos
 import math
 
 class Terreno:
@@ -18,9 +18,8 @@ class Terreno:
         return terreno
 
     def dibujar(self, pantalla):
-        color_terreno = (139, 69, 19)  # Color marrón para el terreno
         for x, altura in enumerate(self.terreno):
-            pygame.draw.rect(pantalla, color_terreno, (x, self.alto - altura, 1, altura))
+            pygame.draw.rect(pantalla, datos.BROWN, (x, self.alto - altura, 1, altura))
 
     def verificar_colision(self, bala):
         for x, y in bala.trayectoria:

@@ -1,5 +1,6 @@
-import pygame
+import pygame, datos
 import math
+
 
 class Bala:
     def __init__(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tipo):
@@ -7,7 +8,6 @@ class Bala:
         self.pos_inicial_y = pos_inicial_y
         self.angulo = math.radians(angulo)
         self.velocidad_inicial = velocidad_inicial
-        self.gravedad = 9.8
         self.incremento = 0.05
         self.trayectoria = []
         self.tipo = tipo
@@ -16,7 +16,7 @@ class Bala:
 
     def calcular_posiciones(self, time):
         x = self.pos_inicial_x + self.velocidad_inicial * math.cos(self.angulo) * time
-        y = self.pos_inicial_y - (self.velocidad_inicial * math.sin(self.angulo) * time - 0.5 * self.gravedad * time ** 2)
+        y = self.pos_inicial_y - (self.velocidad_inicial * math.sin(self.angulo) * time - 0.5 * datos.gravedad * time ** 2)
         return x, y
 
     def verificacion(self, tiempo, screen, color):
