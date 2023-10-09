@@ -1,4 +1,4 @@
-import pygame, sys, Terreno, Pantalla, datos
+import pygame, sys, Terreno, Pantalla, datos, imagenes
 from Bala import Bala
 from Tanque import Tanque
 from Terreno import Terreno
@@ -6,18 +6,18 @@ from Canon import Canon
 
 pygame.init()
 pygame.display.set_caption("TANK WARS") 
-pygame.display.set_icon(datos.IMG_Explosion) 
+pygame.display.set_icon(imagenes.IMG_Explosion) 
 
-font = pygame.font.Font(None, 36)
-size = (Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
+fuente = pygame.font.Font(None, 36)
+size = (datos.PANT_ANCHO, datos.PANT_ALTO)
 screen = pygame.display.set_mode(size)
-terreno = Terreno(Pantalla.pantalla.ancho, Pantalla.pantalla.alto)
+terreno = Terreno(datos.PANT_ANCHO, datos.PANT_ALTO)
 
 # Crear dos hitboxes
 tank1 = Pantalla.pantalla.tank1
 tank2 = Pantalla.pantalla.tank2
 tanque1 = Tanque(Pantalla.pantalla.posX_Tanque1, Pantalla.pantalla.posY_Tanque1 + 10, datos.RED, tank1)
-tanque2 = Tanque(Pantalla.pantalla.ancho - datos.Tanque2.get_width() - Pantalla.pantalla.posX_Tanque2, Pantalla.pantalla.posY_Tanque2 + 10, datos.RED, tank2)
+tanque2 = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - Pantalla.pantalla.posX_Tanque2, Pantalla.pantalla.posY_Tanque2 + 10, datos.RED, tank2)
 
 bala_tanque1 = None
 bala_tanque2 = None
@@ -45,7 +45,7 @@ Clock = pygame.time.Clock()
 tecla_espacio_presionada = False
 
 pivote1 = [Pantalla.pantalla.posX_Tanque1 + 20, Pantalla.pantalla.posY_Tanque1+5]
-pivote2 = [Pantalla.pantalla.ancho - datos.IMG_Canon2.get_width() - Pantalla.pantalla.posX_Tanque2 - 15, Pantalla.pantalla.posY_Tanque2+5]
+pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - Pantalla.pantalla.posX_Tanque2 - 15, Pantalla.pantalla.posY_Tanque2+5]
         
 angulo_jugador1 = 30 # Ángulo inicial
 extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
@@ -124,9 +124,9 @@ while True:
         elif keys[pygame.K_3]:
             tipo_bala2 = 3
 
-    screen.blit(datos.Background, (0, 0))
+    screen.blit(imagenes.Background, (0, 0))
     terreno.dibujar(screen)
-    screen.blit(datos.HUD, (0, 540))
+    screen.blit(imagenes.HUD, (0, 480))
     tanque1.dibujar(screen)
     tanque2.dibujar(screen)
 
@@ -141,7 +141,7 @@ while True:
             bala_tanque1.verificacion(tiempo_transcurrido, screen, datos.BLACK)
             impacto_tanque = bala_tanque1.verificar_impacto_tanque(tanque2)
             impacto_terreno = terreno.verificar_colision(bala_tanque1)
-            impacto_borde = bala_tanque1.verificar_impacto_ancho(Pantalla.pantalla.ancho)
+            impacto_borde = bala_tanque1.verificar_impacto_ancho(datos.PANT_ANCHO)
             if impacto_tanque:
                 sys.exit()  # Cierra el programa si hubo impacto
             elif impacto_borde or impacto_terreno:
@@ -164,7 +164,7 @@ while True:
             bala_tanque2.verificacion(tiempo_transcurrido, screen, datos.BLACK)
             impacto_tanque = bala_tanque2.verificar_impacto_tanque(tanque1)
             impacto_terreno = terreno.verificar_colision(bala_tanque2)
-            impacto_borde = bala_tanque2.verificar_impacto_ancho(Pantalla.pantalla.ancho)
+            impacto_borde = bala_tanque2.verificar_impacto_ancho(datos.PANT_ANCHO)
             if impacto_tanque:
                 sys.exit()  # Cierra el programa si hubo impacto
             elif impacto_borde or impacto_terreno:
@@ -176,12 +176,12 @@ while True:
                  
         tiempo_transcurrido += incremento
 
-    Pantalla.pantalla.muestra_salud(screen, font)
-    Pantalla.pantalla.muestra_potencia(screen, font,velocidad_jugador1,velocidad_jugador2)
-    Pantalla.pantalla.muestra_angulo(screen, font,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])
-    Pantalla.pantalla.muestra_texto(screen, font)
+    Pantalla.pantalla.muestra_salud(screen, fuente)
+    Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
+    Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])
+    Pantalla.pantalla.muestra_texto(screen, fuente)
     Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2)
-    Pantalla.pantalla.muestra_altura(screen, font, altura_maxima, mostrar_altura1, mostrar_altura2)
+    Pantalla.pantalla.muestra_altura(screen, fuente, altura_maxima, mostrar_altura1, mostrar_altura2)
     extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
     extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
     pygame.display.flip()
