@@ -127,8 +127,8 @@ while True:
     screen.blit(datos.Background, (0, 0))
     terreno.dibujar(screen)
     screen.blit(datos.HUD, (0, 540))
-    tanque1.dibujar(screen)
-    tanque2.dibujar(screen)
+    #tanque1.dibujar(screen)
+    #tanque2.dibujar(screen)
 
     if tecla_espacio_presionada and turno1:
         if bala_tanque1 is None:
@@ -180,8 +180,8 @@ while True:
     Pantalla.pantalla.muestra_potencia(screen, font,velocidad_jugador1,velocidad_jugador2)
     Pantalla.pantalla.muestra_angulo(screen, font,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])
     Pantalla.pantalla.muestra_texto(screen, font)
-    Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2)
+    #Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2)
     Pantalla.pantalla.muestra_altura(screen, font, altura_maxima, mostrar_altura1, mostrar_altura2)
-    extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
-    extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
+    #extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
+    #extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
     pygame.display.flip()
