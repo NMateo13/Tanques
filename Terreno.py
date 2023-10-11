@@ -10,17 +10,12 @@ class Terreno:
     def generar_terreno(self):
         terreno = []
 
-        escalar = 4
-        bandera = True
         aux = 0
         flotante = 2.0
-        auxAltura = 0
-        auxAncho = 0
         x = 0
 
         while aux <= 1200:
-
-
+            
             amplitud = random.randint(50, 90)  # Ajusta esta amplitud según tus necesidades
             frecuencia = random.randint(50, 90)  # Ajusta esta frecuencia según }<tus necesidades
 
@@ -37,7 +32,7 @@ class Terreno:
                     flotante = flotante + 0.001
                     altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
 
-            for y in range(frecuencia*escalar):
+            for y in range(frecuencia*4):
 
                 altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
                 terreno.append(altura)
@@ -52,10 +47,8 @@ class Terreno:
         
         return terreno
             
-
-
-
     def dibujar(self, pantalla):
+
         for x, altura in enumerate(self.terreno):
             pygame.draw.rect(pantalla, datos.BROWN, (x, self.alto - altura, 1, altura))
 
