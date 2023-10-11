@@ -1,4 +1,4 @@
-import pygame, datos
+import pygame, datos, random
 import math
 
 class Terreno:
@@ -10,12 +10,9 @@ class Terreno:
     def generar_terreno(self):
         terreno = []
 
-        escalar = 4
-        bandera = True
         aux = 0
         flotante = 2.0
         auxAltura = 0
-        auxAncho = 0
         x = 0
 
         while aux <= 1200:
@@ -37,7 +34,7 @@ class Terreno:
                     flotante = flotante + 0.001
                     altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
 
-            for y in range(frecuencia*escalar):
+            for y in range(frecuencia*4):
 
                 altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
                 terreno.append(altura)
