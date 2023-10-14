@@ -22,11 +22,16 @@ class Terreno:
             frecuencia = random.randint(50, 90)  # Ajusta esta frecuencia según }<tus necesidades
 
             if x > 0:
-                auxAltura = altura
+                if altura > 130:
+                    auxAltura = altura
+                else: 
+                    auxAltura = 131
 
             altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
 
+
             while auxAltura != altura and x != 0:
+
                 if auxAltura > altura:
                     flotante = flotante - 0.001
                     altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
@@ -39,7 +44,7 @@ class Terreno:
                 altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
                 terreno.append(altura)
                 aux += 1
-                if aux == 1200:
+                if aux == 1200 or altura < 130:
                     break
 
             if aux == 1200:
