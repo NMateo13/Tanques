@@ -11,7 +11,6 @@ pygame.display.set_icon(imagenes.IMG_Explosion)
 fuente = pygame.font.Font(None, 36)
 size = (datos.PANT_ANCHO, datos.PANT_ALTO)
 screen = pygame.display.set_mode(size)
-terreno = Terreno(datos.PANT_ANCHO, datos.PANT_ALTO)
 
 def draw_text(text, font, x, y):
     textobj = font.render(text, 1, datos.BLACK)
@@ -76,6 +75,8 @@ def controles():
                 menu()
 
 def juego():
+    terreno = Terreno(datos.PANT_ANCHO, datos.PANT_ALTO)
+
     # Crear dos hitboxes
     tank1 = Pantalla.pantalla.tank1
     tank2 = Pantalla.pantalla.tank2
@@ -121,18 +122,29 @@ def juego():
     tiempo_transcurrido = 0
     incremento = 0.035
 
+    salir = screen.blit(imagenes.Exit, (Pantalla.pantalla.ancho - imagenes.Exit.get_width() - 650, 10))
+    reset = screen.blit(imagenes.Restart, (Pantalla.pantalla.ancho - imagenes.Restart.get_width() - 550, 10))
+
     while True:
         Clock.tick(datos.FPS)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if reset.collidepoint(pygame.mouse.get_pos()):
+                    juego()  # Reiniciar el juego
+                if salir.collidepoint(pygame.mouse.get_pos()):
+                    menu()  # Volver al menú principal
         
         keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_ESCAPE]:
+            menu()
         
         if keys[pygame.K_SPACE]:
             tecla_espacio_presionada = True
-        
+
         # Controles del jugador 1
         if turno1:
             if keys[pygame.K_w]:
@@ -190,8 +202,8 @@ def juego():
         screen.blit(imagenes.Background, (0, 0))
         terreno.dibujar(screen)
         screen.blit(imagenes.HUD, (0, 480))
-        #tanque1.dibujar(screen)
-        #tanque2.dibujar(screen)
+        tanque1.dibujar(screen)
+        tanque2.dibujar(screen)
 
         if tecla_espacio_presionada and turno1:
             if bala_tanque1 is None:
@@ -243,10 +255,10 @@ def juego():
         Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
         Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])
         Pantalla.pantalla.muestra_texto(screen, fuente)
-        #Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2)
+        Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2)
         Pantalla.pantalla.muestra_altura(screen, fuente, altura_maxima, mostrar_altura1, mostrar_altura2)
-        #extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
-        #extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
+        extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
+        extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
         pygame.display.flip()
 
 menu()
