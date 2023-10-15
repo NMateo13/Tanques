@@ -21,15 +21,15 @@ def draw_text(text, font, x, y):
 def menu():
     while True:
         screen.fill(datos.WHITE)
-        draw_text('TANK WARS', fuente, (datos.PANT_ANCHO / 2) - 100, (datos.PANT_ALTO / 2) - 200)
+        draw_text('TANK WARS', fuente, (datos.PANT_ANCHO / 2) - 70, (datos.PANT_ALTO / 2) - 200)
 
         play_button = pygame.Rect((datos.PANT_ANCHO / 2) - 50, (datos.PANT_ALTO / 2) - 50, 100, 50)
         control_button = pygame.Rect((datos.PANT_ANCHO / 2) - 50, (datos.PANT_ALTO / 2) + 50, 100, 50)
         quit_button = pygame.Rect((datos.PANT_ANCHO / 2) - 50, (datos.PANT_ALTO / 2) + 150, 100, 50)
 
-        draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) - 20, (datos.PANT_ALTO / 2) - 35)
-        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) - 40, (datos.PANT_ALTO / 2) + 65)
-        draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) - 20, (datos.PANT_ALTO / 2) + 165)
+        draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) - 30, (datos.PANT_ALTO / 2) - 35)
+        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) - 55, (datos.PANT_ALTO / 2) + 65)
+        draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) - 25, (datos.PANT_ALTO / 2) + 165)
 
         pygame.display.update()
 
