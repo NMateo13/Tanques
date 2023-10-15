@@ -16,7 +16,8 @@ class Terreno:
         x = 0
 
         while aux <= 1200:
-            
+
+
             amplitud = random.randint(50, 90)  # Ajusta esta amplitud según tus necesidades
             frecuencia = random.randint(50, 90)  # Ajusta esta frecuencia según }<tus necesidades
 
@@ -53,6 +54,9 @@ class Terreno:
         
         return terreno
             
+
+
+
     def dibujar(self, pantalla):
 
         for x, altura in enumerate(self.terreno):
