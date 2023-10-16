@@ -1,4 +1,4 @@
-import pygame, sys, Terreno, Pantalla, datos, imagenes
+import pygame, sys, Terreno, Pantalla, datos, imagenes, random
 from Bala import Bala
 from Tanque import Tanque
 from Terreno import Terreno
@@ -21,15 +21,15 @@ def draw_text(text, font, x, y):
 def menu():
     while True:
         screen.fill(datos.WHITE)
-        draw_text('TANK WARS', fuente, (datos.PANT_ANCHO / 2) - 100, (datos.PANT_ALTO / 2) - 200)
+        draw_text('TANK WARS', fuente, (datos.PANT_ANCHO / 2) - 70, (datos.PANT_ALTO / 2) - 200)
 
         play_button = pygame.Rect((datos.PANT_ANCHO / 2) - 50, (datos.PANT_ALTO / 2) - 50, 100, 50)
         control_button = pygame.Rect((datos.PANT_ANCHO / 2) - 50, (datos.PANT_ALTO / 2) + 50, 100, 50)
         quit_button = pygame.Rect((datos.PANT_ANCHO / 2) - 50, (datos.PANT_ALTO / 2) + 150, 100, 50)
 
-        draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) - 20, (datos.PANT_ALTO / 2) - 35)
-        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) - 40, (datos.PANT_ALTO / 2) + 65)
-        draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) - 20, (datos.PANT_ALTO / 2) + 165)
+        draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) - 30, (datos.PANT_ALTO / 2) - 35)
+        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) - 55, (datos.PANT_ALTO / 2) + 65)
+        draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) - 25, (datos.PANT_ALTO / 2) + 165)
 
         pygame.display.update()
 
@@ -74,14 +74,32 @@ def controles():
             if keys[pygame.K_ESCAPE]:
                 menu()
 
+
 def juego():
     terreno = Terreno(datos.PANT_ANCHO, datos.PANT_ALTO)
 
     # Crear dos hitboxes
+
+    posX_Tanque1 = random.randint(0, 550) 
+    posX_Tanque2 = random.randint(0, 550)
+    
+    indice = posX_Tanque1
+    indice2 = (1199 - posX_Tanque2)
+
+    posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
+
+    posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24
+    while posY_Tanque2 < 0:
+        posX_Tanque2 = random.randint(0, 550)
+        indice2 = (1199 - posX_Tanque2)
+        posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
+
+
+
     tank1 = Pantalla.pantalla.tank1
     tank2 = Pantalla.pantalla.tank2
-    tanque1 = Tanque(Pantalla.pantalla.posX_Tanque1, Pantalla.pantalla.posY_Tanque1 + 10, datos.RED, tank1)
-    tanque2 = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - Pantalla.pantalla.posX_Tanque2, Pantalla.pantalla.posY_Tanque2 + 10, datos.RED, tank2)
+    tanque1 = Tanque(posX_Tanque1 - 10, posY_Tanque1 + 10, datos.RED, tank1)
+    tanque2 = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque2 + 20, posY_Tanque2 + 10, datos.RED, tank2)
 
     bala_tanque1 = None
     bala_tanque2 = None
@@ -108,8 +126,8 @@ def juego():
     Clock = pygame.time.Clock()
     tecla_espacio_presionada = False
 
-    pivote1 = [Pantalla.pantalla.posX_Tanque1 + 20, Pantalla.pantalla.posY_Tanque1+5]
-    pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - Pantalla.pantalla.posX_Tanque2 - 15, Pantalla.pantalla.posY_Tanque2+5]
+    pivote1 = [posX_Tanque1 + 10, posY_Tanque1+5]
+    pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - posX_Tanque2 + 5, posY_Tanque2+5]
             
     angulo_jugador1 = 30 # Ángulo inicial
     extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
@@ -205,6 +223,8 @@ def juego():
         tanque1.dibujar(screen)
         tanque2.dibujar(screen)
 
+
+
         if tecla_espacio_presionada and turno1:
             if bala_tanque1 is None:
                 mostrar_altura1 = True
@@ -251,11 +271,13 @@ def juego():
                     
             tiempo_transcurrido += incremento
 
+
+
         Pantalla.pantalla.muestra_salud(screen, fuente)
         Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
         Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])
         Pantalla.pantalla.muestra_texto(screen, fuente)
-        Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2)
+        Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, posX_Tanque1, posX_Tanque2, posY_Tanque1, posY_Tanque2)
         Pantalla.pantalla.muestra_altura(screen, fuente, altura_maxima, mostrar_altura1, mostrar_altura2)
         extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
         extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
