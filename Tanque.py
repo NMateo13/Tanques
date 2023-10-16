@@ -10,6 +10,7 @@ class Tanque:
         self.ancho = 60
         self.altura = 10
         self.num = num
+        self.vida = 100
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.ancho, self.altura))
@@ -26,3 +27,7 @@ class Tanque:
             if (self.x <= x <= (self.x + self.ancho)) and (self.y <= y <= (self.y + self.altura)):
                 return True
         return False
+
+    def tipo1Bala (self):
+        self.vida -= 35
+        
