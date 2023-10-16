@@ -5,31 +5,29 @@ from Terreno import Terreno
 from Canon import Canon
 
 pygame.init()
-pygame.display.set_caption("TANK WARS") 
 pygame.display.set_icon(imagenes.IMG_Explosion) 
 
 fuente = pygame.font.Font(None, 36)
 size = (datos.PANT_ANCHO, datos.PANT_ALTO)
 screen = pygame.display.set_mode(size)
 
-def draw_text(text, font, x, y):
-    textobj = font.render(text, 1, datos.BLACK)
+def draw_text(text, font, x, y, color):
+    textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     screen.blit(textobj, textrect)
 
 def menu():
     while True:
-        screen.fill(datos.WHITE)
-        draw_text('TANK WARS', fuente, (datos.PANT_ANCHO / 2) - 70, (datos.PANT_ALTO / 2) - 200)
+        screen.blit(imagenes.IMG_FondoMenu, (0, 0))
 
-        play_button = pygame.Rect((datos.PANT_ANCHO / 2) - 50, (datos.PANT_ALTO / 2) - 50, 100, 50)
-        control_button = pygame.Rect((datos.PANT_ANCHO / 2) - 50, (datos.PANT_ALTO / 2) + 50, 100, 50)
-        quit_button = pygame.Rect((datos.PANT_ANCHO / 2) - 50, (datos.PANT_ALTO / 2) + 150, 100, 50)
+        play_button = pygame.Rect((datos.PANT_ANCHO / 2) + 155, (datos.PANT_ALTO / 2) - 98, 100, 50)
+        control_button = pygame.Rect((datos.PANT_ANCHO / 2) + 90, (datos.PANT_ALTO / 2) - 5, 100, 50)
+        quit_button = pygame.Rect((datos.PANT_ANCHO / 2) + 118, (datos.PANT_ALTO / 2) + 90, 100, 50)
 
-        draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) - 30, (datos.PANT_ALTO / 2) - 35)
-        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) - 55, (datos.PANT_ALTO / 2) + 65)
-        draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) - 25, (datos.PANT_ALTO / 2) + 165)
+        draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) + 155, (datos.PANT_ALTO / 2) - 98, datos.BLACK)
+        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) + 130, (datos.PANT_ALTO / 2) - 5, datos.BLACK)
+        draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) + 160, (datos.PANT_ALTO / 2) + 88, datos.BLACK)
 
         pygame.display.update()
 
@@ -49,20 +47,36 @@ def menu():
 def controles():
     while True:
         screen.fill(datos.WHITE)
-        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) - 100, (datos.PANT_ALTO / 2) - 250)
-        draw_text('Jugador 1', fuente, (datos.PANT_ANCHO / 2) - 550, (datos.PANT_ALTO / 2) - 200)
-        draw_text('Jugador 2', fuente, (datos.PANT_ANCHO / 2), (datos.PANT_ALTO / 2) - 200)
-        draw_text('W: Aumentar ángulo', fuente, (datos.PANT_ANCHO / 2) - 550, (datos.PANT_ALTO / 2) - 150)
-        draw_text('Arriba: Aumentar ángulo', fuente, (datos.PANT_ANCHO / 2), (datos.PANT_ALTO / 2) - 150)
-        draw_text('S: Disminuir ángulo', fuente, (datos.PANT_ANCHO / 2) - 550, (datos.PANT_ALTO / 2) - 100)
-        draw_text('Abajo: Disminuir ángulo', fuente, (datos.PANT_ANCHO / 2), (datos.PANT_ALTO / 2) - 100)
-        draw_text('A: Disminuir potencia', fuente, (datos.PANT_ANCHO / 2) - 550, (datos.PANT_ALTO / 2) - 50)
-        draw_text('Izquierda: Disminuir potencia', fuente, (datos.PANT_ANCHO / 2), (datos.PANT_ALTO / 2) - 50)
-        draw_text('D: Aumentar potencia', fuente, (datos.PANT_ANCHO / 2) - 550, (datos.PANT_ALTO / 2))
-        draw_text('Derecha: Aumentar potencia', fuente, (datos.PANT_ANCHO / 2), (datos.PANT_ALTO / 2))
-        draw_text('1: Bala 105mm   2: Bala 80mm   3: Bala 60mm', fuente, (datos.PANT_ANCHO / 2) - 550, (datos.PANT_ALTO / 2) + 100)
-        draw_text('Espacio: Disparar', fuente, (datos.PANT_ANCHO / 2) - 550, (datos.PANT_ALTO / 2) + 150)
-        draw_text('Para volver al menú presione Esc :)', fuente, (datos.PANT_ANCHO / 2) - 550, (datos.PANT_ALTO / 2) + 250)
+        screen.blit(imagenes.IMG_fondo_controles, (0, 0))
+        fuente = pygame.font.Font(None, 36)
+        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) - 58, (datos.PANT_ALTO / 2) - 250, datos.BLACK)
+        draw_text('Jugador 1', fuente, (datos.PANT_ANCHO / 2) - 418, (datos.PANT_ALTO / 2) - 200, datos.BLACK)
+        draw_text('Jugador 2', fuente, (datos.PANT_ANCHO / 2) + 303, (datos.PANT_ALTO / 2) - 200, datos.BLACK)
+        fuente = pygame.font.Font(None, 23)
+        draw_text('W: Aumentar ángulo', fuente, (datos.PANT_ANCHO / 2) - 438, (datos.PANT_ALTO / 2) - 137, datos.BLACK)
+        fuente = pygame.font.Font(None, 21)
+        draw_text('Arriba: Aumentar ángulo', fuente, (datos.PANT_ANCHO / 2) + 277, (datos.PANT_ALTO / 2) - 137, datos.BLACK)
+        fuente = pygame.font.Font(None, 23)
+        draw_text('S: Disminuir ángulo', fuente, (datos.PANT_ANCHO / 2) - 436, (datos.PANT_ALTO / 2) - 78, datos.BLACK)
+        fuente = pygame.font.Font(None, 21)
+        draw_text('Abajo: Disminuir ángulo', fuente, (datos.PANT_ANCHO / 2) + 278, (datos.PANT_ALTO / 2) - 78, datos.BLACK)
+        fuente = pygame.font.Font(None, 23)
+        draw_text('A: Disminuir potencia', fuente, (datos.PANT_ANCHO / 2) - 442, (datos.PANT_ALTO / 2) - 19, datos.BLACK)
+        fuente = pygame.font.Font(None, 17)
+        draw_text('Izquierda: Disminuir potencia', fuente, (datos.PANT_ANCHO / 2) + 280, (datos.PANT_ALTO / 2) - 17, datos.BLACK)
+        fuente = pygame.font.Font(None, 23)
+        draw_text('D: Aumentar potencia', fuente, (datos.PANT_ANCHO / 2) - 443, (datos.PANT_ALTO / 2) + 39, datos.BLACK)
+        fuente = pygame.font.Font(None, 17)
+        draw_text('Derecha: Aumentar potencia', fuente, (datos.PANT_ANCHO / 2) + 283, (datos.PANT_ALTO / 2) + 41, datos.BLACK)
+        fuente = pygame.font.Font(None, 26)
+        draw_text('1: Bala 105mm', fuente, (datos.PANT_ANCHO / 2) - 425, (datos.PANT_ALTO / 2) + 116, datos.BLACK)
+        fuente = pygame.font.Font(None, 26)
+        draw_text('2: Bala 80mm', fuente, (datos.PANT_ANCHO / 2) - 57, (datos.PANT_ALTO / 2) + 116, datos.BLACK)
+        fuente = pygame.font.Font(None, 26)
+        draw_text('3: Bala 60mm', fuente, (datos.PANT_ANCHO / 2) + 307, (datos.PANT_ALTO / 2) + 116, datos.BLACK)
+        draw_text('Espacio: Disparar', fuente, (datos.PANT_ANCHO / 2) - 75, (datos.PANT_ALTO / 2) + 42, datos.BLACK)
+        fuente = pygame.font.Font(None, 26)
+        draw_text('Menu: Escape', fuente, (datos.PANT_ANCHO / 2) - 59, (datos.PANT_ALTO / 2) + 191, datos.BLACK)
 
         pygame.display.update()
 
