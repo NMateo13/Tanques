@@ -292,8 +292,6 @@ def juego(reset):
                         for j in range(len(puntosExplosionX)):
                             if i == puntosExplosionX[j] and terreno.terreno[i]>puntosExplosionY[j]:
                                 o =puntosExplosionY[j]
-                                print(terreno.terreno[i])
-                                print(o)
                                 terreno.terreno[i] = o
                                 break
                     
