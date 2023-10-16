@@ -9,6 +9,7 @@ class Terreno:
 
     def generar_terreno(self):
         terreno = []
+        altura2 = []
 
         aux = 0
         flotante = 2.0
@@ -54,9 +55,6 @@ class Terreno:
         
         return terreno
             
-
-
-
     def dibujar(self, pantalla):
 
         for x, altura in enumerate(self.terreno):

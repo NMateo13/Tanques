@@ -47,18 +47,13 @@ class Pantalla:
     elif tank2 == 4:
         imagenes.IMG_Canon4
         
-    J1Y = [250, 210, 270, 370]
     J2Y = [390, 390, 300, 210]
 
     #Posiciones de los tanques 
 
     posTanque1 = random.randint(0, 3)
     posTanque2 = random.randint(0, 3)
-
-    posX_Tanque1 = random.randint(0, 500)
-    posY_Tanque1 = J1Y[posTanque1]
-
-    posX_Tanque2 = random.randint(0, 500)
+  
     posY_Tanque2 = J2Y[posTanque2]
 
     def __init__(self, ancho, alto):
@@ -114,9 +109,9 @@ class Pantalla:
         angulo_texto2 = font.render(f"Ángulo: {angulo_jugador2}°", True, datos.WHITE)
         screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, datos.PANT_ALTO - 30))
 
-    def muestra_imagen(self, screen, tipo1, tipo2):
-        screen.blit(imagenes.Tanque1, (self.posX_Tanque1, self.posY_Tanque1)) 
-        screen.blit(imagenes.Tanque2, (pantalla.ancho - imagenes.Tanque2.get_width() - self.posX_Tanque2, self.posY_Tanque2)) 
+    def muestra_imagen(self, screen, tipo1, tipo2, posX1, posX2, posY1, posY2):
+        screen.blit(imagenes.Tanque1, (posX1 - 10, posY1)) 
+        screen.blit(imagenes.Tanque2, (pantalla.ancho - imagenes.Tanque2.get_width() - posX2+20, posY2)) 
         screen.blit(imagenes.Exit, (pantalla.ancho - imagenes.Exit.get_width() - 650, 10))
         screen.blit(imagenes.Restart, (pantalla.ancho - imagenes.Restart.get_width() - 550, 10))
 
