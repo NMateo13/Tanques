@@ -1,4 +1,4 @@
-import pygame, sys, Terreno, Pantalla, datos, imagenes, random
+import pygame, sys, Terreno, Pantalla, datos, imagenes, random, math
 from Bala import Bala
 from Tanque import Tanque
 from Terreno import Terreno
@@ -10,6 +10,7 @@ pygame.display.set_icon(imagenes.IMG_Explosion)
 fuente = pygame.font.Font(None, 36)
 size = (datos.PANT_ANCHO, datos.PANT_ALTO)
 screen = pygame.display.set_mode(size)
+reset = 0
 
 def draw_text(text, font, x, y, color):
     textobj = font.render(text, 1, color)
@@ -37,7 +38,7 @@ def menu():
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if play_button.collidepoint(event.pos):
-                    juego()
+                    juego(reset)
                 if control_button.collidepoint(event.pos):
                     controles()
                 if quit_button.collidepoint(event.pos):
@@ -88,8 +89,7 @@ def controles():
             if keys[pygame.K_ESCAPE]:
                 menu()
 
-
-def juego():
+def juego(reset):
     terreno = Terreno(datos.PANT_ANCHO, datos.PANT_ALTO)
 
     # Crear dos hitboxes
@@ -117,6 +117,12 @@ def juego():
 
     bala_tanque1 = None
     bala_tanque2 = None
+
+    centroExplosion = []
+    radioExplosion = 100
+    num_puntosExplosion = int(2 * math.pi * radioExplosion)
+    aux_x=0
+    aux_y=0
 
     canon1 = Canon(tanque1)
     canon2 = Canon(tanque2)
@@ -160,12 +166,14 @@ def juego():
     while True:
         Clock.tick(datos.FPS)
 
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if reset.collidepoint(pygame.mouse.get_pos()):
-                    juego()  # Reiniciar el juego
+                    reset = 1
+                    juego(reset)  # Reiniciar el juego
                 if salir.collidepoint(pygame.mouse.get_pos()):
                     menu()  # Volver al menú principal
         
@@ -189,6 +197,7 @@ def juego():
                     angulo_jugador1 = 66
                 else:
                     angulo_jugador1 -= 1
+
             elif keys[pygame.K_a]:
                 velocidad_jugador1 -= 5
                 velocidad_jugador1 = max(0, velocidad_jugador1)
@@ -253,12 +262,41 @@ def juego():
                 impacto_borde = bala_tanque1.verificar_impacto_ancho(datos.PANT_ANCHO)
                 if impacto_tanque:
                     sys.exit()  # Cierra el programa si hubo impacto
-                elif impacto_borde or impacto_terreno:
+                elif impacto_borde:
                     bala_tanque1 = None
                     tecla_espacio_presionada = False
                     turno1 = False
                     turno2 = True
                     tiempo_transcurrido = 0
+                elif impacto_terreno:
+                    for x, y in bala_tanque1.trayectoria:
+                        centroExplosion.append(x)
+                        centroExplosion.append(y)
+                    bala_tanque1 = None
+                    tecla_espacio_presionada = False
+                    turno1 = False
+                    turno2 = True
+                    tiempo_transcurrido = 0
+                    #calculamos los puntos de la circunferencia de la explosion
+                    puntosExplosionX = []
+                    puntosExplosionY = []
+                    for i in range(num_puntosExplosion):
+                        angle = (2 * math.pi / num_puntosExplosion) * i
+                        x = int(centroExplosion[0] + radioExplosion * math.cos(angle))
+                        y = int(centroExplosion[1] + radioExplosion * math.sin(angle))
+                        puntosExplosionX.append(x)
+                        puntosExplosionY.append(y)
+                    
+                    #verificamos los puntos (x,y) de la explosion con los puntos (terreno.terreno[x+1],terreno.terreno[x]) del terreno
+                    for i in range(len(terreno.terreno)):
+                        for j in range(len(puntosExplosionX)):
+                            if i == puntosExplosionX[j] and terreno.terreno[i]>puntosExplosionY[j]:
+                                o =puntosExplosionY[j]
+                                print(terreno.terreno[i])
+                                print(o)
+                                terreno.terreno[i] = o
+                                break
+                    
 
             tiempo_transcurrido += incremento
 
@@ -296,5 +334,9 @@ def juego():
         extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
         extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
         pygame.display.flip()
+        if reset == 1:
+            reset = 0
+            bala_tanque1 = None
+            bala_tanque2 = None
 
 menu()
