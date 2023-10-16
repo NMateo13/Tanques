@@ -10,9 +10,26 @@ class Bala:
         self.velocidad_inicial = velocidad_inicial
         self.incremento = 0.05
         self.trayectoria = []
+        self.pretrayectoria = []
         self.tipo = tipo
-        self.imagen = pygame.image.load(f"Assets/bala105.png")
-        self.imagen = pygame.transform.scale(self.imagen, (self.imagen.get_width() // 7, self.imagen.get_height() // 7))
+        if tipo == 1:
+            self.imagen = pygame.image.load(f"Assets/bala105.png")
+            self.imagen = pygame.transform.scale(self.imagen, (self.imagen.get_width() // 7, self.imagen.get_height() // 7))
+            self.anguloBala = angulo
+            self.imagen = pygame.transform.rotate(self.imagen, self.anguloBala)
+        elif tipo == 2:
+            self.imagen = pygame.image.load(f"Assets/bala80.png")
+            self.imagen = pygame.transform.scale(self.imagen, (self.imagen.get_width() // 7, self.imagen.get_height() // 7))
+            self.anguloBala = angulo
+            self.imagen = pygame.transform.rotate(self.imagen, self.anguloBala)
+        elif tipo == 3:
+            self.imagen = pygame.image.load(f"Assets/bala60.png")
+            self.imagen = pygame.transform.scale(self.imagen, (self.imagen.get_width() // 7, self.imagen.get_height() // 7))
+            self.anguloBala = angulo
+            self.imagen = pygame.transform.rotate(self.imagen, self.anguloBala)
+        self.rect = self.imagen.get_rect()
+        self.xanterior = pos_inicial_x
+        self.yanterior = pos_inicial_y
 
     def calcular_posiciones(self, time):
         x = self.pos_inicial_x + self.velocidad_inicial * math.cos(self.angulo) * time
@@ -27,9 +44,11 @@ class Bala:
         if len(self.trayectoria) > max_points:
             self.trayectoria.pop(0)
         for point in self.trayectoria:
-            x, y = point
-            # Dibujar la imagen en lugar de un círculo
-            screen.blit(self.imagen, (int(x), int(y)))
+            x2, y2 = point
+            ##rotacion = math.degrees(math.atan2(y2,x2))
+            ##self.imagen = pygame.transform.rotate(self.imagen, rotacion)
+            ##self.rect = self.imagen.get_rect()
+            screen.blit(self.imagen, (x2, y2))
 
     def verificar_impacto_ancho(self, ancho_pantalla):
         for x, _ in self.trayectoria:
@@ -60,5 +79,9 @@ class Bala:
                 valor = y
         valor = int(valor)
         return valor
+    
+    
+    
+
 
     
