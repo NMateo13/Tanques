@@ -1,4 +1,4 @@
-import pygame
+import pygame, datos, random
 import math
 
 class Terreno:
@@ -9,18 +9,56 @@ class Terreno:
 
     def generar_terreno(self):
         terreno = []
-        amplitud = 100  # Ajusta esta amplitud según tus necesidades
-        frecuencia = 100  # Ajusta esta frecuencia según tus necesidades
-        for x in range(self.ancho):
-            # Genera el valor de la altura del terreno usando una función seno
-            altura = int(self.alto / 2 + amplitud * math.sin(x / frecuencia))
-            terreno.append(altura)
-        return terreno
+        altura2 = []
 
+        aux = 0
+        flotante = 2.0
+        auxAltura = 0
+        x = 0
+
+        while aux <= 1200:
+
+
+            amplitud = random.randint(50, 90)  # Ajusta esta amplitud según tus necesidades
+            frecuencia = random.randint(50, 90)  # Ajusta esta frecuencia según }<tus necesidades
+
+            if x > 0:
+                if altura > 130:
+                    auxAltura = altura
+                else: 
+                    auxAltura = 131
+
+            altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
+
+
+            while auxAltura != altura and x != 0:
+
+                if auxAltura > altura:
+                    flotante = flotante - 0.001
+                    altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
+                elif auxAltura < altura:
+                    flotante = flotante + 0.001
+                    altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
+
+            for y in range(frecuencia*4):
+
+                altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
+                terreno.append(altura)
+                aux += 1
+                if aux == 1200 or altura < 130:
+                    break
+
+            if aux == 1200:
+                break
+
+            x += 1
+        
+        return terreno
+            
     def dibujar(self, pantalla):
-        color_terreno = (139, 69, 19)  # Color marrón para el terreno
+
         for x, altura in enumerate(self.terreno):
-            pygame.draw.rect(pantalla, color_terreno, (x, self.alto - altura, 1, altura))
+            pygame.draw.rect(pantalla, datos.BROWN, (x, self.alto - altura, 1, altura))
 
     def verificar_colision(self, bala):
         for x, y in bala.trayectoria:
