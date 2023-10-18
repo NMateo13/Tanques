@@ -246,7 +246,10 @@ def juego(reset):
         tanque1.dibujar(screen)
         tanque2.dibujar(screen)
 
+        if tanque1.vida <= 0 or tanque2.vida <= 0:
+            sys.exit()
 
+        
 
         if tecla_espacio_presionada and turno1:
             if bala_tanque1 is None:
@@ -260,14 +263,59 @@ def juego(reset):
                 impacto_tanque = bala_tanque1.verificar_impacto_tanque(tanque2)
                 impacto_terreno = terreno.verificar_colision(bala_tanque1)
                 impacto_borde = bala_tanque1.verificar_impacto_ancho(datos.PANT_ANCHO)
+                        
                 if impacto_tanque:
-                    sys.exit()  # Cierra el programa si hubo impacto
+                    if tipo_bala1 == 1:
+                        tanque2.vida -= tanque1.Bala50mm
+                        tanque1.cantBala50mm -= 1
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
+                    
+                    elif tipo_bala1 == 2:
+                        tanque2.vida -= tanque1.Bala40mm
+                        tanque1.cantBala40mm -= 1
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
+
+                    elif tipo_bala1 == 3:
+                        tanque2.vida -= tanque1.Bala35mm
+                        tanque1.cantBala35mm -= 1
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
+
                 elif impacto_borde:
-                    bala_tanque1 = None
-                    tecla_espacio_presionada = False
-                    turno1 = False
-                    turno2 = True
-                    tiempo_transcurrido = 0
+
+                    if tipo_bala1 == 1:
+                        tanque1.cantBala50mm -= 1
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
+                    elif tipo_bala1 == 2:
+                        tanque1.cantBala40mm -= 1
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
+                    elif tipo_bala1 == 3:
+                        tanque1.cantBala35mm -= 1
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
+
                 elif impacto_terreno:
                     for x, y in bala_tanque1.trayectoria:
                         centroExplosion.append(x)
@@ -294,6 +342,22 @@ def juego(reset):
                                 o =puntosExplosionY[j]
                                 terreno.terreno[i] = o
                                 break
+
+                    if tipo_bala1 == 1:
+                        tanque1.cantBala50mm -= 1
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        tiempo_transcurrido = 0
+                    elif tipo_bala1 == 2:
+                        tanque1.cantBala40mm -= 1
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        tiempo_transcurrido = 0
+                    elif tipo_bala1 == 3:
+                        tanque1.cantBala35mm -= 1
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        tiempo_transcurrido = 0
                     
 
             tiempo_transcurrido += incremento
@@ -311,7 +375,33 @@ def juego(reset):
                 impacto_terreno = terreno.verificar_colision(bala_tanque2)
                 impacto_borde = bala_tanque2.verificar_impacto_ancho(datos.PANT_ANCHO)
                 if impacto_tanque:
-                    sys.exit()  # Cierra el programa si hubo impacto
+                    if tipo_bala2 == 1:
+                        tanque1.vida -= tanque2.Bala50mm
+                        tanque2.cantBala50mm -= 1
+                        bala_tanque2 = None
+                        tecla_espacio_presionada = False
+                        turno2 = False
+                        turno1 = True
+                        tiempo_transcurrido = 0
+                    
+                    elif tipo_bala2 == 2:
+                        tanque1.vida -= tanque2.Bala40mm
+                        tanque2.cantBala40mm -= 1
+                        bala_tanque2 = None
+                        tecla_espacio_presionada = False
+                        turno2 = False
+                        turno1 = True
+                        tiempo_transcurrido = 0
+
+                    elif tipo_bala2 == 3:
+                        tanque1.vida -= tanque2.Bala35mm
+                        tanque2.cantBala35mm -= 1
+                        bala_tanque2 = None
+                        tecla_espacio_presionada = False
+                        turno2 = False
+                        turno1 = True
+                        tiempo_transcurrido = 0
+
                 elif impacto_borde or impacto_terreno:
                     bala_tanque2 = None
                     tecla_espacio_presionada = False
@@ -323,7 +413,7 @@ def juego(reset):
 
 
 
-        Pantalla.pantalla.muestra_salud(screen, fuente)
+        Pantalla.pantalla.muestra_salud(screen, fuente,tanque1.vida, tanque2.vida)
         Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
         Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])
         Pantalla.pantalla.muestra_texto(screen, fuente)

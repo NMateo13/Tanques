@@ -88,11 +88,11 @@ class Pantalla:
         screen.blit(bala, (25, datos.PANT_ALTO - 110))
         screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, datos.PANT_ALTO - 110))
 
-    def muestra_salud(self, screen, font): #falta agregar las variables de vida de los tanques
-        salud_texto1 = font.render(f"Vida: 100%", True, datos.WHITE)
+    def muestra_salud(self, screen, font, vida_tanque1, vida_tanque2): #falta agregar las variables de vida de los tanques
+        salud_texto1 = font.render(f"Vida: {vida_tanque1}%", True, datos.WHITE)
         screen.blit(salud_texto1, (250, datos.PANT_ALTO - 85))
 
-        salud_texto2 = font.render(f"Vida: 100%", True, datos.WHITE) 
+        salud_texto2 = font.render(f"Vida: {vida_tanque2}%", True, datos.WHITE) 
         screen.blit(salud_texto2, (pantalla.ancho - salud_texto2.get_width() - 300, datos.PANT_ALTO - 85))
 
     def muestra_potencia(self, screen, font,velocidad_jugador1, velocidad_jugador2): 
