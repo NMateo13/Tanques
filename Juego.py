@@ -119,8 +119,8 @@ def juego(reset):
     bala_tanque2 = None
 
     centroExplosion = []
-    radioExplosion = 100
-    num_puntosExplosion = int(2 * math.pi * radioExplosion)
+    radioExplosion = 75
+    
     aux_x=0
     aux_y=0
 
@@ -208,10 +208,13 @@ def juego(reset):
             # Cambio de bala J1
             elif keys[pygame.K_1]:
                 tipo_bala1 = 1
+                radioExplosion = 75
             elif keys[pygame.K_2]:
                 tipo_bala1 = 2
+                radioExplosion = 50
             elif keys[pygame.K_3]:
                 tipo_bala1 = 3
+                radioExplosion = 25
 
         # Controles del jugador 2
         if turno2:
@@ -235,10 +238,13 @@ def juego(reset):
             # Cambio de bala J2
             elif keys[pygame.K_1]:
                 tipo_bala2 = 1
+                radioExplosion = 75
             elif keys[pygame.K_2]:
                 tipo_bala2 = 2
+                radioExplosion = 50
             elif keys[pygame.K_3]:
                 tipo_bala2 = 3
+                radioExplosion = 25
 
         screen.blit(imagenes.Background, (0, 0))
         terreno.dibujar(screen)
@@ -270,14 +276,20 @@ def juego(reset):
                     tiempo_transcurrido = 0
                 elif impacto_terreno:
                     for x, y in bala_tanque1.trayectoria:
-                        centroExplosion.append(x)
-                        centroExplosion.append(y)
+                        centroExplosion.append(int(x))
+                        centroExplosion.append(int(y))
+                        for i in range(radioExplosion):
+                            ancho= []
+                            ancho.append(int(x)-radioExplosion+i)
+                    Pantalla.pantalla.prueba(screen, centroExplosion[0], centroExplosion[1])
+                    pygame.display.flip()
                     bala_tanque1 = None
                     tecla_espacio_presionada = False
                     turno1 = False
                     turno2 = True
                     tiempo_transcurrido = 0
                     #calculamos los puntos de la circunferencia de la explosion
+                    num_puntosExplosion = int(2 * math.pi * radioExplosion)
                     puntosExplosionX = []
                     puntosExplosionY = []
                     for i in range(num_puntosExplosion):
@@ -286,15 +298,22 @@ def juego(reset):
                         y = int(centroExplosion[1] + radioExplosion * math.sin(angle))
                         puntosExplosionX.append(x)
                         puntosExplosionY.append(y)
-                    
-                    #verificamos los puntos (x,y) de la explosion con los puntos (terreno.terreno[x+1],terreno.terreno[x]) del terreno
-                    for i in range(len(terreno.terreno)):
-                        for j in range(len(puntosExplosionX)):
-                            if i == puntosExplosionX[j] and terreno.terreno[i]>puntosExplosionY[j]:
-                                o =puntosExplosionY[j]
-                                terreno.terreno[i] = o
-                                break
-                    
+                    #verificamos cada punto x de la circunferencia y verificamos el punto y mas bajo de la circunferencia
+                    alto = []
+                    for i in range(len(puntosExplosionX)):
+                        alto.append(0)
+                    for i in range(len(ancho)):
+                        for j in range(len(puntosExplosionY)):
+                            if ancho[i] == puntosExplosionX[j]:
+                                if puntosExplosionY[j] > alto[i]:
+                                    alto[i] = puntosExplosionY[j]
+                        #verificamos si el punto y mas bajo de la circunferencia es mayor a la altura del terreno
+                        if alto[i] > terreno.terreno[ancho[i]]:
+                            #si es mayor, entonces se reemplaza la altura del terreno por el punto y mas bajo de la circunferencia
+                            terreno.terreno[ancho[i]] = alto[i]
+
+                    #i = x del terreno
+                    #t
 
             tiempo_transcurrido += incremento
 

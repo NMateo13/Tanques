@@ -168,6 +168,9 @@ class Pantalla:
         x = rect.x
         y = rect.y
         return rotated_image, rect, x, y
+    
+    def prueba(self, surface, x, y):
+        pygame.draw.circle(surface, datos.BLACK, (x, y), 2)
 
 pantalla = Pantalla(datos.PANT_ANCHO, datos.PANT_ALTO)
 matriz = []
