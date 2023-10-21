@@ -10,19 +10,33 @@ class Tanque:
         self.ancho = 60
         self.altura = 10
         self.num = num
+        self.vida = 100 # vida tanque
+        self.cantBala35mm = 10 #cantidad de balas 
+        self.cantBala40mm = 5
+        self.cantBala50mm = 2 
+        self.Bala35mm = 35
+        self.Bala40mm = 40
+        self.Bala50mm = 45
+
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.ancho, self.altura))
 
     def disparar(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tiempo, screen, color, tipo_bala):
         bala = Bala(pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tipo_bala  )
-        bala.verificacion(tiempo, screen, color)
-        return bala
+        if tipo_bala == 1:
+            bala.verificacion(tiempo, screen, color)
+            self.cantBala50mm -= 1
+            print(self.cantBala50mm)
+            return bala
+        elif tipo_bala == 2:
+            bala.verificacion(tiempo, screen, color)
+            self.cantBala40mm -= 1
+            print(self.cantBala40mm)
+            return bala
+        elif tipo_bala == 3:
+            bala.verificacion(tiempo, screen, color)
+            self.cantBala35mm -= 1
+            return bala
 
-    def verificar_impacto1(self, bala):
-        # Verificar si la bala ha impactado en el rectángulo del tanque
-        for punto in Bala.trayectoria:
-            x, y = punto
-            if (self.x <= x <= (self.x + self.ancho)) and (self.y <= y <= (self.y + self.altura)):
-                return True
-        return False
+        
