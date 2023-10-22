@@ -5,13 +5,13 @@ from Terreno import Terreno
 from Canon import Canon
 
 pygame.init()
+pygame.display.set_caption("Proyecto Tanques")
 pygame.display.set_icon(imagenes.IMG_Explosion) 
 
 fuente = pygame.font.Font(None, 36)
 size = (datos.PANT_ANCHO, datos.PANT_ALTO)
 screen = pygame.display.set_mode(size)
 reset = 0
-hola = 1
 
 def draw_text(text, font, x, y, color):
     textobj = font.render(text, 1, color)
@@ -108,8 +108,6 @@ def juego(reset):
         posX_Tanque2 = random.randint(0, 550)
         indice2 = (1199 - posX_Tanque2)
         posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
-
-
 
     tank1 = Pantalla.pantalla.tank1
     tank2 = Pantalla.pantalla.tank2
@@ -247,10 +245,21 @@ def juego(reset):
         tanque1.dibujar(screen)
         tanque2.dibujar(screen)
 
-        if tanque1.vida <= 0 or tanque2.vida <= 0:
+        if tanque1.vida <= 0:
+            screen.fill(datos.WHITE)
+            texto_ganador = fuente.render(f"Ganador: Jugador 2", True, datos.BLACK)
+            screen.blit(texto_ganador, (datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
+            pygame.display.flip()
+            pygame.time.delay(3000)
             sys.exit()
 
-        
+        if tanque2.vida <= 0:
+            screen.fill(datos.WHITE)
+            texto_ganador = fuente.render(f"Ganador: Jugador 1", True, datos.BLACK)
+            screen.blit(texto_ganador, (datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
+            pygame.display.flip()
+            pygame.time.delay(3000)
+            sys.exit()
 
         if tecla_espacio_presionada and turno1:
             if bala_tanque1 is None:
