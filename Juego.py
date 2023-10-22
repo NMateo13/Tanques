@@ -4,14 +4,14 @@ from Tanque import Tanque
 from Terreno import Terreno
 from Canon import Canon
 
-
 pygame.init()
-pygame.display.set_caption("Proyecto Tanques")
 pygame.display.set_icon(imagenes.IMG_Explosion) 
-pygame.mixer.music.load('Assets/musica1.mp3')
-volumen = 0
-pygame.mixer.music.set_volume(volumen)
-pygame.mixer.music.play(-1)
+pygame.display.set_caption("PROYECTO TANQUE")
+
+#pygame.mixer.music.load('Assets/musica1.mp3')
+#volumen = 0
+#pygame.mixer.music.set_volume(volumen)
+#pygame.mixer.music.play(-1)
 
 fuente = pygame.font.Font(None, 36)
 size = (datos.PANT_ANCHO, datos.PANT_ALTO)
@@ -95,6 +95,14 @@ def controles():
             if keys[pygame.K_ESCAPE]:
                 menu()
 
+def muestra_ganador(Ganador):
+    screen.fill(datos.WHITE) 
+    texto_ganador = fuente.render(f"Ganador: Jugador {Ganador}", True, datos.BLACK) 
+    screen.blit(texto_ganador, (datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2)) 
+    pygame.display.flip() 
+    pygame.time.delay(3000) 
+    sys.exit() 
+
 def juego(reset):
     terreno = Terreno(datos.PANT_ANCHO, datos.PANT_ALTO)
 
@@ -169,7 +177,6 @@ def juego(reset):
 
     while True:
         Clock.tick(datos.FPS)
-
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -250,37 +257,29 @@ def juego(reset):
         tanque1.dibujar(screen)
         tanque2.dibujar(screen)
 
-        if tanque1.vida <= 0:
-            screen.fill(datos.WHITE)
-            texto_ganador = fuente.render(f"Ganador: Jugador 2", True, datos.BLACK)
-            screen.blit(texto_ganador, (datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
-            pygame.display.flip()
-            pygame.time.delay(3000)
-            sys.exit()
+        if tanque1.vida <= 0: 
+            Ganador = 2
+            muestra_ganador(Ganador)
 
-        if tanque2.vida <= 0:
-            screen.fill(datos.WHITE)
-            texto_ganador = fuente.render(f"Ganador: Jugador 1", True, datos.BLACK)
-            screen.blit(texto_ganador, (datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
-            pygame.display.flip()
-            pygame.time.delay(3000)
-            sys.exit()
+        if tanque2.vida <= 0: 
+            Ganador = 1
+            muestra_ganador(Ganador)
 
         if tecla_espacio_presionada and turno1:
             if bala_tanque1 is None:
                 mostrar_altura1 = True
                 mostrar_altura2 = False
                 altura_maxima = 0
-                if tipo_bala1 == 1 and tanque1.cantBala50mm == 0:
-                    print("no quedan balas bro")
+                if tipo_bala1 == 1 and tanque1.cantBala105mm == 0:
+                    print("No quedan balas")
                     tecla_espacio_presionada = False
                     tiempo_transcurrido = 0
-                elif tipo_bala1 == 2 and tanque1.cantBala40mm == 0:
-                    print("no quedan balas bro")
+                elif tipo_bala1 == 2 and tanque1.cantBala80mm == 0:
+                    print("No quedan balas")
                     tecla_espacio_presionada = False
                     tiempo_transcurrido = 0
-                elif tipo_bala1 == 3 and tanque1.cantBala35mm == 0:
-                    print("no quedan balas bro")
+                elif tipo_bala1 == 3 and tanque1.cantBala60mm == 0:
+                    print("No quedan balas")
                     tecla_espacio_presionada = False
                     tiempo_transcurrido = 0
                 else:
@@ -294,7 +293,7 @@ def juego(reset):
                         
                 if impacto_tanque:
                     if tipo_bala1 == 1:
-                        tanque2.vida -= tanque1.Bala50mm
+                        tanque2.vida -= tanque1.Bala105mm
                         bala_tanque1 = None
                         tecla_espacio_presionada = False
                         turno1 = False
@@ -302,7 +301,7 @@ def juego(reset):
                         tiempo_transcurrido = 0
                     
                     elif tipo_bala1 == 2:
-                        tanque2.vida -= tanque1.Bala40mm
+                        tanque2.vida -= tanque1.Bala80mm
                         bala_tanque1 = None
                         tecla_espacio_presionada = False
                         turno1 = False
@@ -310,7 +309,7 @@ def juego(reset):
                         tiempo_transcurrido = 0
 
                     elif tipo_bala1 == 3:
-                        tanque2.vida -= tanque1.Bala35mm
+                        tanque2.vida -= tanque1.Bala60mm
                         bala_tanque1 = None
                         tecla_espacio_presionada = False
                         turno1 = False
@@ -350,7 +349,6 @@ def juego(reset):
                                 o =puntosExplosionY[j]
                                 terreno.terreno[i] = o
                                 break
-                
 
             tiempo_transcurrido += incremento
 
@@ -359,16 +357,16 @@ def juego(reset):
                 mostrar_altura1 = False
                 mostrar_altura2 = True
                 altura_maxima = 0
-                if tipo_bala2 == 1 and tanque2.cantBala50mm == 0:
-                    print("no quedan balas bro")
+                if tipo_bala2 == 1 and tanque2.cantBala105mm == 0:
+                    print("No quedan balas")
                     tecla_espacio_presionada = False
                     tiempo_transcurrido = 0
-                elif tipo_bala2 == 2 and tanque2.cantBala40mm == 0:
-                    print("no quedan balas bro")
+                elif tipo_bala2 == 2 and tanque2.cantBala80mm == 0:
+                    print("No quedan balas")
                     tecla_espacio_presionada = False
                     tiempo_transcurrido = 0
-                elif tipo_bala2 == 3 and tanque2.cantBala35mm == 0:
-                    print("no quedan balas bro")
+                elif tipo_bala2 == 3 and tanque2.cantBala60mm == 0:
+                    print("No quedan balas")
                     tecla_espacio_presionada = False
                     tiempo_transcurrido = 0
                 else:
@@ -381,7 +379,7 @@ def juego(reset):
                 impacto_borde = bala_tanque2.verificar_impacto_ancho(datos.PANT_ANCHO)
                 if impacto_tanque:
                     if tipo_bala2 == 1:
-                        tanque1.vida -= tanque2.Bala50mm
+                        tanque1.vida -= tanque2.Bala105mm
 
                         bala_tanque2 = None
                         tecla_espacio_presionada = False
@@ -390,7 +388,7 @@ def juego(reset):
                         tiempo_transcurrido = 0
                     
                     elif tipo_bala2 == 2:
-                        tanque1.vida -= tanque2.Bala40mm
+                        tanque1.vida -= tanque2.Bala80mm
                         bala_tanque2 = None
                         tecla_espacio_presionada = False
                         turno2 = False
@@ -398,7 +396,7 @@ def juego(reset):
                         tiempo_transcurrido = 0
 
                     elif tipo_bala2 == 3:
-                        tanque1.vida -= tanque2.Bala35mm
+                        tanque1.vida -= tanque2.Bala60mm
                         bala_tanque2 = None
                         tecla_espacio_presionada = False
                         turno2 = False
@@ -414,25 +412,23 @@ def juego(reset):
                     
             tiempo_transcurrido += incremento
 
-
-
         Pantalla.pantalla.muestra_salud(screen, fuente,tanque1.vida, tanque2.vida)
         Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
         Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])
         
         if tipo_bala1 == 1:
-            datos.cantidad_balas1 = tanque1.cantBala50mm
+            datos.cantidad_balas1 = tanque1.cantBala105mm
         elif tipo_bala1 == 2:
-            datos.cantidad_balas1 = tanque1.cantBala40mm
+            datos.cantidad_balas1 = tanque1.cantBala80mm
         elif tipo_bala1 == 3:
-            datos.cantidad_balas1 = tanque1.cantBala35mm
+            datos.cantidad_balas1 = tanque1.cantBala60mm
         
         if tipo_bala2 == 1:
-            datos.cantidad_balas2 = tanque2.cantBala50mm
+            datos.cantidad_balas2 = tanque2.cantBala105mm
         elif tipo_bala2 == 2:
-            datos.cantidad_balas2 = tanque2.cantBala40mm
+            datos.cantidad_balas2 = tanque2.cantBala80mm
         elif tipo_bala2 == 3:
-            datos.cantidad_balas2 = tanque2.cantBala35mm
+            datos.cantidad_balas2 = tanque2.cantBala60mm
             
         Pantalla.pantalla.muestra_texto(screen, fuente ,turno1,datos.cantidad_balas1,datos.cantidad_balas2)
         Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, posX_Tanque1, posX_Tanque2, posY_Tanque1, posY_Tanque2)
@@ -440,6 +436,7 @@ def juego(reset):
         extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
         extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
         pygame.display.flip()
+
         if reset == 1:
             reset = 0
             bala_tanque1 = None

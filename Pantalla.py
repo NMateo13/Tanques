@@ -47,15 +47,6 @@ class Pantalla:
     elif tank2 == 4:
         imagenes.IMG_Canon4
         
-    J2Y = [390, 390, 300, 210]
-
-    #Posiciones de los tanques 
-
-    posTanque1 = random.randint(0, 3)
-    posTanque2 = random.randint(0, 3)
-  
-    posY_Tanque2 = J2Y[posTanque2]
-
     def __init__(self, ancho, alto):
         
         self.ancho = ancho
