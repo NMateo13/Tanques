@@ -73,20 +73,29 @@ class Pantalla:
                     pygame.draw.rect(screen, pantalla.GREEN, (columnas, filas, 6, 6))
     
     #Funciones para mostrar información en la pantalla
-    def muestra_texto(self, screen, font): 
-        jugador_texto1 = font.render(f"Jugador 1", True, datos.WHITE)
+    def muestra_texto(self, screen, font, turno):
+        jugador_texto1 = font.render("Jugador 1", True, datos.WHITE)
         screen.blit(jugador_texto1, (460, datos.PANT_ALTO - 110))
 
-        jugador_texto2 = font.render(f"Jugador 2", True, datos.WHITE)
+        jugador_texto2 = font.render("Jugador 2", True, datos.WHITE)
         screen.blit(jugador_texto2, (pantalla.ancho - jugador_texto2.get_width() - 460, datos.PANT_ALTO - 110))
 
-        stats = font.render(f"STATS", True, datos.RED)
+        stats = font.render("STATS", True, datos.RED)
         screen.blit(stats, (300, datos.PANT_ALTO - 110))
         screen.blit(stats, (pantalla.ancho - stats.get_width() - 300, datos.PANT_ALTO - 110))
 
-        bala = font.render(f"TIPO DE BALA", True, datos.RED)
+        bala = font.render("TIPO DE BALA", True, datos.RED)
         screen.blit(bala, (25, datos.PANT_ALTO - 110))
         screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, datos.PANT_ALTO - 110))
+
+        #Indica el turno del jugador
+        if turno:
+            turno_texto = font.render("Turno del Jugador 1", True, datos.WHITE)
+        else:
+            turno_texto = font.render("Turno del Jugador 2", True, datos.WHITE)
+        
+        screen.blit(turno_texto, (pantalla.ancho // 2 - turno_texto.get_width() // 2, datos.PANT_ALTO - 160))
+
 
     def muestra_salud(self, screen, font, vida_tanque1, vida_tanque2): #falta agregar las variables de vida de los tanques
         salud_texto1 = font.render(f"Vida: {vida_tanque1}%", True, datos.WHITE)

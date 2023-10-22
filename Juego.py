@@ -6,12 +6,15 @@ from Canon import Canon
 
 pygame.init()
 pygame.display.set_icon(imagenes.IMG_Explosion) 
+pygame.mixer.music.load('Assets/musica1.mp3')
+volumen = 0.1
+pygame.mixer.music.set_volume(volumen)
+pygame.mixer.music.play(-1)
 
 fuente = pygame.font.Font(None, 36)
 size = (datos.PANT_ANCHO, datos.PANT_ALTO)
 screen = pygame.display.set_mode(size)
 reset = 0
-hola = 1
 
 def draw_text(text, font, x, y, color):
     textobj = font.render(text, 1, color)
@@ -156,7 +159,7 @@ def juego(reset):
 
     angulo_jugador2 = 30  # Ángulo inicial
     extremo_canonx_1, extremo_canony_1 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)
-    velocidad_jugador2 = 100  # Velocidad inicial
+    velocidad_jugador2 = 50  # Velocidad inicial
 
     tiempo_transcurrido = 0
     incremento = 0.035
@@ -248,7 +251,7 @@ def juego(reset):
         tanque2.dibujar(screen)
 
         if tanque1.vida <= 0 or tanque2.vida <= 0:
-            sys.exit()
+            menu() 
 
         
 
@@ -406,7 +409,7 @@ def juego(reset):
         Pantalla.pantalla.muestra_salud(screen, fuente,tanque1.vida, tanque2.vida)
         Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
         Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])
-        Pantalla.pantalla.muestra_texto(screen, fuente)
+        Pantalla.pantalla.muestra_texto(screen, fuente ,turno1)
         Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, posX_Tanque1, posX_Tanque2, posY_Tanque1, posY_Tanque2)
         Pantalla.pantalla.muestra_altura(screen, fuente, altura_maxima, mostrar_altura1, mostrar_altura2)
         extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
