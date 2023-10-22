@@ -16,7 +16,7 @@ class Tanque:
         self.cantBala50mm = 2 
         self.Bala35mm = 35
         self.Bala40mm = 40
-        self.Bala50mm = 45
+        self.Bala50mm = 50
 
 
     def dibujar(self, screen):
