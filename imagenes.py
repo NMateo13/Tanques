@@ -18,6 +18,8 @@ IMG_Bala80 = pygame.image.load(os.path.join("Assets", "bala80.png"))
 IMG_Bala105 = pygame.image.load(os.path.join("Assets", "bala105.png"))
 IMG_Exit = pygame.image.load(os.path.join("Assets", "exit.png"))
 IMG_Restart = pygame.image.load(os.path.join("Assets", "reset.png"))
+IMG_FondoMenu = pygame.image.load(os.path.join("Assets", "fondo.png"))
+IMG_fondo_controles = pygame.image.load(os.path.join("Assets", "fondo_controles.png"))
 
 #Reescalado de imagenes
 Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4))

@@ -47,20 +47,13 @@ class Pantalla:
     elif tank2 == 4:
         imagenes.IMG_Canon4
         
-    J1X = [24, 140, 260, 365]
-    J1Y = [250, 210, 270, 370]
-    J2X = [10, 105, 205, 390]
     J2Y = [390, 390, 300, 210]
 
     #Posiciones de los tanques 
 
     posTanque1 = random.randint(0, 3)
     posTanque2 = random.randint(0, 3)
-
-    posX_Tanque1 = J1X[posTanque1]
-    posY_Tanque1 = J1Y[posTanque1]
-
-    posX_Tanque2 = J2X[posTanque2]
+  
     posY_Tanque2 = J2Y[posTanque2]
 
     def __init__(self, ancho, alto):
@@ -95,11 +88,11 @@ class Pantalla:
         screen.blit(bala, (25, datos.PANT_ALTO - 110))
         screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, datos.PANT_ALTO - 110))
 
-    def muestra_salud(self, screen, font): #falta agregar las variables de vida de los tanques
-        salud_texto1 = font.render(f"Vida: 100%", True, datos.WHITE)
+    def muestra_salud(self, screen, font, vida_tanque1, vida_tanque2): #falta agregar las variables de vida de los tanques
+        salud_texto1 = font.render(f"Vida: {vida_tanque1}%", True, datos.WHITE)
         screen.blit(salud_texto1, (250, datos.PANT_ALTO - 85))
 
-        salud_texto2 = font.render(f"Vida: 100%", True, datos.WHITE) 
+        salud_texto2 = font.render(f"Vida: {vida_tanque2}%", True, datos.WHITE) 
         screen.blit(salud_texto2, (pantalla.ancho - salud_texto2.get_width() - 300, datos.PANT_ALTO - 85))
 
     def muestra_potencia(self, screen, font,velocidad_jugador1, velocidad_jugador2): 
@@ -116,9 +109,9 @@ class Pantalla:
         angulo_texto2 = font.render(f"Ángulo: {angulo_jugador2}°", True, datos.WHITE)
         screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, datos.PANT_ALTO - 30))
 
-    def muestra_imagen(self, screen, tipo1, tipo2):
-        screen.blit(imagenes.Tanque1, (self.posX_Tanque1, self.posY_Tanque1)) 
-        screen.blit(imagenes.Tanque2, (pantalla.ancho - imagenes.Tanque2.get_width() - self.posX_Tanque2, self.posY_Tanque2)) 
+    def muestra_imagen(self, screen, tipo1, tipo2, posX1, posX2, posY1, posY2):
+        screen.blit(imagenes.Tanque1, (posX1 - 10, posY1)) 
+        screen.blit(imagenes.Tanque2, (pantalla.ancho - imagenes.Tanque2.get_width() - posX2+20, posY2)) 
         screen.blit(imagenes.Exit, (pantalla.ancho - imagenes.Exit.get_width() - 650, 10))
         screen.blit(imagenes.Restart, (pantalla.ancho - imagenes.Restart.get_width() - 550, 10))
 
