@@ -73,7 +73,10 @@ class Pantalla:
                     pygame.draw.rect(screen, pantalla.GREEN, (columnas, filas, 6, 6))
     
     #Funciones para mostrar información en la pantalla
-    def muestra_texto(self, screen, font, turno):
+    def muestra_texto(self, screen, font, turno,balas1, balas2):
+        balas1_texo = str(balas1)
+        balas2_texo = str(balas2)
+
         jugador_texto1 = font.render("Jugador 1", True, datos.WHITE)
         screen.blit(jugador_texto1, (460, datos.PANT_ALTO - 110))
 
@@ -87,7 +90,14 @@ class Pantalla:
         bala = font.render("TIPO DE BALA", True, datos.RED)
         screen.blit(bala, (25, datos.PANT_ALTO - 110))
         screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, datos.PANT_ALTO - 110))
+        #tanque 1
+        cant_balas = font.render(balas1_texo, True, datos.WHITE)
+        screen.blit(cant_balas, (pantalla.ancho - cant_balas.get_width() - 1080, datos.PANT_ALTO - 30))
 
+        #tanque 2
+        cant_balas = font.render(balas2_texo, True, datos.WHITE)
+        screen.blit(cant_balas, (pantalla.ancho - cant_balas.get_width() - 110 , datos.PANT_ALTO - 30))
+        
         #Indica el turno del jugador
         if turno:
             turno_texto = font.render("Turno del Jugador 1", True, datos.WHITE)
