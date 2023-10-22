@@ -95,7 +95,7 @@ def controles():
             if keys[pygame.K_ESCAPE]:
                 menu()
 
-def muestra_ganador(Ganador):
+def muestra_ganador(Ganador): #Función para mostrar el ganador del juego
     screen.fill(datos.WHITE) 
     texto_ganador = fuente.render(f"Ganador: Jugador {Ganador}", True, datos.BLACK) 
     screen.blit(texto_ganador, (datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2)) 
@@ -153,7 +153,6 @@ def juego(reset):
 
     mostrar_altura1 = False
     mostrar_altura2 = False
-    altura_maxima = 0
 
     Clock = pygame.time.Clock()
     tecla_espacio_presionada = False
@@ -257,11 +256,11 @@ def juego(reset):
         tanque1.dibujar(screen)
         tanque2.dibujar(screen)
 
-        if tanque1.vida <= 0: 
+        if tanque1.vida <= 0: # Si la vida del tanque 1 es menor o igual a 0, el ganador es el tanque 2
             Ganador = 2
             muestra_ganador(Ganador)
 
-        if tanque2.vida <= 0: 
+        if tanque2.vida <= 0: # Si la vida del tanque 2 es menor o igual a 0, el ganador es el tanque 1
             Ganador = 1
             muestra_ganador(Ganador)
 
@@ -269,7 +268,6 @@ def juego(reset):
             if bala_tanque1 is None:
                 mostrar_altura1 = True
                 mostrar_altura2 = False
-                altura_maxima = 0
                 if tipo_bala1 == 1 and tanque1.cantBala105mm == 0:
                     print("No quedan balas")
                     tecla_espacio_presionada = False
@@ -285,7 +283,7 @@ def juego(reset):
                 else:
                     bala_tanque1 = tanque1.disparar(extremo_canonx_1, extremo_canony_1, datos.ang_tank[angulo_jugador1], velocidad_jugador1, tiempo_transcurrido, screen, datos.BLACK, tipo_bala1)
             else:
-                altura_maxima = bala_tanque1.punto_maximo(altura_maxima)
+                datos.altura_maxima = bala_tanque1.punto_maximo(datos.altura_maxima)
                 bala_tanque1.verificacion(tiempo_transcurrido, screen, datos.BLACK)
                 impacto_tanque = bala_tanque1.verificar_impacto_tanque(tanque2)
                 impacto_terreno = terreno.verificar_colision(bala_tanque1)
@@ -332,7 +330,7 @@ def juego(reset):
                     turno1 = False
                     turno2 = True
                     tiempo_transcurrido = 0
-                    #calculamos los puntos de la circunferencia de la explosion
+                    # Calculamos los puntos de la circunferencia de la explosion
                     puntosExplosionX = []
                     puntosExplosionY = []
                     for i in range(num_puntosExplosion):
@@ -342,7 +340,7 @@ def juego(reset):
                         puntosExplosionX.append(x)
                         puntosExplosionY.append(y)
                     
-                    #verificamos los puntos (x,y) de la explosion con los puntos (terreno.terreno[x+1],terreno.terreno[x]) del terreno
+                    # verificamos los puntos (x,y) de la explosion con los puntos (terreno.terreno[x+1],terreno.terreno[x]) del terreno
                     for i in range(len(terreno.terreno)):
                         for j in range(len(puntosExplosionX)):
                             if i == puntosExplosionX[j] and terreno.terreno[i]>puntosExplosionY[j]:
@@ -356,7 +354,6 @@ def juego(reset):
             if bala_tanque2 is None:
                 mostrar_altura1 = False
                 mostrar_altura2 = True
-                altura_maxima = 0
                 if tipo_bala2 == 1 and tanque2.cantBala105mm == 0:
                     print("No quedan balas")
                     tecla_espacio_presionada = False
@@ -372,7 +369,7 @@ def juego(reset):
                 else:
                     bala_tanque2 = tanque2.disparar(extremo_canonx_2, extremo_canony_2, datos.ang_tank[angulo_jugador2], velocidad_jugador2, tiempo_transcurrido, screen, datos.BLACK, tipo_bala2)
             else:
-                altura_maxima = bala_tanque2.punto_maximo(altura_maxima)
+                datos.altura_maxima = bala_tanque2.punto_maximo(datos.altura_maxima)
                 bala_tanque2.verificacion(tiempo_transcurrido, screen, datos.BLACK)
                 impacto_tanque = bala_tanque2.verificar_impacto_tanque(tanque1)
                 impacto_terreno = terreno.verificar_colision(bala_tanque2)
@@ -412,27 +409,29 @@ def juego(reset):
                     
             tiempo_transcurrido += incremento
 
-        Pantalla.pantalla.muestra_salud(screen, fuente,tanque1.vida, tanque2.vida)
-        Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
-        Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])
-        
+        # Descuento de balas        
         if tipo_bala1 == 1:
             datos.cantidad_balas1 = tanque1.cantBala105mm
         elif tipo_bala1 == 2:
             datos.cantidad_balas1 = tanque1.cantBala80mm
         elif tipo_bala1 == 3:
             datos.cantidad_balas1 = tanque1.cantBala60mm
-        
+                    
         if tipo_bala2 == 1:
             datos.cantidad_balas2 = tanque2.cantBala105mm
         elif tipo_bala2 == 2:
             datos.cantidad_balas2 = tanque2.cantBala80mm
         elif tipo_bala2 == 3:
             datos.cantidad_balas2 = tanque2.cantBala60mm
-            
+
+        # Representacion gráfica de los datos
+        Pantalla.pantalla.muestra_salud(screen, fuente,tanque1.vida, tanque2.vida)
+        Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
+        Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])    
         Pantalla.pantalla.muestra_texto(screen, fuente ,turno1,datos.cantidad_balas1,datos.cantidad_balas2)
         Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, posX_Tanque1, posX_Tanque2, posY_Tanque1, posY_Tanque2)
-        Pantalla.pantalla.muestra_altura(screen, fuente, altura_maxima, mostrar_altura1, mostrar_altura2)
+        Pantalla.pantalla.muestra_altura(screen, fuente, datos.altura_maxima, mostrar_altura1, mostrar_altura2)
+
         extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
         extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
         pygame.display.flip()
