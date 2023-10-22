@@ -47,15 +47,6 @@ class Pantalla:
     elif tank2 == 4:
         imagenes.IMG_Canon4
         
-    J2Y = [390, 390, 300, 210]
-
-    #Posiciones de los tanques 
-
-    posTanque1 = random.randint(0, 3)
-    posTanque2 = random.randint(0, 3)
-  
-    posY_Tanque2 = J2Y[posTanque2]
-
     def __init__(self, ancho, alto):
         
         self.ancho = ancho
@@ -73,26 +64,45 @@ class Pantalla:
                     pygame.draw.rect(screen, pantalla.GREEN, (columnas, filas, 6, 6))
     
     #Funciones para mostrar información en la pantalla
-    def muestra_texto(self, screen, font): 
-        jugador_texto1 = font.render(f"Jugador 1", True, datos.WHITE)
+    def muestra_texto(self, screen, font, turno,balas1, balas2):
+        balas1_texo = str(balas1)
+        balas2_texo = str(balas2)
+
+        jugador_texto1 = font.render("Jugador 1", True, datos.WHITE)
         screen.blit(jugador_texto1, (460, datos.PANT_ALTO - 110))
 
-        jugador_texto2 = font.render(f"Jugador 2", True, datos.WHITE)
+        jugador_texto2 = font.render("Jugador 2", True, datos.WHITE)
         screen.blit(jugador_texto2, (pantalla.ancho - jugador_texto2.get_width() - 460, datos.PANT_ALTO - 110))
 
-        stats = font.render(f"STATS", True, datos.RED)
+        stats = font.render("STATS", True, datos.RED)
         screen.blit(stats, (300, datos.PANT_ALTO - 110))
         screen.blit(stats, (pantalla.ancho - stats.get_width() - 300, datos.PANT_ALTO - 110))
 
-        bala = font.render(f"TIPO DE BALA", True, datos.RED)
+        bala = font.render("TIPO DE BALA", True, datos.RED)
         screen.blit(bala, (25, datos.PANT_ALTO - 110))
         screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, datos.PANT_ALTO - 110))
+        #tanque 1
+        cant_balas = font.render(balas1_texo, True, datos.WHITE)
+        screen.blit(cant_balas, (pantalla.ancho - cant_balas.get_width() - 1080, datos.PANT_ALTO - 30))
 
-    def muestra_salud(self, screen, font): #falta agregar las variables de vida de los tanques
-        salud_texto1 = font.render(f"Vida: 100%", True, datos.WHITE)
+        #tanque 2
+        cant_balas = font.render(balas2_texo, True, datos.WHITE)
+        screen.blit(cant_balas, (pantalla.ancho - cant_balas.get_width() - 110 , datos.PANT_ALTO - 30))
+        
+        #Indica el turno del jugador
+        if turno:
+            turno_texto = font.render("Turno del Jugador 1", True, datos.WHITE)
+        else:
+            turno_texto = font.render("Turno del Jugador 2", True, datos.WHITE)
+        
+        screen.blit(turno_texto, (pantalla.ancho // 2 - turno_texto.get_width() // 2, datos.PANT_ALTO - 160))
+
+
+    def muestra_salud(self, screen, font, vida_tanque1, vida_tanque2): #falta agregar las variables de vida de los tanques
+        salud_texto1 = font.render(f"Vida: {vida_tanque1}%", True, datos.WHITE)
         screen.blit(salud_texto1, (250, datos.PANT_ALTO - 85))
 
-        salud_texto2 = font.render(f"Vida: 100%", True, datos.WHITE) 
+        salud_texto2 = font.render(f"Vida: {vida_tanque2}%", True, datos.WHITE) 
         screen.blit(salud_texto2, (pantalla.ancho - salud_texto2.get_width() - 300, datos.PANT_ALTO - 85))
 
     def muestra_potencia(self, screen, font,velocidad_jugador1, velocidad_jugador2): 
