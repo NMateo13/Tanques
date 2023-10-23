@@ -356,9 +356,9 @@ def juego(reset):
                         puntosExplosionX.append(x)
                         puntosExplosionY.append(y)
                     #verificamos cada punto x de la circunferencia y verificamos el punto y mas bajo de la circunferencia
-                    for i in range(len(puntosExplosionX)):
+                    '''for i in range(len(puntosExplosionX)):
                         pygame.draw.circle(screen, datos.BLACK, (puntosExplosionX[i], puntosExplosionY[i]), 1)
-                    pygame.display.flip()
+                    pygame.display.flip()'''
                     conjuntoPuntos = set(puntosExplosionX)
                     arrayaux = list(conjuntoPuntos)
                     arrayaux.sort()
@@ -384,7 +384,7 @@ def juego(reset):
                     arrayaux.clear()
                     conjuntoPuntos.clear()
 
-            tiempo_transcurrido += incremento
+            tiempo_transcurrido += incremento 
 
         if tecla_espacio_presionada and turno2:
             if bala_tanque2 is None:
@@ -495,6 +495,21 @@ def juego(reset):
 
                     
             tiempo_transcurrido += incremento
+
+        if posY_Tanque1 != (terreno.alto - terreno.terreno[indice] - 26) or posY_Tanque2 != (600 -  terreno.terreno[indice2] - 24):
+            
+            posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
+            posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24
+
+            tanque1 = Tanque(posX_Tanque1 - 10, posY_Tanque1 + 10, datos.RED, tank1)
+            tanque2 = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque2 + 20, posY_Tanque2 + 10, datos.RED, tank2)
+
+            pivote1 = [posX_Tanque1 + 10, posY_Tanque1]
+            pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - posX_Tanque2 + 5, posY_Tanque2+5]
+
+            extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
+            extremo_canonx_1, extremo_canony_1 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)
+
 
         # Descuento de balas        
         if tipo_bala1 == 1:
