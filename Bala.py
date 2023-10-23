@@ -45,9 +45,6 @@ class Bala:
             self.trayectoria.pop(0)
         for point in self.trayectoria:
             x2, y2 = point
-            ##rotacion = math.degrees(math.atan2(y2,x2))
-            ##self.imagen = pygame.transform.rotate(self.imagen, rotacion)
-            ##self.rect = self.imagen.get_rect()
             screen.blit(self.imagen, (x2, y2))
 
     def verificar_impacto_ancho(self, ancho_pantalla):
@@ -101,7 +98,12 @@ class Bala:
         for punto in self.trayectoria:
             x, _ = punto
             return x
-    
+        
+    def verificar_impacto_tanque_explosion(self, tanque, puntosx, puntosy):
+        for i in range(len(puntosx)):
+            if (tanque.x <= puntosx[i] <= (tanque.x + tanque.ancho)) and (tanque.y <= puntosy[i] <= (tanque.y + tanque.altura)):
+                return True
+        return False
     
     
 
