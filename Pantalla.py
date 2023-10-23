@@ -155,10 +155,10 @@ class Pantalla:
     def muestra_altura(self, screen, font, altura_maxima, mostrar1, mostrar2):
         if mostrar1:
             altura_texto1 = font.render(f"Altura máxima J1: {altura_maxima}", True, datos.WHITE)
-            screen.blit(altura_texto1, (10, datos.PANT_ALTO - 150))
+            screen.blit(altura_texto1, (10, datos.PANT_ALTO - 180))
         elif mostrar2:
             altura_texto2 = font.render(f"Altura máxima J2: {altura_maxima}", True, datos.WHITE)
-            screen.blit(altura_texto2, (10, datos.PANT_ALTO - 150))
+            screen.blit(altura_texto2, (10, datos.PANT_ALTO - 180))
 
     def prerotate(self, screen, num, angle, pivote):
         if num==1:
@@ -182,5 +182,12 @@ class Pantalla:
     def prueba(self, surface, x, y):
         pygame.draw.circle(surface, datos.BLACK, (x, y), 2)
 
+    def muestra_distancia(self, screen, font, distancia_maxima, mostrar1, mostrar2):
+        if mostrar1:
+            distancia_texto1 = font.render(f"Distancia máxima J1: {distancia_maxima}", True, datos.WHITE)
+            screen.blit(distancia_texto1, (10, datos.PANT_ALTO - 150))
+        elif mostrar2:
+            distancia_texto2 = font.render(f"Distancia máxima J2: {distancia_maxima}", True, datos.WHITE)
+            screen.blit(distancia_texto2, (10, datos.PANT_ALTO - 150))
 pantalla = Pantalla(datos.PANT_ANCHO, datos.PANT_ALTO)
 matriz = []
