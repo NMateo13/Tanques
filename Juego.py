@@ -132,7 +132,9 @@ def juego(reset):
 
     centroExplosion = []
     radioExplosion = 75
-    
+    arrayaux = []
+    arrayaux2 = []
+
     aux_x=0
     aux_y=0
 
@@ -353,7 +355,31 @@ def juego(reset):
                         puntosExplosionX.append(x)
                         puntosExplosionY.append(y)
                     #verificamos cada punto x de la circunferencia y verificamos el punto y mas bajo de la circunferencia
-                    alto = []
+                    for i in range(len(puntosExplosionX)):
+                        pygame.draw.circle(screen, datos.BLACK, (puntosExplosionX[i], puntosExplosionY[i]), 1)
+                    pygame.display.flip()
+                    conjuntoPuntos = set(puntosExplosionX)
+                    arrayaux = list(conjuntoPuntos)
+                    arrayaux.sort()
+                    bandera = 0
+                    valory = 0
+                    for i in range(len(arrayaux)):
+                        valory = 0
+                        for j in range(len(puntosExplosionX)):
+                            if arrayaux[i] == puntosExplosionX[j]:
+                                if bandera == 0:
+                                    valory = puntosExplosionY[j]
+                                    bandera+=1
+                                else:
+                                    if puntosExplosionY[j] > valory:
+                                        valory = puntosExplosionY[j]
+                        valory = 600 - valory
+                        if terreno.terreno[arrayaux[i]] > valory:
+                            terreno.terreno[arrayaux[i]] = valory
+
+                        
+                    
+                    """alto = []
                     for i in range(len(puntosExplosionX)):
                         alto.append(0)
                     for i in range(len(ancho)):
@@ -362,9 +388,10 @@ def juego(reset):
                                 if puntosExplosionY[j] > alto[i]:
                                     alto[i] = puntosExplosionY[j]
                         #verificamos si el punto y mas bajo de la circunferencia es mayor a la altura del terreno
-                        if alto[i] > terreno.terreno[ancho[i]]:
+                    for i in range(len(alto)):    
+                        if alto[i] < terreno.terreno[ancho[i]]:
                             #si es mayor, entonces se reemplaza la altura del terreno por el punto y mas bajo de la circunferencia
-                            terreno.terreno[ancho[i]] = alto[i]
+                            terreno.terreno[ancho[i]] = alto[i]"""
 
                     #i = x del terreno
                     #t
@@ -454,6 +481,10 @@ def juego(reset):
         Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, posX_Tanque1, posX_Tanque2, posY_Tanque1, posY_Tanque2)
         Pantalla.pantalla.muestra_altura(screen, fuente, datos.altura_maxima, mostrar_altura1, mostrar_altura2)
         Pantalla.pantalla.muestra_distancia(screen, fuente, datos.distancia_maxima, mostrar_altura1, mostrar_altura2)
+        if bala_tanque1 is not None and bala_tanque1.visualizar():
+            Pantalla.pantalla.muestra_bala(screen, tipo_bala1, bala_tanque1.xactual())
+        elif bala_tanque2 is not None and bala_tanque2.visualizar():
+            Pantalla.pantalla.muestra_bala(screen, tipo_bala2, bala_tanque2.xactual())
 
         extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
         extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)

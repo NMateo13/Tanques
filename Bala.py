@@ -90,6 +90,18 @@ class Bala:
         valor = int(valor)
         return valor
     
+    def visualizar(self):
+        for punto in self.trayectoria:
+            _, y = punto
+            if y < 0:
+                return True
+        return False
+    
+    def xactual(self):
+        for punto in self.trayectoria:
+            x, _ = punto
+            return x
+    
     
     
 

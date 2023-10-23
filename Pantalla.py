@@ -189,5 +189,14 @@ class Pantalla:
         elif mostrar2:
             distancia_texto2 = font.render(f"Distancia máxima J2: {distancia_maxima}", True, datos.WHITE)
             screen.blit(distancia_texto2, (10, datos.PANT_ALTO - 150))
+
+    def muestra_bala(self, screen, tipo_bala, pos_x):
+        if tipo_bala == 1:
+            screen.blit(imagenes.Prebala105, (pos_x, 0))
+        elif tipo_bala == 2:
+            screen.blit(imagenes.Prebala80, (pos_x, 0))
+        elif tipo_bala == 3:
+            screen.blit(imagenes.Prebala60, (pos_x, 0))
+
 pantalla = Pantalla(datos.PANT_ANCHO, datos.PANT_ALTO)
 matriz = []
