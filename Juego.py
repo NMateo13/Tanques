@@ -276,6 +276,7 @@ def juego(reset):
             if bala_tanque1 is None:
                 mostrar_altura1 = True
                 mostrar_altura2 = False
+                datos.altura_maxima = 0
                 if tipo_bala1 == 1 and tanque1.cantBala105mm == 0:
                     print("No quedan balas")
                     tecla_espacio_presionada = False
@@ -389,6 +390,7 @@ def juego(reset):
             if bala_tanque2 is None:
                 mostrar_altura1 = False
                 mostrar_altura2 = True
+                datos.altura_maxima = 0
                 if tipo_bala2 == 1 and tanque2.cantBala105mm == 0:
                     print("No quedan balas")
                     tecla_espacio_presionada = False
