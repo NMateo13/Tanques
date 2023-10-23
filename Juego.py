@@ -373,28 +373,15 @@ def juego(reset):
                                 else:
                                     if puntosExplosionY[j] > valory:
                                         valory = puntosExplosionY[j]
-                        valory = 600 - valory
-                        if terreno.terreno[arrayaux[i]] > valory:
-                            terreno.terreno[arrayaux[i]] = valory
-
-                        
-                    
-                    """alto = []
-                    for i in range(len(puntosExplosionX)):
-                        alto.append(0)
-                    for i in range(len(ancho)):
-                        for j in range(len(puntosExplosionY)):
-                            if ancho[i] == puntosExplosionX[j]:
-                                if puntosExplosionY[j] > alto[i]:
-                                    alto[i] = puntosExplosionY[j]
-                        #verificamos si el punto y mas bajo de la circunferencia es mayor a la altura del terreno
-                    for i in range(len(alto)):    
-                        if alto[i] < terreno.terreno[ancho[i]]:
-                            #si es mayor, entonces se reemplaza la altura del terreno por el punto y mas bajo de la circunferencia
-                            terreno.terreno[ancho[i]] = alto[i]"""
-
-                    #i = x del terreno
-                    #t
+                        valory = datos.PANT_ALTO - valory
+                        if arrayaux[i] < 1200 and arrayaux[i] > 0:
+                            if terreno.terreno[arrayaux[i]] > valory:
+                                terreno.terreno[arrayaux[i]] = valory
+                    centroExplosion.clear()
+                    puntosExplosionX.clear()
+                    puntosExplosionY.clear()
+                    arrayaux.clear()
+                    conjuntoPuntos.clear()
 
             tiempo_transcurrido += incremento
 
@@ -449,12 +436,61 @@ def juego(reset):
                         turno1 = True
                         tiempo_transcurrido = 0
 
-                elif impacto_borde or impacto_terreno:
+                elif impacto_borde:
                     bala_tanque2 = None
                     tecla_espacio_presionada = False
                     turno2 = False
                     turno1 = True
                     tiempo_transcurrido = 0
+
+                elif impacto_terreno:
+                    for x, y in bala_tanque2.trayectoria:
+                        centroExplosion.append(int(x))
+                        centroExplosion.append(int(y))
+                    bala_tanque2 = None
+                    tecla_espacio_presionada = False
+                    turno2 = False
+                    turno1 = True
+                    tiempo_transcurrido = 0
+                    #calculamos los puntos de la circunferencia de la explosion
+                    num_puntosExplosion = int(2 * math.pi * radioExplosion)
+                    puntosExplosionX = []
+                    puntosExplosionY = []
+                    for i in range(num_puntosExplosion):
+                        angle = (2 * math.pi / num_puntosExplosion) * i
+                        x = int(centroExplosion[0] + radioExplosion * math.cos(angle))
+                        y = int(centroExplosion[1] + radioExplosion * math.sin(angle))
+                        puntosExplosionX.append(x)
+                        puntosExplosionY.append(y)
+                    #verificamos cada punto x de la circunferencia y verificamos el punto y mas bajo de la circunferencia
+                    for i in range(len(puntosExplosionX)):
+                        pygame.draw.circle(screen, datos.BLACK, (puntosExplosionX[i], puntosExplosionY[i]), 1)
+                    pygame.display.flip()
+                    conjuntoPuntos = set(puntosExplosionX)
+                    arrayaux = list(conjuntoPuntos)
+                    arrayaux.sort()
+                    bandera = 0
+                    valory = 0
+                    for i in range(len(arrayaux)):
+                        valory = 0
+                        for j in range(len(puntosExplosionX)):
+                            if arrayaux[i] == puntosExplosionX[j]:
+                                if bandera == 0:
+                                    valory = puntosExplosionY[j]
+                                    bandera+=1
+                                else:
+                                    if puntosExplosionY[j] > valory:
+                                        valory = puntosExplosionY[j]
+                        valory = datos.PANT_ALTO - valory
+                        if arrayaux[i] < 1200 and arrayaux[i] > 0:
+                            if terreno.terreno[arrayaux[i]] > valory:
+                                terreno.terreno[arrayaux[i]] = valory
+                    centroExplosion.clear()
+                    puntosExplosionX.clear()
+                    puntosExplosionY.clear()
+                    arrayaux.clear()
+                    conjuntoPuntos.clear()
+
                     
             tiempo_transcurrido += incremento
 
