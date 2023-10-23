@@ -20,6 +20,9 @@ IMG_Exit = pygame.image.load(os.path.join("Assets", "exit.png"))
 IMG_Restart = pygame.image.load(os.path.join("Assets", "reset.png"))
 IMG_FondoMenu = pygame.image.load(os.path.join("Assets", "fondo.png"))
 IMG_fondo_controles = pygame.image.load(os.path.join("Assets", "fondo_controles.png"))
+IMG_Prebala_105 = pygame.image.load(os.path.join("Assets", "prebala105.png"))
+IMG_Prebala_80 = pygame.image.load(os.path.join("Assets", "prebala80.png"))
+IMG_Prebala_60 = pygame.image.load(os.path.join("Assets", "prebala60.png"))
 
 #Reescalado de imagenes
 Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4))
@@ -36,3 +39,6 @@ Bala60 = pygame.transform.scale(IMG_Bala60, (IMG_Bala60.get_width() // 2, IMG_Ba
 Explosion = pygame.transform.scale(IMG_Explosion, (IMG_Explosion.get_width() // 4, IMG_Explosion.get_height() // 4))
 Exit = pygame.transform.scale(IMG_Exit, (IMG_Exit.get_width() // 1.5, IMG_Exit.get_height() // 1.5))
 Restart = pygame.transform.scale(IMG_Restart, (IMG_Restart.get_width() // 1.5, IMG_Restart.get_height() // 1.5))
+Prebala105 = pygame.transform.scale(IMG_Prebala_105, (IMG_Prebala_105.get_width() // 6, IMG_Prebala_105.get_height() // 6))
+Prebala80 = pygame.transform.scale(IMG_Prebala_80, (IMG_Prebala_80.get_width() // 6, IMG_Prebala_80.get_height() // 6))
+Prebala60 = pygame.transform.scale(IMG_Prebala_60, (IMG_Prebala_60.get_width() // 6, IMG_Prebala_60.get_height() // 6))

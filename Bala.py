@@ -80,6 +80,28 @@ class Bala:
         valor = int(valor)
         return valor
     
+    def distancia_maxima(self, xt, valor=0):
+        for punto in self.trayectoria:
+            x, _ = punto
+            valor = x - xt
+            #si el valor de x es negativo, se convierte en positivo
+            if valor < 0:
+                valor = valor * -1
+        valor = int(valor)
+        return valor
+    
+    def visualizar(self):
+        for punto in self.trayectoria:
+            _, y = punto
+            if y < 0:
+                return True
+        return False
+    
+    def xactual(self):
+        for punto in self.trayectoria:
+            x, _ = punto
+            return x
+    
     
     
 
