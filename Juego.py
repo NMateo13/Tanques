@@ -131,8 +131,10 @@ def juego(reset):
     bala_tanque2 = None
 
     centroExplosion = []
-    radioExplosion = 100
-    num_puntosExplosion = int(2 * math.pi * radioExplosion)
+    radioExplosion = 75
+    arrayaux = []
+    arrayaux2 = []
+
     aux_x=0
     aux_y=0
 
@@ -218,10 +220,13 @@ def juego(reset):
             # Cambio de bala J1
             elif keys[pygame.K_1]:
                 tipo_bala1 = 1
+                radioExplosion = 75
             elif keys[pygame.K_2]:
                 tipo_bala1 = 2
+                radioExplosion = 50
             elif keys[pygame.K_3]:
                 tipo_bala1 = 3
+                radioExplosion = 25
 
         # Controles del jugador 2
         if turno2:
@@ -245,10 +250,13 @@ def juego(reset):
             # Cambio de bala J2
             elif keys[pygame.K_1]:
                 tipo_bala2 = 1
+                radioExplosion = 75
             elif keys[pygame.K_2]:
                 tipo_bala2 = 2
+                radioExplosion = 50
             elif keys[pygame.K_3]:
                 tipo_bala2 = 3
+                radioExplosion = 25
 
         screen.blit(imagenes.Background, (0, 0))
         terreno.dibujar(screen)
@@ -268,6 +276,7 @@ def juego(reset):
             if bala_tanque1 is None:
                 mostrar_altura1 = True
                 mostrar_altura2 = False
+                datos.altura_maxima = 0
                 if tipo_bala1 == 1 and tanque1.cantBala105mm == 0:
                     print("No quedan balas")
                     tecla_espacio_presionada = False
@@ -284,6 +293,7 @@ def juego(reset):
                     bala_tanque1 = tanque1.disparar(extremo_canonx_1, extremo_canony_1, datos.ang_tank[angulo_jugador1], velocidad_jugador1, tiempo_transcurrido, screen, datos.BLACK, tipo_bala1)
             else:
                 datos.altura_maxima = bala_tanque1.punto_maximo(datos.altura_maxima)
+                datos.distancia_maxima = bala_tanque1.distancia_maxima(tanque1.x, datos.distancia_maxima)
                 bala_tanque1.verificacion(tiempo_transcurrido, screen, datos.BLACK)
                 impacto_tanque = bala_tanque1.verificar_impacto_tanque(tanque2)
                 impacto_terreno = terreno.verificar_colision(bala_tanque1)
@@ -323,14 +333,20 @@ def juego(reset):
 
                 elif impacto_terreno:
                     for x, y in bala_tanque1.trayectoria:
-                        centroExplosion.append(x)
-                        centroExplosion.append(y)
+                        centroExplosion.append(int(x))
+                        centroExplosion.append(int(y))
+                        for i in range(radioExplosion):
+                            ancho= []
+                            ancho.append(int(x)-radioExplosion+i)
+                    Pantalla.pantalla.prueba(screen, centroExplosion[0], centroExplosion[1])
+                    pygame.display.flip()
                     bala_tanque1 = None
                     tecla_espacio_presionada = False
                     turno1 = False
                     turno2 = True
                     tiempo_transcurrido = 0
-                    # Calculamos los puntos de la circunferencia de la explosion
+                    #calculamos los puntos de la circunferencia de la explosion
+                    num_puntosExplosion = int(2 * math.pi * radioExplosion)
                     puntosExplosionX = []
                     puntosExplosionY = []
                     for i in range(num_puntosExplosion):
@@ -339,14 +355,34 @@ def juego(reset):
                         y = int(centroExplosion[1] + radioExplosion * math.sin(angle))
                         puntosExplosionX.append(x)
                         puntosExplosionY.append(y)
-                    
-                    # verificamos los puntos (x,y) de la explosion con los puntos (terreno.terreno[x+1],terreno.terreno[x]) del terreno
-                    for i in range(len(terreno.terreno)):
+                    #verificamos cada punto x de la circunferencia y verificamos el punto y mas bajo de la circunferencia
+                    for i in range(len(puntosExplosionX)):
+                        pygame.draw.circle(screen, datos.BLACK, (puntosExplosionX[i], puntosExplosionY[i]), 1)
+                    pygame.display.flip()
+                    conjuntoPuntos = set(puntosExplosionX)
+                    arrayaux = list(conjuntoPuntos)
+                    arrayaux.sort()
+                    bandera = 0
+                    valory = 0
+                    for i in range(len(arrayaux)):
+                        valory = 0
                         for j in range(len(puntosExplosionX)):
-                            if i == puntosExplosionX[j] and terreno.terreno[i]>puntosExplosionY[j]:
-                                o =puntosExplosionY[j]
-                                terreno.terreno[i] = o
-                                break
+                            if arrayaux[i] == puntosExplosionX[j]:
+                                if bandera == 0:
+                                    valory = puntosExplosionY[j]
+                                    bandera+=1
+                                else:
+                                    if puntosExplosionY[j] > valory:
+                                        valory = puntosExplosionY[j]
+                        valory = datos.PANT_ALTO - valory
+                        if arrayaux[i] < 1200 and arrayaux[i] > 0:
+                            if terreno.terreno[arrayaux[i]] > valory:
+                                terreno.terreno[arrayaux[i]] = valory
+                    centroExplosion.clear()
+                    puntosExplosionX.clear()
+                    puntosExplosionY.clear()
+                    arrayaux.clear()
+                    conjuntoPuntos.clear()
 
             tiempo_transcurrido += incremento
 
@@ -354,6 +390,7 @@ def juego(reset):
             if bala_tanque2 is None:
                 mostrar_altura1 = False
                 mostrar_altura2 = True
+                datos.altura_maxima = 0
                 if tipo_bala2 == 1 and tanque2.cantBala105mm == 0:
                     print("No quedan balas")
                     tecla_espacio_presionada = False
@@ -370,6 +407,7 @@ def juego(reset):
                     bala_tanque2 = tanque2.disparar(extremo_canonx_2, extremo_canony_2, datos.ang_tank[angulo_jugador2], velocidad_jugador2, tiempo_transcurrido, screen, datos.BLACK, tipo_bala2)
             else:
                 datos.altura_maxima = bala_tanque2.punto_maximo(datos.altura_maxima)
+                datos.distancia_maxima = bala_tanque2.distancia_maxima(tanque2.x, datos.distancia_maxima)
                 bala_tanque2.verificacion(tiempo_transcurrido, screen, datos.BLACK)
                 impacto_tanque = bala_tanque2.verificar_impacto_tanque(tanque1)
                 impacto_terreno = terreno.verificar_colision(bala_tanque2)
@@ -400,12 +438,61 @@ def juego(reset):
                         turno1 = True
                         tiempo_transcurrido = 0
 
-                elif impacto_borde or impacto_terreno:
+                elif impacto_borde:
                     bala_tanque2 = None
                     tecla_espacio_presionada = False
                     turno2 = False
                     turno1 = True
                     tiempo_transcurrido = 0
+
+                elif impacto_terreno:
+                    for x, y in bala_tanque2.trayectoria:
+                        centroExplosion.append(int(x))
+                        centroExplosion.append(int(y))
+                    bala_tanque2 = None
+                    tecla_espacio_presionada = False
+                    turno2 = False
+                    turno1 = True
+                    tiempo_transcurrido = 0
+                    #calculamos los puntos de la circunferencia de la explosion
+                    num_puntosExplosion = int(2 * math.pi * radioExplosion)
+                    puntosExplosionX = []
+                    puntosExplosionY = []
+                    for i in range(num_puntosExplosion):
+                        angle = (2 * math.pi / num_puntosExplosion) * i
+                        x = int(centroExplosion[0] + radioExplosion * math.cos(angle))
+                        y = int(centroExplosion[1] + radioExplosion * math.sin(angle))
+                        puntosExplosionX.append(x)
+                        puntosExplosionY.append(y)
+                    #verificamos cada punto x de la circunferencia y verificamos el punto y mas bajo de la circunferencia
+                    for i in range(len(puntosExplosionX)):
+                        pygame.draw.circle(screen, datos.BLACK, (puntosExplosionX[i], puntosExplosionY[i]), 1)
+                    pygame.display.flip()
+                    conjuntoPuntos = set(puntosExplosionX)
+                    arrayaux = list(conjuntoPuntos)
+                    arrayaux.sort()
+                    bandera = 0
+                    valory = 0
+                    for i in range(len(arrayaux)):
+                        valory = 0
+                        for j in range(len(puntosExplosionX)):
+                            if arrayaux[i] == puntosExplosionX[j]:
+                                if bandera == 0:
+                                    valory = puntosExplosionY[j]
+                                    bandera+=1
+                                else:
+                                    if puntosExplosionY[j] > valory:
+                                        valory = puntosExplosionY[j]
+                        valory = datos.PANT_ALTO - valory
+                        if arrayaux[i] < 1200 and arrayaux[i] > 0:
+                            if terreno.terreno[arrayaux[i]] > valory:
+                                terreno.terreno[arrayaux[i]] = valory
+                    centroExplosion.clear()
+                    puntosExplosionX.clear()
+                    puntosExplosionY.clear()
+                    arrayaux.clear()
+                    conjuntoPuntos.clear()
+
                     
             tiempo_transcurrido += incremento
 
@@ -431,6 +518,11 @@ def juego(reset):
         Pantalla.pantalla.muestra_texto(screen, fuente ,turno1,datos.cantidad_balas1,datos.cantidad_balas2)
         Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, posX_Tanque1, posX_Tanque2, posY_Tanque1, posY_Tanque2)
         Pantalla.pantalla.muestra_altura(screen, fuente, datos.altura_maxima, mostrar_altura1, mostrar_altura2)
+        Pantalla.pantalla.muestra_distancia(screen, fuente, datos.distancia_maxima, mostrar_altura1, mostrar_altura2)
+        if bala_tanque1 is not None and bala_tanque1.visualizar():
+            Pantalla.pantalla.muestra_bala(screen, tipo_bala1, bala_tanque1.xactual())
+        elif bala_tanque2 is not None and bala_tanque2.visualizar():
+            Pantalla.pantalla.muestra_bala(screen, tipo_bala2, bala_tanque2.xactual())
 
         extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
         extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
