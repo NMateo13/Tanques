@@ -20,48 +20,49 @@ size = (datos.PANT_ANCHO, datos.PANT_ALTO)
 screen = pygame.display.set_mode(size)
 reset = 0
 
-def procesar_impacto_tanque(bala_tanque2, radioExplosion, centroExplosion, terreno, tipo_bala2, tanque1, tanque2):
-    for x, y in bala_tanque2.trayectoria:
-        centroExplosion.append(int(x))
-        centroExplosion.append(int(y))
-    num_puntosExplosion = int(2 * math.pi * radioExplosion)
-    puntosExplosionX = []
-    puntosExplosionY = []
-    for i in range(num_puntosExplosion):
-        angle = (2 * math.pi / num_puntosExplosion) * i
-        x = int(centroExplosion[0] + radioExplosion * math.cos(angle))
-        y = int(centroExplosion[1] + radioExplosion * math.sin(angle))
-        puntosExplosionX.append(x)
-        puntosExplosionY.append(y)
-    
-    for i in range(len(puntosExplosionX)):
-        pygame.draw.circle(screen, datos.BLACK, (puntosExplosionX[i], puntosExplosionY[i]), 1)
-    pygame.display.flip()
-    conjuntoPuntos = set(puntosExplosionX)
-    arrayaux = list(conjuntoPuntos)
-    arrayaux.sort()
-    bandera = 0
-    valory = 0
-    for i in range(len(arrayaux)):
+def procesar_impacto_tanque(impacto,bala_tanque2, radioExplosion, centroExplosion, terreno, tipo_bala2, tanque1, tanque2):
+    if impacto: 
+        for x, y in bala_tanque2.trayectoria:
+            centroExplosion.append(int(x))
+            centroExplosion.append(int(y))
+        num_puntosExplosion = int(2 * math.pi * radioExplosion)
+        puntosExplosionX = []
+        puntosExplosionY = []
+        for i in range(num_puntosExplosion):
+            angle = (2 * math.pi / num_puntosExplosion) * i
+            x = int(centroExplosion[0] + radioExplosion * math.cos(angle))
+            y = int(centroExplosion[1] + radioExplosion * math.sin(angle))
+            puntosExplosionX.append(x)
+            puntosExplosionY.append(y)
+        
+        for i in range(len(puntosExplosionX)):
+            pygame.draw.circle(screen, datos.BLACK, (puntosExplosionX[i], puntosExplosionY[i]), 1)
+        pygame.display.flip()
+        conjuntoPuntos = set(puntosExplosionX)
+        arrayaux = list(conjuntoPuntos)
+        arrayaux.sort()
+        bandera = 0
         valory = 0
-        for j in range(len(puntosExplosionX)):
-            if arrayaux[i] == puntosExplosionX[j]:
-                if bandera == 0:
-                    valory = puntosExplosionY[j]
-                    bandera+=1
-                else:
-                    if puntosExplosionY[j] > valory:
+        for i in range(len(arrayaux)):
+            valory = 0
+            for j in range(len(puntosExplosionX)):
+                if arrayaux[i] == puntosExplosionX[j]:
+                    if bandera == 0:
                         valory = puntosExplosionY[j]
-        valory = datos.PANT_ALTO - valory
-        if arrayaux[i] < 1200 and arrayaux[i] > 0:
-            if terreno.terreno[arrayaux[i]] > valory:
-                terreno.terreno[arrayaux[i]] = valory
-    centroExplosion.clear()
-    puntosExplosionX.clear()
-    puntosExplosionY.clear()
-    arrayaux.clear()
-    conjuntoPuntos.clear()
-    quitar_vida(tipo_bala2, tanque2, tanque1)
+                        bandera+=1
+                    else:
+                        if puntosExplosionY[j] > valory:
+                            valory = puntosExplosionY[j]
+            valory = datos.PANT_ALTO - valory
+            if arrayaux[i] < 1200 and arrayaux[i] > 0:
+                if terreno.terreno[arrayaux[i]] > valory:
+                    terreno.terreno[arrayaux[i]] = valory
+        centroExplosion.clear()
+        puntosExplosionX.clear()
+        puntosExplosionY.clear()
+        arrayaux.clear()
+        conjuntoPuntos.clear()
+        quitar_vida(tipo_bala2, tanque2, tanque1)
     
 
 def quitar_vida(tipo_bala, tanque1, tanque2):
@@ -355,7 +356,7 @@ def juego(reset):
                 impacto_borde = bala_tanque1.verificar_impacto_ancho(datos.PANT_ANCHO)
                         
                 if impacto_tanque:
-                    procesar_impacto_tanque(bala_tanque1,radioExplosion,centroExplosion,terreno,tipo_bala1,tanque1,tanque2)
+                    procesar_impacto_tanque(impacto_tanque,bala_tanque1,radioExplosion,centroExplosion,terreno,tipo_bala1,tanque2,tanque1)
                     bala_tanque1 = None
                     tecla_espacio_presionada = False
                     turno1 = False
@@ -363,7 +364,7 @@ def juego(reset):
                     tiempo_transcurrido = 0
 
                 elif impacto_tanque_igual:
-                    procesar_impacto_tanque(bala_tanque1,radioExplosion,centroExplosion,terreno,tipo_bala1,tanque1,tanque1)
+                    procesar_impacto_tanque(impacto_tanque_igual,bala_tanque1,radioExplosion,centroExplosion,terreno,tipo_bala1,tanque1,tanque1)
                     bala_tanque1 = None
                     tecla_espacio_presionada = False
                     turno1 = False
@@ -479,7 +480,7 @@ def juego(reset):
                 impacto_terreno = terreno.verificar_colision(bala_tanque2)
                 impacto_borde = bala_tanque2.verificar_impacto_ancho(datos.PANT_ANCHO)
                 if impacto_tanque:
-                    procesar_impacto_tanque(bala_tanque2,radioExplosion,centroExplosion,terreno,tipo_bala2,tanque2,tanque1)
+                    procesar_impacto_tanque(impacto_tanque,bala_tanque2,radioExplosion,centroExplosion,terreno,tipo_bala2,tanque1,tanque2)
                     bala_tanque1 = None
                     tecla_espacio_presionada = False
                     turno1 = True
@@ -487,7 +488,7 @@ def juego(reset):
                     tiempo_transcurrido = 0
 
                 if impacto_tanque_igual:
-                    procesar_impacto_tanque(bala_tanque2,radioExplosion,centroExplosion,terreno,tipo_bala2,tanque2,tanque2)
+                    procesar_impacto_tanque(impacto_tanque_igual,bala_tanque2,radioExplosion,centroExplosion,terreno,tipo_bala2,tanque2,tanque2)
                     bala_tanque1 = None
                     tecla_espacio_presionada = False
                     turno1 = True
