@@ -395,9 +395,6 @@ def juego(reset):
                         puntosExplosionY.append(y)
                     
                     #verificamos cada punto x de la circunferencia y verificamos el punto y mas bajo de la circunferencia
-                    '''for i in range(len(puntosExplosionX)):
-                        pygame.draw.circle(screen, datos.BLACK, (puntosExplosionX[i], puntosExplosionY[i]), 1)
-                    pygame.display.flip()'''
                     conjuntoPuntos = set(puntosExplosionX)
                     arrayaux = list(conjuntoPuntos)
                     arrayaux.sort()
@@ -571,10 +568,7 @@ def juego(reset):
         if posY_Tanque1 != (terreno.alto - terreno.terreno[indice] - 26) or posY_Tanque2 != (600 -  terreno.terreno[indice2] - 24):
             
             posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
-            posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24
-
-            """tanque1 = Tanque(posX_Tanque1 - 10, posY_Tanque1 + 10, datos.RED, tank1)
-            tanque2 = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque2 + 20, posY_Tanque2 + 10, datos.RED, tank2)"""
+            posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24 
 
             tanque1.y = posY_Tanque1+10
             tanque2.y = posY_Tanque2+20
@@ -601,6 +595,14 @@ def juego(reset):
         elif tipo_bala2 == 3:
             datos.cantidad_balas2 = tanque2.cantBala60mm
         
+        # Muestra la bala en pantalla
+        if bala_tanque1 is not None and bala_tanque1.visualizar():
+            Pantalla.pantalla.muestra_bala(screen, tipo_bala1, bala_tanque1.xactual())
+        elif bala_tanque2 is not None and bala_tanque2.visualizar():
+            Pantalla.pantalla.muestra_bala(screen, tipo_bala2, bala_tanque2.xactual())
+
+        extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
+        extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
 
         # Representacion gráfica de los datos
         Pantalla.pantalla.muestra_salud(screen, fuente,tanque1.vida, tanque2.vida)
@@ -610,13 +612,6 @@ def juego(reset):
         Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, posX_Tanque1, posX_Tanque2, posY_Tanque1, posY_Tanque2)
         Pantalla.pantalla.muestra_altura(screen, fuente, datos.altura_maxima, mostrar_altura1, mostrar_altura2)
         Pantalla.pantalla.muestra_distancia(screen, fuente, datos.distancia_maxima, mostrar_altura1, mostrar_altura2)
-        if bala_tanque1 is not None and bala_tanque1.visualizar():
-            Pantalla.pantalla.muestra_bala(screen, tipo_bala1, bala_tanque1.xactual())
-        elif bala_tanque2 is not None and bala_tanque2.visualizar():
-            Pantalla.pantalla.muestra_bala(screen, tipo_bala2, bala_tanque2.xactual())
-
-        extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, -(datos.ang_tank[angulo_jugador1]-90), pivote1)
-        extremo_canonx_2, extremo_canony_2 = Pantalla.pantalla.prerotate(screen, 2, -(datos.ang_tank[angulo_jugador2]-90), pivote2)
         pygame.display.flip()
 
         if reset == 1:
