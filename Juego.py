@@ -4,17 +4,13 @@ from Tanque import Tanque
 from Terreno import Terreno
 from Canon import Canon
 
+# Inicialización de pygame
 pygame.init()
 pygame.display.set_icon(imagenes.IMG_Explosion) 
 pygame.display.set_caption("PROYECTO TANQUE")
-
-
-
-#pygame.mixer.music.load('Assets/musica1.mp3')
-#volumen = 0
-#pygame.mixer.music.set_volume(volumen)
-#pygame.mixer.music.play(-1)
-
+pygame.mixer.music.load('Assets/musica1.mp3')
+pygame.mixer.music.set_volume(datos.volumen)
+pygame.mixer.music.play(-1)
 fuente = pygame.font.Font(None, 36)
 size = (datos.PANT_ANCHO, datos.PANT_ALTO)
 screen = pygame.display.set_mode(size)
@@ -64,7 +60,6 @@ def procesar_impacto_tanque(impacto,bala_tanque2, radioExplosion, centroExplosio
         conjuntoPuntos.clear()
         quitar_vida(tipo_bala2, tanque2, tanque1)
     
-
 def quitar_vida(tipo_bala, tanque1, tanque2):
     if tipo_bala == 1:
         tanque2.vida -= tanque1.Bala105mm
@@ -73,13 +68,13 @@ def quitar_vida(tipo_bala, tanque1, tanque2):
     elif tipo_bala == 3:
         tanque2.vida -= tanque1.Bala60mm
 
-def draw_text(text, font, x, y, color):
+def draw_text(text, font, x, y, color): 
     textobj = font.render(text, 1, color)
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     screen.blit(textobj, textrect)
 
-def menu():
+def menu(): #Función para mostrar el menú principal
     while True:
         screen.blit(imagenes.IMG_FondoMenu, (0, 0))
 
@@ -106,7 +101,7 @@ def menu():
                     pygame.quit()
                     sys.exit()
 
-def controles():
+def controles(): #Función para mostrar los controles del juego
     while True:
         screen.fill(datos.WHITE)
         screen.blit(imagenes.IMG_fondo_controles, (0, 0))
