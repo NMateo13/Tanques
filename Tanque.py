@@ -18,7 +18,6 @@ class Tanque:
         self.Bala80mm = 40
         self.Bala105mm = 50
 
-
     def dibujar(self, screen):
         pygame.draw.rect(screen, self.color, (self.x, self.y, self.ancho, self.altura))
 
@@ -39,5 +38,3 @@ class Tanque:
             self.cantBala60mm -= 1
             print(self.cantBala60mm)
             return bala
-
-        
