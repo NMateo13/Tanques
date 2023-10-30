@@ -91,12 +91,13 @@ class Pantalla:
         
         #Indica el turno del jugador
         if turno:
-            turno_texto = font.render("Turno del Jugador 1", True, datos.WHITE)
+            turno_texto = font.render("J1", True, datos.WHITE)
         else:
-            turno_texto = font.render("Turno del Jugador 2", True, datos.WHITE)
+            turno_texto = font.render("J2", True, datos.WHITE)
         
-        screen.blit(turno_texto, (pantalla.ancho // 2 - turno_texto.get_width() // 2, datos.PANT_ALTO - 160))
-
+        screen.blit(turno_texto, (pantalla.ancho // 2 - turno_texto.get_width() // 2, datos.PANT_ALTO - 140))
+        nTurno_texto = font.render(f"Turno: {datos.nTurnos}", True, datos.WHITE)
+        screen.blit(nTurno_texto, (pantalla.ancho // 2 - nTurno_texto.get_width() // 2, datos.PANT_ALTO - 170))
 
     def muestra_salud(self, screen, font, vida_tanque1, vida_tanque2): #falta agregar las variables de vida de los tanques
         salud_texto1 = font.render(f"Vida: {vida_tanque1}%", True, datos.WHITE)

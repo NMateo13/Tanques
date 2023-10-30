@@ -17,10 +17,8 @@ class Terreno:
         x = 0
 
         while aux <= 1200:
-
-
             amplitud = random.randint(50, 90)  # Ajusta esta amplitud según tus necesidades
-            frecuencia = random.randint(50, 90)  # Ajusta esta frecuencia según }<tus necesidades
+            frecuencia = random.randint(50, 90)  # Ajusta esta frecuencia según tus necesidades
 
             if x > 0:
                 if altura > 130:
@@ -30,9 +28,7 @@ class Terreno:
 
             altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
 
-
             while auxAltura != altura and x != 0:
-
                 if auxAltura > altura:
                     flotante = flotante - 0.001
                     altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
@@ -41,7 +37,6 @@ class Terreno:
                     altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
 
             for y in range(frecuencia*4):
-
                 altura = int(self.alto / flotante + amplitud * math.sin(aux / frecuencia))
                 terreno.append(altura)
                 aux += 1
@@ -56,7 +51,6 @@ class Terreno:
         return terreno
             
     def dibujar(self, pantalla):
-
         for x, altura in enumerate(self.terreno):
             pygame.draw.rect(pantalla, datos.BROWN, (x, self.alto - altura, 1, altura))
 
