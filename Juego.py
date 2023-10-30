@@ -146,7 +146,13 @@ def controles(): #Función para mostrar los controles del juego
                 menu()
 
 def muestra_ganador(Ganador): #Función para mostrar el ganador del juego
-    screen.fill(datos.WHITE) 
+    screen.fill(datos.WHITE)
+    if Ganador == 0:
+        texto_ganador = fuente.render("._.", True, datos.BLACK)
+        screen.blit(texto_ganador, (datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
+        pygame.display.flip()
+        pygame.time.delay(3000)
+        sys.exit()
     texto_ganador = fuente.render(f"Ganador: Jugador {Ganador}", True, datos.BLACK) 
     screen.blit(texto_ganador, (datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2)) 
     pygame.display.flip() 
@@ -228,7 +234,6 @@ def juego(reset):
 
     while True:
         Clock.tick(datos.FPS)
-
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -356,6 +361,7 @@ def juego(reset):
                     tecla_espacio_presionada = False
                     turno1 = False
                     turno2 = True
+                    datos.nTurnos += 1
                     tiempo_transcurrido = 0
 
                 elif impacto_tanque_igual:
@@ -364,6 +370,7 @@ def juego(reset):
                     tecla_espacio_presionada = False
                     turno1 = False
                     turno2 = True
+                    datos.nTurnos += 1
                     tiempo_transcurrido = 0
                 
                 elif impacto_borde:
@@ -371,6 +378,7 @@ def juego(reset):
                         tecla_espacio_presionada = False
                         turno1 = False
                         turno2 = True
+                        datos.nTurnos += 1
                         tiempo_transcurrido = 0
 
                 elif impacto_terreno:
@@ -382,6 +390,7 @@ def juego(reset):
                     tecla_espacio_presionada = False
                     turno1 = False
                     turno2 = True
+                    datos.nTurnos += 1
                     tiempo_transcurrido = 0
                     #calculamos los puntos de la circunferencia de la explosion
                     num_puntosExplosion = int(2 * math.pi * radioExplosion)
@@ -477,6 +486,7 @@ def juego(reset):
                     tecla_espacio_presionada = False
                     turno1 = True
                     turno2 = False
+                    datos.nTurnos += 1
                     tiempo_transcurrido = 0
 
                 if impacto_tanque_igual:
@@ -485,6 +495,7 @@ def juego(reset):
                     tecla_espacio_presionada = False
                     turno1 = True
                     turno2 = False
+                    datos.nTurnos += 1
                     tiempo_transcurrido = 0
 
                 elif impacto_borde:
@@ -492,6 +503,7 @@ def juego(reset):
                     tecla_espacio_presionada = False
                     turno2 = False
                     turno1 = True
+                    datos.nTurnos += 1
                     tiempo_transcurrido = 0
 
                 elif impacto_terreno:
@@ -501,6 +513,7 @@ def juego(reset):
                     tecla_espacio_presionada = False
                     turno2 = False
                     turno1 = True
+                    datos.nTurnos += 1
                     tiempo_transcurrido = 0
                     #calculamos los puntos de la circunferencia de la explosion
                     num_puntosExplosion = int(2 * math.pi * radioExplosion)
@@ -595,6 +608,10 @@ def juego(reset):
         elif tipo_bala2 == 3:
             datos.cantidad_balas2 = tanque2.cantBala60mm
         
+        if datos.nTurnos == 33:
+            Ganador = 0
+            muestra_ganador(Ganador)
+
         # Muestra la bala en pantalla
         if bala_tanque1 is not None and bala_tanque1.visualizar():
             Pantalla.pantalla.muestra_bala(screen, tipo_bala1, bala_tanque1.xactual())
