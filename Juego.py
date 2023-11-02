@@ -10,10 +10,18 @@ def draw_text(text, font, x, y, color, screen):
     textrect.topleft = (x, y)
     screen.blit(textobj, textrect)
 
+def destruir_terreno():
+    for x, y in bala_tanque1.trayectoria:
+        centroExplosion.append(int(x))
+        centroExplosion.append(int(y))
+        for i in range(radioExplosion):
+            ancho= []
+            ancho.append(int(x)-radioExplosion+i)
+
 def menu_seleccion(screen, fuente):
     while True:
         screen.fill(datos.WHITE)
-        
+
 
 def controles(screen):
     while True:
@@ -98,7 +106,7 @@ def juego(screen, fuente):
     bala_tanque1 = None
     bala_tanque2 = None
 
-    centroExplosion = []
+
     radioExplosion = 75
     arrayaux = []
     arrayaux2 = []
