@@ -71,24 +71,8 @@ def juego(screen, fuente):
 
     # Crear dos hitboxes
 
-    posX_Tanque1 = random.randint(0, 550) 
-    posX_Tanque2 = random.randint(0, 550)
-    
-    indice = posX_Tanque1
-    indice2 = (1199 - posX_Tanque2)
-
-    posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
-
-    posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24
-    while posY_Tanque2 < 0:
-        posX_Tanque2 = random.randint(0, 550)
-        indice2 = (1199 - posX_Tanque2)
-        posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
-
-    tank1 = Pantalla.pantalla.tank1
-    tank2 = Pantalla.pantalla.tank2
-    tanque1 = Tanque(posX_Tanque1 - 10, posY_Tanque1 + 10, datos.RED, tank1)
-    tanque2 = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque2 + 20, posY_Tanque2 + 10, datos.RED, tank2)
+    tanque1 = Tanque.crearTanques(terreno)
+    tanque2 = Tanque.crearTanques(terreno)
 
     bala_tanque1 = None
     bala_tanque2 = None
@@ -122,8 +106,8 @@ def juego(screen, fuente):
     Clock = pygame.time.Clock()
     tecla_espacio_presionada = False
 
-    pivote1 = [posX_Tanque1 + 10, posY_Tanque1+5]
-    pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - posX_Tanque2 + 5, posY_Tanque2+5]
+    pivote1 = [tanque1.x  , tanque1.y]
+    pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - tanque2.x, tanque2.y]
             
     angulo_jugador1 = 30 # Ángulo inicial
     extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
@@ -477,7 +461,7 @@ def juego(screen, fuente):
         Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
         Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])    
         Pantalla.pantalla.muestra_texto(screen, fuente ,turno1,datos.cantidad_balas1,datos.cantidad_balas2)
-        Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, posX_Tanque1, posX_Tanque2, posY_Tanque1, posY_Tanque2)
+        Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, tanque1.x, tanque2.x, tanque2.x, tanque2.y)
         Pantalla.pantalla.muestra_altura(screen, fuente, datos.altura_maxima, mostrar_altura1, mostrar_altura2)
         Pantalla.pantalla.muestra_distancia(screen, fuente, datos.distancia_maxima, mostrar_altura1, mostrar_altura2)
         if bala_tanque1 is not None and bala_tanque1.visualizar():
