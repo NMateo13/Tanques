@@ -10,6 +10,11 @@ def draw_text(text, font, x, y, color, screen):
     textrect.topleft = (x, y)
     screen.blit(textobj, textrect)
 
+def menu_seleccion(screen, fuente):
+    while True:
+        screen.fill(datos.WHITE)
+        
+
 def controles(screen):
     while True:
         salir = False
