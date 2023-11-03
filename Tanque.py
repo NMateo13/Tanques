@@ -1,5 +1,5 @@
 import pygame
-import math
+import random
 from Bala import Bala
 
 class Tanque:
@@ -38,3 +38,28 @@ class Tanque:
             self.cantBala60mm -= 1
             print(self.cantBala60mm)
             return bala
+
+    def ia(self):
+        #61 valores disponibles en el arrayist ang_tank
+        #numero aleatorio entre 0 y 60
+        angulo = random.randint(0, 60)
+        #Velocidad aleatoria entre 0 y 150 
+        velocidad = random.randint(0, 150)
+        #Tipo de bala aleatoria entre 1 y 3
+        if self.cantBala105mm == 0:
+            tipo_bala = random.randint(2, 3)
+        elif self.cantBala80mm == 0:
+            tipo_bala = random.randint(1, 3)
+            while tipo_bala == 2:
+                tipo_bala = random.randint(1, 3)
+        elif self.cantBala60mm == 0:
+            tipo_bala = random.randint(1, 2)
+        elif self.cantBala105mm == 0 and self.cantBala80mm == 0:
+            tipo_bala = 3
+        elif self.cantBala105mm == 0 and self.cantBala60mm == 0:
+            tipo_bala = 2
+        elif self.cantBala80mm == 0 and self.cantBala60mm == 0:
+            tipo_bala = 1
+        else:
+            tipo_bala = random.randint(1, 3)
+        return angulo, velocidad, tipo_bala
