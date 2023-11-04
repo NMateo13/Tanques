@@ -223,7 +223,7 @@ def juego(screen, fuente):
 
         screen.blit(imagenes.Background, (0, 0))
         terreno.dibujar(screen)
-        screen.blit(imagenes.HUD, (0, 480))
+        screen.blit(imagenes.HUD, (0, datos.PANT_ALTO - 120))
         tanque1.dibujar(screen)
         tanque2.dibujar(screen)
 
