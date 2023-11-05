@@ -128,8 +128,9 @@ class Pantalla:
 
         #NO TOCAR SON ESTÁTICOS 
 
-        screen.blit(imagenes.Tanque1_HUD, (450, 525)) 
-        screen.blit(imagenes.Tanque2_HUD, (pantalla.ancho - imagenes.Tanque2_HUD.get_width() - 450, 525)) 
+        screen.blit(imagenes.Tanque1_HUD, (450, datos.PANT_ALTO - imagenes.Tanque1_HUD.get_height() - 5)) 
+        screen.blit(imagenes.Tanque2_HUD, (pantalla.ancho - imagenes.Tanque2_HUD.get_width() - 450, datos.PANT_ALTO - imagenes.Tanque2_HUD.get_height() - 5))
+
         if tipo1 == 1:
             #cambiar imagen a bala 105mm
             screen.blit(imagenes.Bala105, (50, datos.PANT_ALTO - 75))
