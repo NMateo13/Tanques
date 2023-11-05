@@ -64,15 +64,18 @@ def opciones(screen):
                 if boton_800.collidepoint(event.pos):
                     datos.PANT_ANCHO = 800
                     datos.PANT_ALTO = 800
+                    pygame.display.set_mode((datos.PANT_ANCHO, datos.PANT_ALTO))
                 if boton_default.collidepoint(event.pos):
                     datos.PANT_ANCHO = 1200
                     datos.PANT_ALTO = 600
+                    pygame.display.set_mode((datos.PANT_ANCHO, datos.PANT_ALTO))
                 if boton_1080.collidepoint(event.pos):
                     datos.PANT_ANCHO = 1920
                     datos.PANT_ALTO = 1080
+                    pygame.display.set_mode((datos.PANT_ANCHO, datos.PANT_ALTO))
                 if boton_aplicar.collidepoint(event.pos):
                     pygame.display.update()
-                    salir = True           
+                    salir = True      
 
         if salir:
             break
