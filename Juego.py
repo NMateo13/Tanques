@@ -13,6 +13,12 @@ def draw_text(text, font, x, y, color, screen):
 def opciones(screen):
     while True:
         salir = False
+
+        boton_800 = pygame.Rect((datos.PANT_ANCHO / 2) - 450, (datos.PANT_ALTO / 2) - 140, 100, 50)
+        boton_default = pygame.Rect((datos.PANT_ANCHO / 2) - 450, (datos.PANT_ALTO / 2) - 80, 100, 50)
+        boton_1080 = pygame.Rect((datos.PANT_ANCHO / 2) - 450, (datos.PANT_ALTO / 2) - 20, 100, 50)
+        boton_aplicar = pygame.Rect((datos.PANT_ANCHO / 2) - 450, (datos.PANT_ALTO / 2) + 40, 100, 50)
+    
         screen.fill(datos.WHITE)
         screen.blit(imagenes.FondoControles, (0, 0))
         fuente = pygame.font.Font(None, 36)
@@ -55,13 +61,19 @@ def opciones(screen):
             if keys[pygame.K_ESCAPE]:
                 salir = True
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if play_button.collidepoint(event.pos):
-                    Juego.juego(screen, fuente)
-                if control_button.collidepoint(event.pos):
-                    Juego.opciones(screen)
-                if quit_button.collidepoint(event.pos):
-                    pygame.quit()
-                    sys.exit()
+                if boton_800.collidepoint(event.pos):
+                    datos.PANT_ANCHO = 800
+                    datos.PANT_ALTO = 800
+                if boton_default.collidepoint(event.pos):
+                    datos.PANT_ANCHO = 1200
+                    datos.PANT_ALTO = 600
+                if boton_1080.collidepoint(event.pos):
+                    datos.PANT_ANCHO = 1920
+                    datos.PANT_ALTO = 1080
+                if boton_aplicar.collidepoint(event.pos):
+                    pygame.display.update()
+                    salir = True           
+
         if salir:
             break
 
