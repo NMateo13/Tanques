@@ -83,7 +83,7 @@ class Pantalla:
         screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, datos.PANT_ALTO - 110))
         #tanque 1
         cant_balas = font.render(balas1_texo, True, datos.WHITE)
-        screen.blit(cant_balas, (pantalla.ancho - cant_balas.get_width() - 1080, datos.PANT_ALTO - 30))
+        screen.blit(cant_balas, (110, datos.PANT_ALTO - 30))
 
         #tanque 2
         cant_balas = font.render(balas2_texo, True, datos.WHITE)

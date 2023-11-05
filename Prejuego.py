@@ -28,13 +28,13 @@ while True:
         Juego.juego(screen, fuente)
     screen.blit(imagenes.FondoMenu, (0, 0))
 
-    play_button = pygame.Rect((datos.PANT_ANCHO / 2) + 155, (datos.PANT_ALTO / 2) - 98, 100, 50)
-    control_button = pygame.Rect((datos.PANT_ANCHO / 2) + 90, (datos.PANT_ALTO / 2) - 5, 100, 50)
-    quit_button = pygame.Rect((datos.PANT_ANCHO / 2) + 118, (datos.PANT_ALTO / 2) + 90, 100, 50)
+    play_button = pygame.Rect((datos.PANT_ANCHO / 2) + 95, (datos.PANT_ALTO / 2) - 98, 100, 50)
+    control_button = pygame.Rect((datos.PANT_ANCHO / 2) + 75, (datos.PANT_ALTO / 2) - 5, 100, 50)
+    quit_button = pygame.Rect((datos.PANT_ANCHO / 2) + 100, (datos.PANT_ALTO / 2) + 90, 100, 50)
 
-    draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) + 155, (datos.PANT_ALTO / 2) - 98, datos.WHITE)
-    draw_text('Opciones', fuente, (datos.PANT_ANCHO / 2) + 130, (datos.PANT_ALTO / 2) - 5, datos.WHITE)
-    draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) + 160, (datos.PANT_ALTO / 2) + 88, datos.WHITE)
+    draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) + 95, (datos.PANT_ALTO / 2) - 98, datos.WHITE)
+    draw_text('Opciones', fuente, (datos.PANT_ANCHO / 2) + 75, (datos.PANT_ALTO / 2) - 5, datos.WHITE)
+    draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) + 100, (datos.PANT_ALTO / 2) + 88, datos.WHITE)
 
     pygame.display.update()
 
