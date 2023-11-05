@@ -17,7 +17,6 @@ def draw_text(text, font, x, y, color):
     textrect.topleft = (x, y)
     screen.blit(textobj, textrect)
 
-
 while True:
     if datos.reiniciar == True:
         datos.reiniciar = False
@@ -27,15 +26,15 @@ while True:
         pygame.display.flip() 
         pygame.time.delay(300)
         Juego.juego(screen, fuente)
-    screen.blit(imagenes.IMG_FondoMenu, (0, 0))
+    screen.blit(imagenes.FondoMenu, (0, 0))
 
-    play_button = pygame.Rect((datos.PANT_ANCHO / 2) + 155, (datos.PANT_ALTO / 2) - 98, 100, 50)
-    control_button = pygame.Rect((datos.PANT_ANCHO / 2) + 90, (datos.PANT_ALTO / 2) - 5, 100, 50)
-    quit_button = pygame.Rect((datos.PANT_ANCHO / 2) + 118, (datos.PANT_ALTO / 2) + 90, 100, 50)
+    play_button = pygame.Rect((datos.PANT_ANCHO / 2) + 95, (datos.PANT_ALTO / 2) - 98, 100, 50)
+    control_button = pygame.Rect((datos.PANT_ANCHO / 2) + 75, (datos.PANT_ALTO / 2) - 5, 100, 50)
+    quit_button = pygame.Rect((datos.PANT_ANCHO / 2) + 100, (datos.PANT_ALTO / 2) + 90, 100, 50)
 
-    draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) + 155, (datos.PANT_ALTO / 2) - 98, datos.BLACK)
-    draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) + 130, (datos.PANT_ALTO / 2) - 5, datos.BLACK)
-    draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) + 160, (datos.PANT_ALTO / 2) + 88, datos.BLACK)
+    draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) + 95, (datos.PANT_ALTO / 2) - 98, datos.WHITE)
+    draw_text('Opciones', fuente, (datos.PANT_ANCHO / 2) + 75, (datos.PANT_ALTO / 2) - 5, datos.WHITE)
+    draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) + 100, (datos.PANT_ALTO / 2) + 88, datos.WHITE)
 
     pygame.display.update()
 
@@ -47,7 +46,7 @@ while True:
             if play_button.collidepoint(event.pos):
                 Juego.juego(screen, fuente)
             if control_button.collidepoint(event.pos):
-                Juego.controles(screen)
+                Juego.opciones(screen)
             if quit_button.collidepoint(event.pos):
                 pygame.quit()
                 sys.exit()
