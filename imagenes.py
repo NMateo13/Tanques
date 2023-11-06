@@ -1,4 +1,4 @@
-import datos, os, pygame
+import Datos, os, pygame
 
 # Imagenes
 IMG_Tanque1 = pygame.image.load(os.path.join("Assets", "Tanque1.png"))
@@ -32,8 +32,8 @@ Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG
 Tanque2 = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4))
 Canon1 = pygame.transform.scale(IMG_Canon1, (IMG_Canon1.get_width() // 4, IMG_Canon1.get_height() // 4))
 Canon2 = pygame.transform.scale(IMG_Canon2, (IMG_Canon2.get_width() // 4, IMG_Canon2.get_height() // 4))
-Background = pygame.transform.scale(IMG_Background, (datos.PANT_ANCHO, datos.PANT_ALTO))
-HUD = pygame.transform.scale(IMG_HUD, (datos.PANT_ANCHO, 120))    
+Background = pygame.transform.scale(IMG_Background, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
+HUD = pygame.transform.scale(IMG_HUD, (Datos.PANT_ANCHO, 120))    
 Tanque1_HUD = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 2, IMG_Tanque1.get_height() // 2))
 Tanque2_HUD = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 2, IMG_Tanque2.get_height() // 2))
 Bala105 = pygame.transform.scale(IMG_Bala105, (IMG_Bala105.get_width() // 1.5, IMG_Bala105.get_height() // 1.5))
@@ -45,5 +45,5 @@ Restart = pygame.transform.scale(IMG_Restart, (IMG_Restart.get_width() // 1.5, I
 Prebala105 = pygame.transform.scale(IMG_Prebala_105, (IMG_Prebala_105.get_width() // 6, IMG_Prebala_105.get_height() // 6))
 Prebala80 = pygame.transform.scale(IMG_Prebala_80, (IMG_Prebala_80.get_width() // 6, IMG_Prebala_80.get_height() // 6))
 Prebala60 = pygame.transform.scale(IMG_Prebala_60, (IMG_Prebala_60.get_width() // 6, IMG_Prebala_60.get_height() // 6))
-FondoMenu = pygame.transform.scale(IMG_FondoMenu, (datos.PANT_ANCHO, datos.PANT_ALTO))
-FondoControles = pygame.transform.scale(IMG_fondo_controles, (datos.PANT_ANCHO, datos.PANT_ALTO))
+FondoMenu = pygame.transform.scale(IMG_FondoMenu, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
+FondoControles = pygame.transform.scale(IMG_fondo_controles, (Datos.PANT_ANCHO, Datos.PANT_ALTO))

@@ -1,4 +1,4 @@
-import pygame, datos, os, random, imagenes
+import pygame, Datos, os, random, imagenes
 
 
 class Pantalla:
@@ -54,11 +54,11 @@ class Pantalla:
 
     def crearMatriz(self, alto, ancho):
 
-        Pantalla.matriz = [[0] * ancho for _ in range(alto - datos.medidaHUD)]
+        Pantalla.matriz = [[0] * ancho for _ in range(alto - Datos.medidaHUD)]
 
     def dibujar(self, screen):
         
-        for filas in range(0, (datos.PANT_ALTO - datos.medidaHUD)):
+        for filas in range(0, (Datos.PANT_ALTO - Datos.medidaHUD)):
             for columnas in range (0, pantalla.ancho):
                 if pantalla.matriz[filas][columnas] == 1:
                     pygame.draw.rect(screen, pantalla.GREEN, (columnas, filas, 6, 6))
@@ -68,57 +68,57 @@ class Pantalla:
         balas1_texo = str(balas1)
         balas2_texo = str(balas2)
 
-        jugador_texto1 = font.render("Jugador 1", True, datos.WHITE)
-        screen.blit(jugador_texto1, (460, datos.PANT_ALTO - 110))
+        jugador_texto1 = font.render("Jugador 1", True, Datos.WHITE)
+        screen.blit(jugador_texto1, (460, Datos.PANT_ALTO - 110))
 
-        jugador_texto2 = font.render("Jugador 2", True, datos.WHITE)
-        screen.blit(jugador_texto2, (pantalla.ancho - jugador_texto2.get_width() - 460, datos.PANT_ALTO - 110))
+        jugador_texto2 = font.render("Jugador 2", True, Datos.WHITE)
+        screen.blit(jugador_texto2, (pantalla.ancho - jugador_texto2.get_width() - 460, Datos.PANT_ALTO - 110))
 
-        stats = font.render("STATS", True, datos.RED)
-        screen.blit(stats, (300, datos.PANT_ALTO - 110))
-        screen.blit(stats, (pantalla.ancho - stats.get_width() - 300, datos.PANT_ALTO - 110))
+        stats = font.render("STATS", True, Datos.RED)
+        screen.blit(stats, (300, Datos.PANT_ALTO - 110))
+        screen.blit(stats, (pantalla.ancho - stats.get_width() - 300, Datos.PANT_ALTO - 110))
 
-        bala = font.render("TIPO DE BALA", True, datos.RED)
-        screen.blit(bala, (25, datos.PANT_ALTO - 110))
-        screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, datos.PANT_ALTO - 110))
+        bala = font.render("TIPO DE BALA", True, Datos.RED)
+        screen.blit(bala, (25, Datos.PANT_ALTO - 110))
+        screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, Datos.PANT_ALTO - 110))
         #tanque 1
-        cant_balas = font.render(balas1_texo, True, datos.WHITE)
-        screen.blit(cant_balas, (110, datos.PANT_ALTO - 30))
+        cant_balas = font.render(balas1_texo, True, Datos.WHITE)
+        screen.blit(cant_balas, (110, Datos.PANT_ALTO - 30))
 
         #tanque 2
-        cant_balas = font.render(balas2_texo, True, datos.WHITE)
-        screen.blit(cant_balas, (pantalla.ancho - cant_balas.get_width() - 110 , datos.PANT_ALTO - 30))
+        cant_balas = font.render(balas2_texo, True, Datos.WHITE)
+        screen.blit(cant_balas, (pantalla.ancho - cant_balas.get_width() - 110 , Datos.PANT_ALTO - 30))
         
         #Indica el turno del jugador
         if turno:
-            turno_texto = font.render("J1", True, datos.WHITE)
+            turno_texto = font.render("J1", True, Datos.WHITE)
         else:
-            turno_texto = font.render("J2", True, datos.WHITE)
+            turno_texto = font.render("J2", True, Datos.WHITE)
         
-        screen.blit(turno_texto, (pantalla.ancho // 2 - turno_texto.get_width() // 2, datos.PANT_ALTO - 140))
-        nTurno_texto = font.render(f"Turno: {datos.nTurnos}", True, datos.WHITE)
-        screen.blit(nTurno_texto, (pantalla.ancho // 2 - nTurno_texto.get_width() // 2, datos.PANT_ALTO - 170))
+        screen.blit(turno_texto, (pantalla.ancho // 2 - turno_texto.get_width() // 2, Datos.PANT_ALTO - 140))
+        nTurno_texto = font.render(f"Turno: {Datos.nTurnos}", True, Datos.WHITE)
+        screen.blit(nTurno_texto, (pantalla.ancho // 2 - nTurno_texto.get_width() // 2, Datos.PANT_ALTO - 170))
 
     def muestra_salud(self, screen, font, vida_tanque1, vida_tanque2): #falta agregar las variables de vida de los tanques
-        salud_texto1 = font.render(f"Vida: {vida_tanque1}%", True, datos.WHITE)
-        screen.blit(salud_texto1, (250, datos.PANT_ALTO - 85))
+        salud_texto1 = font.render(f"Vida: {vida_tanque1}%", True, Datos.WHITE)
+        screen.blit(salud_texto1, (250, Datos.PANT_ALTO - 85))
 
-        salud_texto2 = font.render(f"Vida: {vida_tanque2}%", True, datos.WHITE) 
-        screen.blit(salud_texto2, (pantalla.ancho - salud_texto2.get_width() - 300, datos.PANT_ALTO - 85))
+        salud_texto2 = font.render(f"Vida: {vida_tanque2}%", True, Datos.WHITE) 
+        screen.blit(salud_texto2, (pantalla.ancho - salud_texto2.get_width() - 300, Datos.PANT_ALTO - 85))
 
     def muestra_potencia(self, screen, font,velocidad_jugador1, velocidad_jugador2): 
-        potencia_texto1 = font.render(f"Potencia: {velocidad_jugador1}", True, datos.WHITE)
-        screen.blit(potencia_texto1, (250, datos.PANT_ALTO - 57))
+        potencia_texto1 = font.render(f"Potencia: {velocidad_jugador1}", True, Datos.WHITE)
+        screen.blit(potencia_texto1, (250, Datos.PANT_ALTO - 57))
 
-        potencia_texto2 = font.render(f"Potencia: {velocidad_jugador2}", True, datos.WHITE)
-        screen.blit(potencia_texto2, (pantalla.ancho - potencia_texto2.get_width() - 280, datos.PANT_ALTO - 57))
+        potencia_texto2 = font.render(f"Potencia: {velocidad_jugador2}", True, Datos.WHITE)
+        screen.blit(potencia_texto2, (pantalla.ancho - potencia_texto2.get_width() - 280, Datos.PANT_ALTO - 57))
 
     def muestra_angulo(self, screen, font,angulo_jugador1, angulo_jugador2): 
-        angulo_texto1 = font.render(f"Ángulo: {angulo_jugador1}°", True, datos.WHITE)
-        screen.blit(angulo_texto1, (250, datos.PANT_ALTO - 30))
+        angulo_texto1 = font.render(f"Ángulo: {angulo_jugador1}°", True, Datos.WHITE)
+        screen.blit(angulo_texto1, (250, Datos.PANT_ALTO - 30))
 
-        angulo_texto2 = font.render(f"Ángulo: {angulo_jugador2}°", True, datos.WHITE)
-        screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, datos.PANT_ALTO - 30))
+        angulo_texto2 = font.render(f"Ángulo: {angulo_jugador2}°", True, Datos.WHITE)
+        screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, Datos.PANT_ALTO - 30))
 
     def muestra_imagen(self, screen, tipo1, tipo2, posX1, posY1, posX2, posY2):
         screen.blit(imagenes.Tanque1, (posX1, posY1-10)) 
@@ -128,39 +128,39 @@ class Pantalla:
 
         #NO TOCAR SON ESTÁTICOS 
 
-        screen.blit(imagenes.Tanque1_HUD, (450, datos.PANT_ALTO - imagenes.Tanque1_HUD.get_height() - 5)) 
-        screen.blit(imagenes.Tanque2_HUD, (pantalla.ancho - imagenes.Tanque2_HUD.get_width()-450, datos.PANT_ALTO - imagenes.Tanque2_HUD.get_height()-5))
+        screen.blit(imagenes.Tanque1_HUD, (450, Datos.PANT_ALTO - imagenes.Tanque1_HUD.get_height() - 5)) 
+        screen.blit(imagenes.Tanque2_HUD, (pantalla.ancho - imagenes.Tanque2_HUD.get_width()-450, Datos.PANT_ALTO - imagenes.Tanque2_HUD.get_height()-5))
 
         if tipo1 == 1:
             #cambiar imagen a bala 105mm
-            screen.blit(imagenes.Bala105, (50, datos.PANT_ALTO - 75))
+            screen.blit(imagenes.Bala105, (50, Datos.PANT_ALTO - 75))
         elif tipo1 == 2:
             #cambiar imagen a bala 80mm
-            screen.blit(imagenes.Bala80, (60, datos.PANT_ALTO - 75))
+            screen.blit(imagenes.Bala80, (60, Datos.PANT_ALTO - 75))
         elif tipo1 == 3:
             #cambiar imagen a bala 60mm
-            screen.blit(imagenes.Bala60, (70, datos.PANT_ALTO - 75))
+            screen.blit(imagenes.Bala60, (70, Datos.PANT_ALTO - 75))
         
         if tipo2 == 1:
             #cambiar imagen a bala 105mm
-            screen.blit(imagenes.Bala105, (pantalla.ancho - imagenes.Bala105.get_width() - 50, datos.PANT_ALTO - 75))
+            screen.blit(imagenes.Bala105, (pantalla.ancho - imagenes.Bala105.get_width() - 50, Datos.PANT_ALTO - 75))
         elif tipo2 == 2:
             #cambiar imagen a bala 80mm
-            screen.blit(imagenes.Bala80, (pantalla.ancho - imagenes.Bala80.get_width() - 60, datos.PANT_ALTO - 75))
+            screen.blit(imagenes.Bala80, (pantalla.ancho - imagenes.Bala80.get_width() - 60, Datos.PANT_ALTO - 75))
         elif tipo2 == 3:
             #cambiar imagen a bala 60mm
-            screen.blit(imagenes.Bala60, (pantalla.ancho - imagenes.Bala60.get_width() - 70, datos.PANT_ALTO - 75))
+            screen.blit(imagenes.Bala60, (pantalla.ancho - imagenes.Bala60.get_width() - 70, Datos.PANT_ALTO - 75))
 
         #NO TOCAR SON ESTÁTICOS
 
     #ahora se iniciará una función para calcular la altura maxima de la bala y la distancia recorrida por la bala y se mostrará en pantalla
     def muestra_altura(self, screen, font, altura_maxima, mostrar1, mostrar2):
         if mostrar1:
-            altura_texto1 = font.render(f"Altura máxima J1: {altura_maxima}", True, datos.WHITE)
-            screen.blit(altura_texto1, (10, datos.PANT_ALTO - 180))
+            altura_texto1 = font.render(f"Altura máxima J1: {altura_maxima}", True, Datos.WHITE)
+            screen.blit(altura_texto1, (10, Datos.PANT_ALTO - 180))
         elif mostrar2:
-            altura_texto2 = font.render(f"Altura máxima J2: {altura_maxima}", True, datos.WHITE)
-            screen.blit(altura_texto2, (10, datos.PANT_ALTO - 180))
+            altura_texto2 = font.render(f"Altura máxima J2: {altura_maxima}", True, Datos.WHITE)
+            screen.blit(altura_texto2, (10, Datos.PANT_ALTO - 180))
 
     def prerotate(self, screen, num, angle, pivote):
         if num==1:
@@ -182,15 +182,15 @@ class Pantalla:
         return rotated_image, rect, x, y
     
     def prueba(self, surface, x, y):
-        pygame.draw.circle(surface, datos.BLACK, (x, y), 2)
+        pygame.draw.circle(surface, Datos.BLACK, (x, y), 2)
 
     def muestra_distancia(self, screen, font, distancia_maxima, mostrar1, mostrar2):
         if mostrar1:
-            distancia_texto1 = font.render(f"Distancia máxima J1: {distancia_maxima}", True, datos.WHITE)
-            screen.blit(distancia_texto1, (10, datos.PANT_ALTO - 150))
+            distancia_texto1 = font.render(f"Distancia máxima J1: {distancia_maxima}", True, Datos.WHITE)
+            screen.blit(distancia_texto1, (10, Datos.PANT_ALTO - 150))
         elif mostrar2:
-            distancia_texto2 = font.render(f"Distancia máxima J2: {distancia_maxima}", True, datos.WHITE)
-            screen.blit(distancia_texto2, (10, datos.PANT_ALTO - 150))
+            distancia_texto2 = font.render(f"Distancia máxima J2: {distancia_maxima}", True, Datos.WHITE)
+            screen.blit(distancia_texto2, (10, Datos.PANT_ALTO - 150))
 
     def muestra_bala(self, screen, tipo_bala, pos_x):
         if tipo_bala == 1:
@@ -200,5 +200,5 @@ class Pantalla:
         elif tipo_bala == 3:
             screen.blit(imagenes.Prebala60, (pos_x, 0))
 
-pantalla = Pantalla(datos.PANT_ANCHO, datos.PANT_ALTO)
+pantalla = Pantalla(Datos.PANT_ANCHO, Datos.PANT_ALTO)
 matriz = []

@@ -1,4 +1,4 @@
-import pygame, datos, random
+import pygame, Datos, random
 import math
 
 class Terreno:
@@ -52,7 +52,7 @@ class Terreno:
             
     def dibujar(self, pantalla):
         for x, altura in enumerate(self.terreno):
-            pygame.draw.rect(pantalla, datos.BROWN, (x, self.alto - altura, 1, altura))
+            pygame.draw.rect(pantalla, Datos.BROWN, (x, self.alto - altura, 1, altura))
 
     def verificar_colision(self, bala):
         for x, y in bala.trayectoria:

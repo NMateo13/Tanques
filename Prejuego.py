@@ -1,13 +1,13 @@
-import pygame, imagenes, datos, Juego, sys
+import pygame, imagenes, Datos, Juego, sys
 
 pygame.init()
 pygame.display.set_icon(imagenes.IMG_Explosion) 
 pygame.display.set_caption("PROYECTO TANQUE")
 pygame.mixer.music.load('Assets/musica1.mp3')
-pygame.mixer.music.set_volume(datos.volumen)
+pygame.mixer.music.set_volume(Datos.volumen)
 pygame.mixer.music.play(-1)
 fuente = pygame.font.Font(None, 36)
-size = (datos.PANT_ANCHO, datos.PANT_ALTO)
+size = (Datos.PANT_ANCHO, Datos.PANT_ALTO)
 screen = pygame.display.set_mode(size)
 reset = 0
 
@@ -18,24 +18,25 @@ def draw_text(text, font, x, y, color):
     screen.blit(textobj, textrect)
 
 while True:
-    if datos.reiniciar == True:
-        datos.reiniciar = False
-        screen.fill(datos.WHITE)
-        texto_espera = fuente.render(f"Cargando...", True, datos.BLACK)
-        screen.blit(texto_espera, (datos.PANT_ANCHO / 2 - texto_espera.get_width() / 2, datos.PANT_ALTO / 2 - texto_espera.get_height() / 2))
+    if Datos.reiniciar == True:
+        Datos.reiniciar = False
+        screen.fill(Datos.WHITE)
+        texto_espera = fuente.render(f"Cargando...", True, Datos.BLACK)
+        screen.blit(texto_espera, (Datos.PANT_ANCHO / 2 - texto_espera.get_width() / 2, Datos.PANT_ALTO / 2 - texto_espera.get_height() / 2))
         pygame.display.flip() 
         pygame.time.delay(300)
-        datos.bandera_tanque = True
+        Datos.bandera_tanque = True
         Juego.juego(screen, fuente)
     screen.blit(imagenes.FondoMenu, (0, 0))
 
-    play_button = pygame.Rect((datos.PANT_ANCHO / 2) + 95, (datos.PANT_ALTO / 2) - 98, 100, 50)
-    control_button = pygame.Rect((datos.PANT_ANCHO / 2) + 75, (datos.PANT_ALTO / 2) - 5, 100, 50)
-    quit_button = pygame.Rect((datos.PANT_ANCHO / 2) + 100, (datos.PANT_ALTO / 2) + 90, 100, 50)
+    play_button = pygame.Rect((Datos.PANT_ANCHO / 2) + 95, (Datos.PANT_ALTO / 2) - 98, 100, 50)
+    control_button = pygame.Rect((Datos.PANT_ANCHO / 2) + 75, (Datos.PANT_ALTO / 2) - 5, 100, 50)
+    quit_button = pygame.Rect((Datos.PANT_ANCHO / 2) + 100, (Datos.PANT_ALTO / 2) + 90, 100, 50)
 
-    draw_text('Jugar', fuente, (datos.PANT_ANCHO / 2) + 95, (datos.PANT_ALTO / 2) - 98, datos.WHITE)
-    draw_text('Opciones', fuente, (datos.PANT_ANCHO / 2) + 75, (datos.PANT_ALTO / 2) - 5, datos.WHITE)
-    draw_text('Salir', fuente, (datos.PANT_ANCHO / 2) + 100, (datos.PANT_ALTO / 2) + 88, datos.WHITE)
+    draw_text('Jugar', fuente, (Datos.PANT_ANCHO / 2) + 95, (Datos.PANT_ALTO / 2) - 98, Datos.WHITE)
+    draw_text('Opciones', fuente, (Datos.PANT_ANCHO / 2) + 75, (Datos.PANT_ALTO / 2) - 5, Datos.WHITE)
+    draw_text('Salir', fuente, (Datos.PANT_ANCHO / 2) + 100, (Datos.PANT_ALTO / 2) + 88, Datos.WHITE)
+
 
     pygame.display.update()
 
@@ -51,3 +52,6 @@ while True:
             if quit_button.collidepoint(event.pos):
                 pygame.quit()
                 sys.exit()
+
+
+    

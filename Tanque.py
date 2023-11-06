@@ -1,4 +1,4 @@
-import pygame, datos, imagenes, Pantalla
+import pygame, Datos, imagenes, Pantalla
 import random
 from Bala import Bala
 
@@ -21,7 +21,7 @@ class Tanque:
         self.indice = indice
 
     def dibujar(self, screen):
-        pygame.draw.rect(screen, datos.RED, (self.x, self.y, self.ancho, self.altura))
+        pygame.draw.rect(screen, Datos.RED, (self.x, self.y, self.ancho, self.altura))
 
     def disparar(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tiempo, screen, color, tipo_bala):
         bala = Bala(pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tipo_bala  )
@@ -75,7 +75,7 @@ class Tanque:
             posY_Tanque = terreno.alto - terreno.terreno[indice] - 26
             tank1 = Pantalla.pantalla.tank1
             tanque = Tanque(posX_Tanque - 10, posY_Tanque + 10, tank1, indice)
-            datos.bandera_tanque = False
+            Datos.bandera_tanque = False
 
             return tanque
 
@@ -84,6 +84,6 @@ class Tanque:
             indice = (1199 - posX_Tanque)    
             posY_Tanque = terreno.alto -  terreno.terreno[indice] - 24
             tank2 = Pantalla.pantalla.tank2
-            tanque = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque + 20, posY_Tanque + 10, tank2, indice)
+            tanque = Tanque(Datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque + 20, posY_Tanque + 10, tank2, indice)
 
             return tanque
