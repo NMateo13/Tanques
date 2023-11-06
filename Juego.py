@@ -130,15 +130,15 @@ def juego(screen, fuente):
     Clock = pygame.time.Clock()
     tecla_espacio_presionada = False
 
-    pivote1 = [tanque1.x  , tanque1.y]
-    pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - tanque2.x, tanque2.y]
+    pivote1 = [tanque1.x + 35 , tanque1.y]
+    pivote2 = [tanque2.x, tanque2.y]
             
     angulo_jugador1 = 30 # Ángulo inicial
     extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
     velocidad_jugador1 = 50  # Velocidad inicial
 
     angulo_jugador2 = 30  # Ángulo inicial
-    extremo_canonx_1, extremo_canony_1 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)
+    extremo_canonx_2, extremo_canony_2 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)
     velocidad_jugador2 = 50  # Velocidad inicial
 
     tiempo_transcurrido = 0
@@ -232,8 +232,8 @@ def juego(screen, fuente):
         screen.blit(imagenes.Background, (0, 0))
         terreno.dibujar(screen)
         screen.blit(imagenes.HUD, (0, datos.PANT_ALTO - 120))
-        tanque1.dibujar(screen)
-        tanque2.dibujar(screen)
+        tanque1.dibujar(screen)  #DIBUJAN HITBOX
+        tanque2.dibujar(screen)  #DIBUJAN HITBOX
 
         if tanque1.vida <= 0: # Si la vida del tanque 1 es menor o igual a 0, el ganador es el tanque 2
             Ganador = 2
@@ -512,7 +512,7 @@ def juego(screen, fuente):
 
                     
             tiempo_transcurrido += incremento
-        if tanque1.y != (terreno.alto - tanque1.indice - 26) or tanque2.y != (600 -  tanque2.indice - 24):
+        '''if tanque1.y != (terreno.alto - tanque1.indice - 26) or tanque2.y != (600 -  tanque2.indice - 24):
             
             tanque1.y = terreno.alto - tanque1.indice - 26
             tanque2.y = 600 -  tanque2.indice - 24 
@@ -524,7 +524,7 @@ def juego(screen, fuente):
             pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() -tanque2.x + 5, tanque2.y+5]
 
             extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
-            extremo_canonx_1, extremo_canony_1 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)
+            extremo_canonx_1, extremo_canony_1 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)'''
 
 
 
@@ -549,7 +549,7 @@ def juego(screen, fuente):
         Pantalla.pantalla.muestra_potencia(screen, fuente,velocidad_jugador1,velocidad_jugador2)
         Pantalla.pantalla.muestra_angulo(screen, fuente,datos.ang_tank[angulo_jugador1-30],datos.ang_tank[angulo_jugador2-30])    
         Pantalla.pantalla.muestra_texto(screen, fuente ,turno1,datos.cantidad_balas1,datos.cantidad_balas2)
-        Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, tanque1.x, tanque2.x, tanque2.x, tanque2.y)
+        Pantalla.pantalla.muestra_imagen(screen, tipo_bala1, tipo_bala2, tanque1.x, tanque1.y, tanque2.x, tanque2.y)
         Pantalla.pantalla.muestra_altura(screen, fuente, datos.altura_maxima, mostrar_altura1, mostrar_altura2)
         Pantalla.pantalla.muestra_distancia(screen, fuente, datos.distancia_maxima, mostrar_altura1, mostrar_altura2)
         if bala_tanque1 is not None and bala_tanque1.visualizar():

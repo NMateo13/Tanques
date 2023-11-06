@@ -120,8 +120,8 @@ class Pantalla:
         angulo_texto2 = font.render(f"Ángulo: {angulo_jugador2}°", True, datos.WHITE)
         screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, datos.PANT_ALTO - 30))
 
-    def muestra_imagen(self, screen, tipo1, tipo2, posX1, posX2, posY1, posY2):
-        screen.blit(imagenes.Tanque1, (posX1 - 10, posY1)) 
+    def muestra_imagen(self, screen, tipo1, tipo2, posX1, posY1, posX2, posY2):
+        screen.blit(imagenes.Tanque1, (posX1, posY1-10)) 
         screen.blit(imagenes.Tanque2, (pantalla.ancho - imagenes.Tanque2.get_width() - posX2+20, posY2)) 
         screen.blit(imagenes.Exit, (pantalla.ancho - imagenes.Exit.get_width() - 650, 10))
         screen.blit(imagenes.Restart, (pantalla.ancho - imagenes.Restart.get_width() - 550, 10))

@@ -25,6 +25,7 @@ while True:
         screen.blit(texto_espera, (datos.PANT_ANCHO / 2 - texto_espera.get_width() / 2, datos.PANT_ALTO / 2 - texto_espera.get_height() / 2))
         pygame.display.flip() 
         pygame.time.delay(300)
+        datos.bandera_tanque = True
         Juego.juego(screen, fuente)
     screen.blit(imagenes.FondoMenu, (0, 0))
 

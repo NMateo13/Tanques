@@ -68,11 +68,11 @@ class Tanque:
     
     def crearTanques(terreno, bandera):
 
-        posX_Tanque = random.randint(0, 550)
-
         if bandera:
+
+            posX_Tanque = random.randint(0, 550)
             indice = posX_Tanque
-            posY_Tanque = datos.PANT_ALTO - terreno.terreno[indice] - 26
+            posY_Tanque = terreno.alto - terreno.terreno[indice] - 26
             tank1 = Pantalla.pantalla.tank1
             tanque = Tanque(posX_Tanque - 10, posY_Tanque + 10, tank1, indice)
             datos.bandera_tanque = False
@@ -80,6 +80,7 @@ class Tanque:
             return tanque
 
         else:
+            posX_Tanque = random.randint(0, 500)
             indice = (1199 - posX_Tanque)    
             posY_Tanque = datos.PANT_ALTO -  terreno.terreno[indice] - 24
             tank2 = Pantalla.pantalla.tank2
