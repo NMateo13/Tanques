@@ -83,7 +83,7 @@ class Pantalla:
         screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, datos.PANT_ALTO - 110))
         #tanque 1
         cant_balas = font.render(balas1_texo, True, datos.WHITE)
-        screen.blit(cant_balas, (pantalla.ancho - cant_balas.get_width() - 1080, datos.PANT_ALTO - 30))
+        screen.blit(cant_balas, (110, datos.PANT_ALTO - 30))
 
         #tanque 2
         cant_balas = font.render(balas2_texo, True, datos.WHITE)
@@ -128,8 +128,9 @@ class Pantalla:
 
         #NO TOCAR SON ESTÁTICOS 
 
-        screen.blit(imagenes.Tanque1_HUD, (450, 525)) 
-        screen.blit(imagenes.Tanque2_HUD, (pantalla.ancho - imagenes.Tanque2_HUD.get_width() - 450, 525)) 
+        screen.blit(imagenes.Tanque1_HUD, (450, datos.PANT_ALTO - imagenes.Tanque1_HUD.get_height() - 5)) 
+        screen.blit(imagenes.Tanque2_HUD, (pantalla.ancho - imagenes.Tanque2_HUD.get_width() - 450, datos.PANT_ALTO - imagenes.Tanque2_HUD.get_height() - 5))
+
         if tipo1 == 1:
             #cambiar imagen a bala 105mm
             screen.blit(imagenes.Bala105, (50, datos.PANT_ALTO - 75))

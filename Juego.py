@@ -9,32 +9,38 @@ def draw_text(text, font, x, y, color, screen):
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     screen.blit(textobj, textrect)
-
-def controles(screen):
+    
+def opciones(screen):
     while True:
         salir = False
+
+        boton_800 = pygame.Rect((datos.PANT_ANCHO / 2) - 450, (datos.PANT_ALTO / 2) - 140, 100, 50)
+        boton_default = pygame.Rect((datos.PANT_ANCHO / 2) - 450, (datos.PANT_ALTO / 2) - 80, 100, 50)
+        boton_1080 = pygame.Rect((datos.PANT_ANCHO / 2) - 450, (datos.PANT_ALTO / 2) - 20, 100, 50)
+        boton_aplicar = pygame.Rect((datos.PANT_ANCHO / 2) - 450, (datos.PANT_ALTO / 2) + 40, 100, 50)
+    
         screen.fill(datos.WHITE)
-        screen.blit(imagenes.IMG_fondo_controles, (0, 0))
+        screen.blit(imagenes.FondoControles, (0, 0))
         fuente = pygame.font.Font(None, 36)
-        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) - 58, (datos.PANT_ALTO / 2) - 250, datos.BLACK, screen)
-        draw_text('Jugador 1', fuente, (datos.PANT_ANCHO / 2) - 418, (datos.PANT_ALTO / 2) - 200, datos.BLACK, screen)
-        draw_text('Jugador 2', fuente, (datos.PANT_ANCHO / 2) + 303, (datos.PANT_ALTO / 2) - 200, datos.BLACK, screen)
+        draw_text('Opciones', fuente, (datos.PANT_ANCHO / 2) - 58, (datos.PANT_ALTO / 2) - 250, datos.BLACK, screen)
+        draw_text('Resolucion', fuente, (datos.PANT_ANCHO / 2) - 418, (datos.PANT_ALTO / 2) - 200, datos.BLACK, screen)
+        draw_text('Controles', fuente, (datos.PANT_ANCHO / 2) + 303, (datos.PANT_ALTO / 2) - 200, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 23)
-        draw_text('W: Aumentar ángulo', fuente, (datos.PANT_ANCHO / 2) - 438, (datos.PANT_ALTO / 2) - 137, datos.BLACK, screen)
+        draw_text('800x800', fuente, (datos.PANT_ANCHO / 2) - 438, (datos.PANT_ALTO / 2) - 137, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 21)
-        draw_text('Arriba: Aumentar ángulo', fuente, (datos.PANT_ANCHO / 2) + 277, (datos.PANT_ALTO / 2) - 137, datos.BLACK, screen)
+        draw_text('W | Arriba: Más ángulo', fuente, (datos.PANT_ANCHO / 2) + 277, (datos.PANT_ALTO / 2) - 137, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 23)
-        draw_text('S: Disminuir ángulo', fuente, (datos.PANT_ANCHO / 2) - 436, (datos.PANT_ALTO / 2) - 78, datos.BLACK, screen)
+        draw_text('Default', fuente, (datos.PANT_ANCHO / 2) - 436, (datos.PANT_ALTO / 2) - 78, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 21)
-        draw_text('Abajo: Disminuir ángulo', fuente, (datos.PANT_ANCHO / 2) + 278, (datos.PANT_ALTO / 2) - 78, datos.BLACK, screen)
+        draw_text('S | Abajo: Menos ángulo', fuente, (datos.PANT_ANCHO / 2) + 278, (datos.PANT_ALTO / 2) - 78, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 23)
-        draw_text('A: Disminuir potencia', fuente, (datos.PANT_ANCHO / 2) - 442, (datos.PANT_ALTO / 2) - 19, datos.BLACK, screen)
+        draw_text('1920x1080', fuente, (datos.PANT_ANCHO / 2) - 442, (datos.PANT_ALTO / 2) - 19, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 17)
-        draw_text('Izquierda: Disminuir potencia', fuente, (datos.PANT_ANCHO / 2) + 280, (datos.PANT_ALTO / 2) - 17, datos.BLACK, screen)
+        draw_text('A | Izquierda: Menos potencia', fuente, (datos.PANT_ANCHO / 2) + 280, (datos.PANT_ALTO / 2) - 17, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 23)
-        draw_text('D: Aumentar potencia', fuente, (datos.PANT_ANCHO / 2) - 443, (datos.PANT_ALTO / 2) + 39, datos.BLACK, screen)
+        draw_text('Aplicar Resolución', fuente, (datos.PANT_ANCHO / 2) - 443, (datos.PANT_ALTO / 2) + 39, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 17)
-        draw_text('Derecha: Aumentar potencia', fuente, (datos.PANT_ANCHO / 2) + 283, (datos.PANT_ALTO / 2) + 41, datos.BLACK, screen)
+        draw_text('D | Derecha: Más potencia', fuente, (datos.PANT_ANCHO / 2) + 283, (datos.PANT_ALTO / 2) + 41, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 26)
         draw_text('1: Bala 105mm', fuente, (datos.PANT_ANCHO / 2) - 425, (datos.PANT_ALTO / 2) + 116, datos.BLACK, screen)
         fuente = pygame.font.Font(None, 26)
@@ -54,8 +60,26 @@ def controles(screen):
             keys = pygame.key.get_pressed()
             if keys[pygame.K_ESCAPE]:
                 salir = True
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if boton_800.collidepoint(event.pos):
+                    datos.PANT_ANCHO = 800
+                    datos.PANT_ALTO = 800
+                    pygame.display.set_mode((datos.PANT_ANCHO, datos.PANT_ALTO))
+                if boton_default.collidepoint(event.pos):
+                    datos.PANT_ANCHO = 1200
+                    datos.PANT_ALTO = 600
+                    pygame.display.set_mode((datos.PANT_ANCHO, datos.PANT_ALTO))
+                if boton_1080.collidepoint(event.pos):
+                    datos.PANT_ANCHO = 1920
+                    datos.PANT_ALTO = 1080
+                    pygame.display.set_mode((datos.PANT_ANCHO, datos.PANT_ALTO))
+                if boton_aplicar.collidepoint(event.pos):
+                    pygame.display.update()
+                    salir = True      
+
         if salir:
             break
+
 
 def muestra_ganador(Ganador, screen, fuente): #Función para mostrar el ganador del juego
     screen.fill(datos.WHITE) 
@@ -207,7 +231,7 @@ def juego(screen, fuente):
 
         screen.blit(imagenes.Background, (0, 0))
         terreno.dibujar(screen)
-        screen.blit(imagenes.HUD, (0, 480))
+        screen.blit(imagenes.HUD, (0, datos.PANT_ALTO - 120))
         tanque1.dibujar(screen)
         tanque2.dibujar(screen)
 
@@ -242,6 +266,7 @@ def juego(screen, fuente):
                 datos.distancia_maxima = bala_tanque1.distancia_maxima(tanque1.x, datos.distancia_maxima)
                 bala_tanque1.verificacion(tiempo_transcurrido, screen, datos.BLACK)
                 impacto_tanque = bala_tanque1.verificar_impacto_tanque(tanque2)
+                impacto_tanque_igual = bala_tanque1.verificar_impacto_tanque(tanque1)
                 impacto_terreno = terreno.verificar_colision(bala_tanque1)
                 impacto_borde = bala_tanque1.verificar_impacto_ancho(datos.PANT_ANCHO)
                         
@@ -269,7 +294,30 @@ def juego(screen, fuente):
                         turno1 = False
                         turno2 = True
                         tiempo_transcurrido = 0
+                elif impacto_tanque_igual:
+                    if tipo_bala1 == 1:
+                        tanque1.vida -= tanque1.Bala105mm
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
+                    
+                    elif tipo_bala1 == 2:
+                        tanque1.vida -= tanque1.Bala80mm
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
 
+                    elif tipo_bala1 == 3:
+                        tanque1.vida -= tanque1.Bala60mm
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
                 elif impacto_borde:
                         bala_tanque1 = None
                         tecla_espacio_presionada = False
@@ -355,12 +403,12 @@ def juego(screen, fuente):
                 datos.distancia_maxima = bala_tanque2.distancia_maxima(tanque2.x, datos.distancia_maxima)
                 bala_tanque2.verificacion(tiempo_transcurrido, screen, datos.BLACK)
                 impacto_tanque = bala_tanque2.verificar_impacto_tanque(tanque1)
+                impacto_tanque_igual = bala_tanque2.verificar_impacto_tanque(tanque2)
                 impacto_terreno = terreno.verificar_colision(bala_tanque2)
                 impacto_borde = bala_tanque2.verificar_impacto_ancho(datos.PANT_ANCHO)
                 if impacto_tanque:
                     if tipo_bala2 == 1:
                         tanque1.vida -= tanque2.Bala105mm
-
                         bala_tanque2 = None
                         tecla_espacio_presionada = False
                         turno2 = False
@@ -382,7 +430,31 @@ def juego(screen, fuente):
                         turno2 = False
                         turno1 = True
                         tiempo_transcurrido = 0
+                elif impacto_tanque_igual:
+                    if tipo_bala2 == 1:
+                        tanque2.vida -= tanque2.Bala105mm
+                        datos.nTurnos += 1
+                        bala_tanque2 = None
+                        tecla_espacio_presionada = False
+                        turno2 = False
+                        turno1 = True
+                        tiempo_transcurrido = 0
+                    
+                    elif tipo_bala2 == 2:
+                        tanque2.vida -= tanque2.Bala80mm
+                        bala_tanque2 = None
+                        tecla_espacio_presionada = False
+                        turno2 = False
+                        turno1 = True
+                        tiempo_transcurrido = 0
 
+                    elif tipo_bala2 == 3:
+                        tanque2.vida -= tanque2.Bala60mm
+                        bala_tanque2 = None
+                        tecla_espacio_presionada = False
+                        turno2 = False
+                        turno1 = True
+                        tiempo_transcurrido = 0
                 elif impacto_borde:
                     bala_tanque2 = None
                     tecla_espacio_presionada = False
@@ -440,6 +512,22 @@ def juego(screen, fuente):
 
                     
             tiempo_transcurrido += incremento
+        if posY_Tanque1 != (terreno.alto - terreno.terreno[indice] - 26) or posY_Tanque2 != (600 -  terreno.terreno[indice2] - 24):
+            
+            posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
+            posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24 
+
+            tanque1.y = posY_Tanque1+10
+            tanque2.y = posY_Tanque2+20
+
+            pivote1 = [posX_Tanque1 + 10, posY_Tanque1]
+            pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - posX_Tanque2 + 5, posY_Tanque2+5]
+
+            extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
+            extremo_canonx_1, extremo_canony_1 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)
+
+
+
 
         # Descuento de balas        
         if tipo_bala1 == 1:
