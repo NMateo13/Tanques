@@ -258,6 +258,7 @@ def juego(screen, fuente):
                 datos.distancia_maxima = bala_tanque1.distancia_maxima(tanque1.x, datos.distancia_maxima)
                 bala_tanque1.verificacion(tiempo_transcurrido, screen, datos.BLACK)
                 impacto_tanque = bala_tanque1.verificar_impacto_tanque(tanque2)
+                impacto_tanque_igual = bala_tanque1.verificar_impacto_tanque(tanque1)
                 impacto_terreno = terreno.verificar_colision(bala_tanque1)
                 impacto_borde = bala_tanque1.verificar_impacto_ancho(datos.PANT_ANCHO)
                         
@@ -285,7 +286,30 @@ def juego(screen, fuente):
                         turno1 = False
                         turno2 = True
                         tiempo_transcurrido = 0
+                elif impacto_tanque_igual:
+                    if tipo_bala1 == 1:
+                        tanque1.vida -= tanque1.Bala105mm
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
+                    
+                    elif tipo_bala1 == 2:
+                        tanque1.vida -= tanque1.Bala80mm
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
 
+                    elif tipo_bala1 == 3:
+                        tanque1.vida -= tanque1.Bala60mm
+                        bala_tanque1 = None
+                        tecla_espacio_presionada = False
+                        turno1 = False
+                        turno2 = True
+                        tiempo_transcurrido = 0
                 elif impacto_borde:
                         bala_tanque1 = None
                         tecla_espacio_presionada = False
@@ -371,12 +395,12 @@ def juego(screen, fuente):
                 datos.distancia_maxima = bala_tanque2.distancia_maxima(tanque2.x, datos.distancia_maxima)
                 bala_tanque2.verificacion(tiempo_transcurrido, screen, datos.BLACK)
                 impacto_tanque = bala_tanque2.verificar_impacto_tanque(tanque1)
+                impacto_tanque_igual = bala_tanque2.verificar_impacto_tanque(tanque2)
                 impacto_terreno = terreno.verificar_colision(bala_tanque2)
                 impacto_borde = bala_tanque2.verificar_impacto_ancho(datos.PANT_ANCHO)
                 if impacto_tanque:
                     if tipo_bala2 == 1:
                         tanque1.vida -= tanque2.Bala105mm
-
                         bala_tanque2 = None
                         tecla_espacio_presionada = False
                         turno2 = False
@@ -398,7 +422,31 @@ def juego(screen, fuente):
                         turno2 = False
                         turno1 = True
                         tiempo_transcurrido = 0
+                elif impacto_tanque_igual:
+                    if tipo_bala2 == 1:
+                        tanque2.vida -= tanque2.Bala105mm
+                        datos.nTurnos += 1
+                        bala_tanque2 = None
+                        tecla_espacio_presionada = False
+                        turno2 = False
+                        turno1 = True
+                        tiempo_transcurrido = 0
+                    
+                    elif tipo_bala2 == 2:
+                        tanque2.vida -= tanque2.Bala80mm
+                        bala_tanque2 = None
+                        tecla_espacio_presionada = False
+                        turno2 = False
+                        turno1 = True
+                        tiempo_transcurrido = 0
 
+                    elif tipo_bala2 == 3:
+                        tanque2.vida -= tanque2.Bala60mm
+                        bala_tanque2 = None
+                        tecla_espacio_presionada = False
+                        turno2 = False
+                        turno1 = True
+                        tiempo_transcurrido = 0
                 elif impacto_borde:
                     bala_tanque2 = None
                     tecla_espacio_presionada = False
@@ -456,6 +504,22 @@ def juego(screen, fuente):
 
                     
             tiempo_transcurrido += incremento
+        if posY_Tanque1 != (terreno.alto - terreno.terreno[indice] - 26) or posY_Tanque2 != (600 -  terreno.terreno[indice2] - 24):
+            
+            posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
+            posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24 
+
+            tanque1.y = posY_Tanque1+10
+            tanque2.y = posY_Tanque2+20
+
+            pivote1 = [posX_Tanque1 + 10, posY_Tanque1]
+            pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - posX_Tanque2 + 5, posY_Tanque2+5]
+
+            extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
+            extremo_canonx_1, extremo_canony_1 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)
+
+
+
 
         # Descuento de balas        
         if tipo_bala1 == 1:
