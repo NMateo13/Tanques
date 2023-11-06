@@ -5,7 +5,7 @@ from Bala import Bala
 
 
 class Tanque:
-    def __init__(self, x, y, num):
+    def __init__(self, x, y, num, indice):
         self.x = x
         self.y = y
         self.ancho = 60
@@ -18,6 +18,7 @@ class Tanque:
         self.Bala60mm = 30 # daño de las balas
         self.Bala80mm = 40
         self.Bala105mm = 50
+        self.indice = 0
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, datos.RED, (self.x, self.y, self.ancho, self.altura))
@@ -65,24 +66,23 @@ class Tanque:
             tipo_bala = random.randint(1, 3)
         return angulo, velocidad, tipo_bala
     
-    def crearTanques(self, terreno):
+    def crearTanques(terreno, bandera):
 
-        posX_Tanque1 = random.randint(0, 550) 
-        posX_Tanque2 = random.randint(0, 550)
+        posX_Tanque = random.randint(0, 550)
 
-        indice = posX_Tanque1
-        indice2 = (1199 - posX_Tanque2)
+        if bandera:
+            indice = posX_Tanque
+            posY_Tanque = datos.PANT_ALTO - terreno.terreno[indice] - 26
+            tank1 = Pantalla.pantalla.tank1
+            tanque = Tanque(posX_Tanque - 10, posY_Tanque + 10, tank1, indice)
+            datos.bandera_tanque = False
 
-        posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
-        posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24
-        while posY_Tanque2 < 0:
-            posX_Tanque2 = random.randint(0, 550)
-            indice2 = (1199 - posX_Tanque2)
-           
-        tank1 = Pantalla.pantalla.tank1 #Imagenes tanques
-        tank2 = Pantalla.pantalla.tank2 #Imagenes tanques 
+            return tanque
 
-        tanque1 = Tanque(posX_Tanque1 - 10, posY_Tanque1 + 10, tank1) #Muestra visualmente los tanques
-        tanque2 = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque2 + 20, posY_Tanque2 + 10, tank2) 
+        else:
+            indice = (1199 - posX_Tanque)    
+            posY_Tanque = datos.PANT_ALTO -  terreno.terreno[indice] - 24
+            tank2 = Pantalla.pantalla.tank2
+            tanque = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque + 20, posY_Tanque + 10, tank2, indice)
 
-        return tanque1, tanque2
+            return tanque

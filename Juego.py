@@ -95,8 +95,8 @@ def juego(screen, fuente):
 
     # Crear dos hitboxes
 
-    tanque1 = Tanque.crearTanques(terreno)
-    tanque2 = Tanque.crearTanques(terreno)
+    tanque1 = Tanque.crearTanques(terreno, datos.bandera_tanque)
+    tanque2 = Tanque.crearTanques(terreno, datos.bandera_tanque)
 
     bala_tanque1 = None
     bala_tanque2 = None
@@ -512,16 +512,16 @@ def juego(screen, fuente):
 
                     
             tiempo_transcurrido += incremento
-        if posY_Tanque1 != (terreno.alto - terreno.terreno[indice] - 26) or posY_Tanque2 != (600 -  terreno.terreno[indice2] - 24):
+        if tanque1.y != (terreno.alto - tanque1.indice - 26) or tanque2.y != (600 -  tanque2.indice - 24):
             
-            posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
-            posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24 
+            tanque1.y = terreno.alto - tanque1.indice - 26
+            tanque2.y = 600 -  tanque2.indice - 24 
 
-            tanque1.y = posY_Tanque1+10
-            tanque2.y = posY_Tanque2+20
+            tanque1.y = tanque1.y+10
+            tanque2.y = tanque2.y+20
 
-            pivote1 = [posX_Tanque1 + 10, posY_Tanque1]
-            pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() - posX_Tanque2 + 5, posY_Tanque2+5]
+            pivote1 = [tanque1.x + 10, tanque1.y]
+            pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() -tanque2.x + 5, tanque2.y+5]
 
             extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
             extremo_canonx_1, extremo_canony_1 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)
