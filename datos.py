@@ -1,3 +1,4 @@
+#Variables de juego
 bala_tanque1 = None
 bala_tanque2 = None
 centroExplosion = []
@@ -15,7 +16,13 @@ extremo_canony_1 = 0
 extremo_canonx_2 = 0
 extremo_canony_2 = 0
 mostrar_altura1 = False
-mostrar_altura2 = False    
+mostrar_altura2 = False 
+tecla_espacio_presionada = False 
+angulo_jugador1 = 30 
+angulo_jugador2 = 30
+velocidad_jugador1 = 50
+velocidad_jugador2 = 50
+tiempo_transcurrido = 0
 
 # Variables y Constantes
 FPS = 60
@@ -47,12 +54,15 @@ BROWN = (139, 69, 19)
 
 
 def reiniciar_datos():
-    global bala_tanque1, bala_tanque2
-    global centroExplosion, radioExplosion
-    global arrayaux ,arrayaux2 ,aux_x ,aux_y
-    global tipo_bala1,tipo_bala2, turno1,turno2
+    global bala_tanque1, tipo_bala1, mostrar_altura1
+    global bala_tanque2, tipo_bala2, mostrar_altura2
+    global turno1, angulo_jugador1, velocidad_jugador1
+    global turno2, angulo_jugador2, velocidad_jugador2
     global extremo_canonx_1, extremo_canony_1, extremo_canonx_2,extremo_canony_2
-    global mostrar_altura1, mostrar_altura2
+    global arrayaux ,arrayaux2 ,aux_x ,aux_y
+    global tecla_espacio_presionada
+    global centroExplosion, radioExplosion, tiempo_transcurrido
+
     bala_tanque1 = None
     bala_tanque2 = None
     centroExplosion = []
@@ -71,7 +81,12 @@ def reiniciar_datos():
     extremo_canony_2 = 0
     mostrar_altura1 = False
     mostrar_altura2 = False
-    
+    tecla_espacio_presionada = False
+    angulo_jugador1 = 30
+    angulo_jugador2 = 30
+    velocidad_jugador1 = 50
+    velocidad_jugador2 = 50
+    tiempo_transcurrido = 0
 
 
 

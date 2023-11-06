@@ -19,6 +19,7 @@ class Tanque:
         self.Bala80mm = 40
         self.Bala105mm = 50
         self.indice = indice
+        self.pivote = []
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, Datos.RED, (self.x, self.y, self.ancho, self.altura))
