@@ -1,4 +1,4 @@
-import pygame
+import pygame, datos, imagenes, Pantalla
 import random
 from Bala import Bala
 
@@ -64,3 +64,25 @@ class Tanque:
         else:
             tipo_bala = random.randint(1, 3)
         return angulo, velocidad, tipo_bala
+    
+    def crearTanques(self, terreno):
+
+        posX_Tanque1 = random.randint(0, 550) 
+        posX_Tanque2 = random.randint(0, 550)
+
+        indice = posX_Tanque1
+        indice2 = (1199 - posX_Tanque2)
+
+        posY_Tanque1 = terreno.alto - terreno.terreno[indice] - 26
+        posY_Tanque2 = 600 -  terreno.terreno[indice2] - 24
+        while posY_Tanque2 < 0:
+            posX_Tanque2 = random.randint(0, 550)
+            indice2 = (1199 - posX_Tanque2)
+           
+        tank1 = Pantalla.pantalla.tank1 #Imagenes tanques
+        tank2 = Pantalla.pantalla.tank2 #Imagenes tanques 
+
+        tanque1 = Tanque(posX_Tanque1 - 10, posY_Tanque1 + 10, tank1) #Muestra visualmente los tanques
+        tanque2 = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque2 + 20, posY_Tanque2 + 10, tank2) 
+
+        return tanque1, tanque2
