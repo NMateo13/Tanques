@@ -18,7 +18,7 @@ class Tanque:
         self.Bala60mm = 30 # daño de las balas
         self.Bala80mm = 40
         self.Bala105mm = 50
-        self.indice = 0
+        self.indice = indice
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, datos.RED, (self.x, self.y, self.ancho, self.altura))
@@ -82,7 +82,7 @@ class Tanque:
         else:
             posX_Tanque = random.randint(0, 500)
             indice = (1199 - posX_Tanque)    
-            posY_Tanque = datos.PANT_ALTO -  terreno.terreno[indice] - 24
+            posY_Tanque = terreno.alto -  terreno.terreno[indice] - 24
             tank2 = Pantalla.pantalla.tank2
             tanque = Tanque(datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque + 20, posY_Tanque + 10, tank2, indice)
 

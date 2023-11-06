@@ -130,8 +130,8 @@ def juego(screen, fuente):
     Clock = pygame.time.Clock()
     tecla_espacio_presionada = False
 
-    pivote1 = [tanque1.x + 35 , tanque1.y]
-    pivote2 = [tanque2.x, tanque2.y]
+    pivote1 = [tanque1.x+21, tanque1.y-5]
+    pivote2 = [tanque2.x+21, tanque2.y-5]
             
     angulo_jugador1 = 30 # Ángulo inicial
     extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
@@ -512,21 +512,15 @@ def juego(screen, fuente):
 
                     
             tiempo_transcurrido += incremento
-        '''if tanque1.y != (terreno.alto - tanque1.indice - 26) or tanque2.y != (600 -  tanque2.indice - 24):
-            
-            tanque1.y = terreno.alto - tanque1.indice - 26
-            tanque2.y = 600 -  tanque2.indice - 24 
-
-            tanque1.y = tanque1.y+10
-            tanque2.y = tanque2.y+20
-
-            pivote1 = [tanque1.x + 10, tanque1.y]
-            pivote2 = [datos.PANT_ANCHO - imagenes.IMG_Canon2.get_width() -tanque2.x + 5, tanque2.y+5]
-
+        if tanque1.y != (terreno.alto - terreno.terreno[tanque1.indice] - 16):
+            tanque1.y = terreno.alto - terreno.terreno[tanque1.indice] - 16
+            pivote1 = [tanque1.x+21, tanque1.y-5]
             extremo_canonx_1, extremo_canony_1 = Pantalla.pantalla.prerotate(screen, 1, datos.ang_tank[angulo_jugador1], pivote1)
-            extremo_canonx_1, extremo_canony_1 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)'''
 
-
+        elif tanque2.y != (terreno.alto -  terreno.terreno[tanque2.indice] - 14):
+            tanque2.y = terreno.alto -  terreno.terreno[tanque2.indice] - 14
+            pivote2 = [tanque2.x+21, tanque2.y-5]
+            extremo_canonx_2, extremo_canony_2 =Pantalla.pantalla.prerotate(screen, 2, datos.ang_tank[angulo_jugador2]-90, pivote2)
 
 
         # Descuento de balas        

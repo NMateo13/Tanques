@@ -122,14 +122,14 @@ class Pantalla:
 
     def muestra_imagen(self, screen, tipo1, tipo2, posX1, posY1, posX2, posY2):
         screen.blit(imagenes.Tanque1, (posX1, posY1-10)) 
-        screen.blit(imagenes.Tanque2, (pantalla.ancho - imagenes.Tanque2.get_width() - posX2+20, posY2)) 
-        screen.blit(imagenes.Exit, (pantalla.ancho - imagenes.Exit.get_width() - 650, 10))
-        screen.blit(imagenes.Restart, (pantalla.ancho - imagenes.Restart.get_width() - 550, 10))
+        screen.blit(imagenes.Tanque2, (posX2, posY2-10)) 
+        screen.blit(imagenes.Exit, (pantalla.ancho - imagenes.Exit.get_width()-650, 10))
+        screen.blit(imagenes.Restart, (pantalla.ancho - imagenes.Restart.get_width()-550, 10))
 
         #NO TOCAR SON ESTÁTICOS 
 
         screen.blit(imagenes.Tanque1_HUD, (450, datos.PANT_ALTO - imagenes.Tanque1_HUD.get_height() - 5)) 
-        screen.blit(imagenes.Tanque2_HUD, (pantalla.ancho - imagenes.Tanque2_HUD.get_width() - 450, datos.PANT_ALTO - imagenes.Tanque2_HUD.get_height() - 5))
+        screen.blit(imagenes.Tanque2_HUD, (pantalla.ancho - imagenes.Tanque2_HUD.get_width()-450, datos.PANT_ALTO - imagenes.Tanque2_HUD.get_height()-5))
 
         if tipo1 == 1:
             #cambiar imagen a bala 105mm
