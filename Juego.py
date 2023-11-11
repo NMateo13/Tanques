@@ -339,7 +339,7 @@ def juego(screen, fuente):
                                     if puntosExplosionY[j] > valory:
                                         valory = puntosExplosionY[j]
                         valory = Datos.PANT_ALTO - valory
-                        if Datos.arrayaux[i] < 1200 and Datos.arrayaux[i] > 0:
+                        if Datos.arrayaux[i] < Datos.PANT_ANCHO and Datos.arrayaux[i] > 0:
                             if terreno.terreno[Datos.arrayaux[i]] > valory:
                                 terreno.terreno[Datos.arrayaux[i]] = valory
                     Datos.centroExplosion.clear()
@@ -471,7 +471,7 @@ def juego(screen, fuente):
                                     if puntosExplosionY[j] > valory:
                                         valory = puntosExplosionY[j]
                         valory = Datos.PANT_ALTO - valory
-                        if Datos.arrayaux[i] < 1200 and Datos.arrayaux[i] > 0:
+                        if Datos.arrayaux[i] < Datos.PANT_ANCHO and Datos.arrayaux[i] > 0:
                             if terreno.terreno[Datos.arrayaux[i]] > valory:
                                 terreno.terreno[Datos.arrayaux[i]] = valory
                     Datos.centroExplosion.clear()
