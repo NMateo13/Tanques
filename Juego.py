@@ -193,7 +193,7 @@ def juego(screen, fuente):
                 Datos.velocidad_jugador1 = max(0, Datos.velocidad_jugador1)
             elif keys[pygame.K_d]:
                 Datos.velocidad_jugador1 += 5
-                Datos.velocidad_jugador1 = min(150, Datos.velocidad_jugador1)
+                Datos.velocidad_jugador1 = min(300, Datos.velocidad_jugador1)
 
             # Cambio de bala J1
             elif keys[pygame.K_1]:
@@ -223,7 +223,7 @@ def juego(screen, fuente):
                 Datos.velocidad_jugador2 = max(0, Datos.velocidad_jugador2)
             elif keys[pygame.K_RIGHT]:
                 Datos.velocidad_jugador2 += 5
-                Datos.velocidad_jugador2 = min(150, Datos.velocidad_jugador2)
+                Datos.velocidad_jugador2 = min(300, Datos.velocidad_jugador2)
 
             # Cambio de bala J2
             elif keys[pygame.K_1]:
