@@ -9,7 +9,7 @@ def draw_text(text, font, x, y, color, screen):
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     screen.blit(textobj, textrect)
-    
+
 def opciones(screen):
     while True:
         salir = False
@@ -17,39 +17,24 @@ def opciones(screen):
         boton_800 = pygame.Rect((Datos.PANT_ANCHO / 2) - 450, (Datos.PANT_ALTO / 2) - 140, 100, 50)
         boton_default = pygame.Rect((Datos.PANT_ANCHO / 2) - 450, (Datos.PANT_ALTO / 2) - 80, 100, 50)
         boton_1080 = pygame.Rect((Datos.PANT_ANCHO / 2) - 450, (Datos.PANT_ALTO / 2) - 20, 100, 50)
-        boton_aplicar = pygame.Rect((Datos.PANT_ANCHO / 2) - 450, (Datos.PANT_ALTO / 2) + 40, 100, 50)
+        boton_controles = pygame.Rect((Datos.PANT_ANCHO / 2) - 450, (Datos.PANT_ALTO / 2) + 190, 100, 50)
+        boton_gravedad_baja = pygame.Rect((Datos.PANT_ANCHO / 2) + 350, (Datos.PANT_ALTO / 2) - 140, 100, 50)
+        boton_gravedad_default = pygame.Rect((Datos.PANT_ANCHO / 2) + 350, (Datos.PANT_ALTO / 2) - 80, 100, 50)
+        boton_gravedad_alta = pygame.Rect((Datos.PANT_ANCHO / 2) + 350, (Datos.PANT_ALTO / 2) - 20, 100, 50)
     
         screen.fill(Datos.WHITE)
-        screen.blit(imagenes.FondoControles, (0, 0))
         fuente = pygame.font.Font(None, 36)
         draw_text('Opciones', fuente, (Datos.PANT_ANCHO / 2) - 58, (Datos.PANT_ALTO / 2) - 250, Datos.BLACK, screen)
-        draw_text('Resolucion', fuente, (Datos.PANT_ANCHO / 2) - 418, (Datos.PANT_ALTO / 2) - 200, Datos.BLACK, screen)
-        draw_text('Controles', fuente, (Datos.PANT_ANCHO / 2) + 303, (Datos.PANT_ALTO / 2) - 200, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 23)
+        draw_text('Resolucion', fuente, (Datos.PANT_ANCHO / 2) - 450, (Datos.PANT_ALTO / 2) - 200, Datos.BLACK, screen)
         draw_text('800x800', fuente, (Datos.PANT_ANCHO / 2) - 438, (Datos.PANT_ALTO / 2) - 137, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 21)
-        draw_text('W | Arriba: Más ángulo', fuente, (Datos.PANT_ANCHO / 2) + 277, (Datos.PANT_ALTO / 2) - 137, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 23)
         draw_text('Default', fuente, (Datos.PANT_ANCHO / 2) - 436, (Datos.PANT_ALTO / 2) - 78, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 21)
-        draw_text('S | Abajo: Menos ángulo', fuente, (Datos.PANT_ANCHO / 2) + 278, (Datos.PANT_ALTO / 2) - 78, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 23)
         draw_text('1920x1080', fuente, (Datos.PANT_ANCHO / 2) - 442, (Datos.PANT_ALTO / 2) - 19, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 17)
-        draw_text('A | Izquierda: Menos potencia', fuente, (Datos.PANT_ANCHO / 2) + 280, (Datos.PANT_ALTO / 2) - 17, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 23)
-        draw_text('Aplicar Resolución', fuente, (Datos.PANT_ANCHO / 2) - 443, (Datos.PANT_ALTO / 2) + 39, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 17)
-        draw_text('D | Derecha: Más potencia', fuente, (Datos.PANT_ANCHO / 2) + 283, (Datos.PANT_ALTO / 2) + 41, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 26)
-        draw_text('1: Bala 105mm', fuente, (Datos.PANT_ANCHO / 2) - 425, (Datos.PANT_ALTO / 2) + 116, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 26)
-        draw_text('2: Bala 80mm', fuente, (Datos.PANT_ANCHO / 2) - 57, (Datos.PANT_ALTO / 2) + 116, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 26)
-        draw_text('3: Bala 60mm', fuente, (Datos.PANT_ANCHO / 2) + 307, (Datos.PANT_ALTO / 2) + 116, Datos.BLACK, screen)
-        draw_text('Espacio: Disparar', fuente, (Datos.PANT_ANCHO / 2) - 75, (Datos.PANT_ALTO / 2) + 42, Datos.BLACK, screen)
-        fuente = pygame.font.Font(None, 26)
-        draw_text('Menu: Escape', fuente, (Datos.PANT_ANCHO / 2) - 59, (Datos.PANT_ALTO / 2) + 191, Datos.BLACK, screen)
+        draw_text('Controles', fuente, (Datos.PANT_ANCHO / 2) - 443, (Datos.PANT_ALTO / 2) + 191, Datos.BLACK, screen)
+        draw_text('Menu: Escape', fuente, (Datos.PANT_ANCHO / 2) + 303, (Datos.PANT_ALTO / 2) + 191, Datos.BLACK, screen)
+        draw_text('Gravedad', fuente, (Datos.PANT_ANCHO / 2) + 303, (Datos.PANT_ALTO / 2) - 200, Datos.BLACK, screen)
+        draw_text('Gravedad Baja', fuente, (Datos.PANT_ANCHO / 2) + 303, (Datos.PANT_ALTO / 2) - 140, Datos.BLACK, screen)
+        draw_text('Gravedad Default', fuente, (Datos.PANT_ANCHO / 2) + 303, (Datos.PANT_ALTO / 2) - 80, Datos.BLACK, screen)
+        draw_text('Gravedad Alta', fuente, (Datos.PANT_ANCHO / 2) + 303, (Datos.PANT_ALTO / 2) - 20, Datos.BLACK, screen)
 
         pygame.display.update()
 
@@ -73,13 +58,65 @@ def opciones(screen):
                     Datos.PANT_ANCHO = 1920
                     Datos.PANT_ALTO = 1080
                     pygame.display.set_mode((Datos.PANT_ANCHO, Datos.PANT_ALTO))
-                if boton_aplicar.collidepoint(event.pos):
-                    pygame.display.update()
-                    salir = True      
+                if boton_controles.collidepoint(event.pos):
+                    controles(screen)
+                    salir = True
+                if boton_gravedad_baja.collidepoint(event.pos):
+                    Datos.gravedad = 5
+                if boton_gravedad_default.collidepoint(event.pos):
+                    Datos.gravedad = 9.8
+                if boton_gravedad_alta.collidepoint(event.pos):
+                    Datos.gravedad = 20
 
         if salir:
             break
 
+def controles(screen):
+    while True:
+        salir = False
+        screen.fill(Datos.WHITE)
+        screen.blit(imagenes.FondoControles, (0, 0))
+        fuente = pygame.font.Font(None, 36)
+        draw_text('Controles', fuente, (Datos.PANT_ANCHO / 2) - 58, (Datos.PANT_ALTO / 2) - 250, Datos.BLACK, screen) 
+        draw_text('Jugador 1', fuente, (Datos.PANT_ANCHO / 2) - 418, (Datos.PANT_ALTO / 2) - 200, Datos.BLACK, screen) 
+        draw_text('Jugador 2', fuente, (Datos.PANT_ANCHO / 2) + 303, (Datos.PANT_ALTO / 2) - 200, Datos.BLACK, screen) 
+        fuente = pygame.font.Font(None, 23)
+        draw_text('W: Más ángulo', fuente, (Datos.PANT_ANCHO / 2) - 438, (Datos.PANT_ALTO / 2) - 137, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 21)
+        draw_text('Arriba: Más ángulo', fuente, (Datos.PANT_ANCHO / 2) + 277, (Datos.PANT_ALTO / 2) - 137, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 23)
+        draw_text('S: Menos ángulo', fuente, (Datos.PANT_ANCHO / 2) - 436, (Datos.PANT_ALTO / 2) - 78, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 21)
+        draw_text('Abajo: Menos ángulo', fuente, (Datos.PANT_ANCHO / 2) + 278, (Datos.PANT_ALTO / 2) - 78, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 23)
+        draw_text('A: Menos potencia', fuente, (Datos.PANT_ANCHO / 2) - 442, (Datos.PANT_ALTO / 2) - 19, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 17)
+        draw_text('Izquierda: Menos potencia', fuente, (Datos.PANT_ANCHO / 2) + 280, (Datos.PANT_ALTO / 2) - 17, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 23)
+        draw_text('D: Más potencia', fuente, (Datos.PANT_ANCHO / 2) - 443, (Datos.PANT_ALTO / 2) + 39, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 17)
+        draw_text('Derecha: Más potencia', fuente, (Datos.PANT_ANCHO / 2) + 283, (Datos.PANT_ALTO / 2) + 41, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 26)
+        draw_text('1: Bala 105mm', fuente, (Datos.PANT_ANCHO / 2) - 425, (Datos.PANT_ALTO / 2) + 116, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 26)
+        draw_text('2: Bala 80mm', fuente, (Datos.PANT_ANCHO / 2) - 57, (Datos.PANT_ALTO / 2) + 116, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 26)
+        draw_text('3: Bala 60mm', fuente, (Datos.PANT_ANCHO / 2) + 307, (Datos.PANT_ALTO / 2) + 116, Datos.BLACK, screen)
+        draw_text('Espacio: Disparar', fuente, (Datos.PANT_ANCHO / 2) - 75, (Datos.PANT_ALTO / 2) + 42, Datos.BLACK, screen)
+        fuente = pygame.font.Font(None, 26)
+        draw_text('Menu: Escape', fuente, (Datos.PANT_ANCHO / 2) - 59, (Datos.PANT_ALTO / 2) + 191, Datos.BLACK, screen)
+
+        pygame.display.update()
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_ESCAPE]:
+                salir = True    
+        if salir:
+            break
 
 def muestra_ganador(Ganador, screen, fuente): #Función para mostrar el ganador del juego
     screen.fill(Datos.WHITE) 
@@ -156,7 +193,7 @@ def juego(screen, fuente):
                 Datos.velocidad_jugador1 = max(0, Datos.velocidad_jugador1)
             elif keys[pygame.K_d]:
                 Datos.velocidad_jugador1 += 5
-                Datos.velocidad_jugador1 = min(150, Datos.velocidad_jugador1)
+                Datos.velocidad_jugador1 = min(300, Datos.velocidad_jugador1)
 
             # Cambio de bala J1
             elif keys[pygame.K_1]:
@@ -186,7 +223,7 @@ def juego(screen, fuente):
                 Datos.velocidad_jugador2 = max(0, Datos.velocidad_jugador2)
             elif keys[pygame.K_RIGHT]:
                 Datos.velocidad_jugador2 += 5
-                Datos.velocidad_jugador2 = min(150, Datos.velocidad_jugador2)
+                Datos.velocidad_jugador2 = min(300, Datos.velocidad_jugador2)
 
             # Cambio de bala J2
             elif keys[pygame.K_1]:
@@ -339,7 +376,7 @@ def juego(screen, fuente):
                                     if puntosExplosionY[j] > valory:
                                         valory = puntosExplosionY[j]
                         valory = Datos.PANT_ALTO - valory
-                        if Datos.arrayaux[i] < 1200 and Datos.arrayaux[i] > 0:
+                        if Datos.arrayaux[i] < Datos.PANT_ANCHO and Datos.arrayaux[i] > 0:
                             if terreno.terreno[Datos.arrayaux[i]] > valory:
                                 terreno.terreno[Datos.arrayaux[i]] = valory
                     Datos.centroExplosion.clear()
@@ -471,7 +508,7 @@ def juego(screen, fuente):
                                     if puntosExplosionY[j] > valory:
                                         valory = puntosExplosionY[j]
                         valory = Datos.PANT_ALTO - valory
-                        if Datos.arrayaux[i] < 1200 and Datos.arrayaux[i] > 0:
+                        if Datos.arrayaux[i] < Datos.PANT_ANCHO and Datos.arrayaux[i] > 0:
                             if terreno.terreno[Datos.arrayaux[i]] > valory:
                                 terreno.terreno[Datos.arrayaux[i]] = valory
                     Datos.centroExplosion.clear()
