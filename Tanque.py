@@ -71,7 +71,7 @@ class Tanque:
 
         if bandera:
 
-            posX_Tanque = random.randint(0, Datos.PANT_ANCHO / 2)
+            posX_Tanque = random.randint(0, Datos.PANT_ANCHO // 2)
             indice = posX_Tanque
             posY_Tanque = terreno.alto - terreno.terreno[indice] - 26
             tank1 = Pantalla.pantalla.tank1
@@ -81,7 +81,7 @@ class Tanque:
             return tanque
 
         else:
-            posX_Tanque = random.randint(0, (Datos.PANT_ANCHO / 2 - 50))
+            posX_Tanque = random.randint(0, (Datos.PANT_ANCHO // 2 - 50))
             indice = ((Datos.PANT_ANCHO - 1) - posX_Tanque)    
             posY_Tanque = terreno.alto -  terreno.terreno[indice] - 24
             tank2 = Pantalla.pantalla.tank2
