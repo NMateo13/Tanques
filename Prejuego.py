@@ -18,6 +18,7 @@ def draw_text(text, font, x, y, color):
     screen.blit(textobj, textrect)
 
 def seleccion(screen):
+    Datos.numero_jugadores = 0
     j1_v,j2_v,j3_v,j4_v,j5_v,j6_v = 0,0,0,0,0,0
     while True:
         salir = False
@@ -135,7 +136,18 @@ def seleccion(screen):
                     if j1_v == 2 and j2_v == 2 and j3_v == 2 and j4_v == 2 and j5_v == 2 and j6_v == 2:
                         print("No hay jugadores")
                     else:
-                        #se devolverá una lista con los jugadores que jugarán y el color que eligió cada uno
+                        if j1_v == 0 or j1_v == 1:
+                            Datos.numero_jugadores += 1
+                        if j2_v == 0 or j2_v == 1:
+                            Datos.numero_jugadores += 1
+                        if j3_v == 0 or j3_v == 1:
+                            Datos.numero_jugadores += 1
+                        if j4_v == 0 or j4_v == 1:
+                            Datos.numero_jugadores += 1
+                        if j5_v == 0 or j5_v == 1:
+                            Datos.numero_jugadores += 1
+                        if j6_v == 0 or j6_v == 1:
+                            Datos.numero_jugadores += 1
                         Juego.juego(screen, fuente)
                 if volver.collidepoint(event.pos):
                     salir = True

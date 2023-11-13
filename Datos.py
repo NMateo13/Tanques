@@ -23,6 +23,7 @@ angulo_jugador2 = 30
 velocidad_jugador1 = 50
 velocidad_jugador2 = 50
 tiempo_transcurrido = 0
+numero_jugadores = 0
 
 # Variables y Constantes
 FPS = 60
