@@ -139,7 +139,6 @@ class Juego:
             volver = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 1.53, 100, 50))
             controles = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 2.65, 100, 50))
 
-            
             Pantalla.pantalla.muestra_seleccion(screen, fuente) 
 
             j1 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 3.5, 100, 20))
@@ -158,12 +157,12 @@ class Juego:
                     text = 'No juega'
 
                 if indice < 3:
-                    texto = Juego.draw_text(text, fuente, Datos.PANT_ANCHO / Datos.lista_cuadrar_jugadores_texto_x[indice], Datos.PANT_ALTO / Datos.lista_cuadrar_jugadores_texto_y[0], Datos.WHITE, screen)
+                    Juego.draw_text(text, fuente, Datos.PANT_ANCHO / Datos.lista_cuadrar_jugadores_texto_x[indice], Datos.PANT_ALTO / Datos.lista_cuadrar_jugadores_texto_y[0], Datos.WHITE, screen)
                 else:
-                    texto = Juego.draw_text(text, fuente, Datos.PANT_ANCHO / Datos.lista_cuadrar_jugadores_texto_x[indice-3], Datos.PANT_ALTO / Datos.lista_cuadrar_jugadores_texto_y[1], Datos.WHITE, screen)
-
+                    Juego.draw_text(text, fuente, Datos.PANT_ANCHO / Datos.lista_cuadrar_jugadores_texto_x[indice-3], Datos.PANT_ALTO / Datos.lista_cuadrar_jugadores_texto_y[1], Datos.WHITE, screen)
 
             pygame.display.update()
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -206,7 +205,7 @@ class Juego:
                                 Jugador.jugadores[5] += 1
                             pygame.display.update()  
                     if jugar.collidepoint(event.pos):
-                        pass
+                        salir = True
                     if volver.collidepoint(event.pos):
                         salir = True
                     if controles.collidepoint(event.pos):
@@ -217,7 +216,6 @@ class Juego:
 
             if salir:
                 break
-
 
     def juego(screen, fuente):
 

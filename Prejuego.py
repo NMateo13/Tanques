@@ -49,7 +49,7 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if play_button.collidepoint(event.pos):
                 Juego.seleccion(screen, fuente)
-                #Juego.juego(screen, fuente)
+                Juego.juego(screen, fuente)
             if control_button.collidepoint(event.pos):
                 Juego.opciones(screen)
             if quit_button.collidepoint(event.pos):
