@@ -1,4 +1,5 @@
-import pygame, imagenes, Datos, Juego, sys
+import pygame, imagenes, Datos, Juego, sys, Pantalla
+
 
 pygame.init()
 pygame.display.set_icon(imagenes.IMG_Explosion) 
@@ -21,21 +22,6 @@ def seleccion(screen):
     j1_v,j2_v,j3_v,j4_v,j5_v,j6_v = 0,0,0,0,0,0
     while True:
         salir = False
-        screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
-        #las divisiones son para que queden exactamente separados los rectangulos independiente de la resolucion
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10 , Datos.PANT_ALTO / 10, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 10, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 10, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 2, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 2, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, 100, 100))
-
-        draw_text('1', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 10, Datos.WHITE)
-        draw_text('2', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 10, Datos.WHITE)
-        draw_text('3', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 10, Datos.WHITE)
-        draw_text('4', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 2, Datos.WHITE)
-        draw_text('5', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 2, Datos.WHITE)
-        draw_text('6', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, Datos.WHITE)
 
         #justo debajo de los rectangulos se debe mostrar otro rectangulo de altura 20 y ancho 100 que muestre mediante texto si es jugador o IA y que responda a los clicks para cambiar entre uno u otro
         j1 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 3.5, 100, 20))
@@ -177,7 +163,7 @@ while True:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if play_button.collidepoint(event.pos):
-                seleccion(screen)
+                Juego.seleccion(screen, fuente)
                 #Juego.juego(screen, fuente)
             if control_button.collidepoint(event.pos):
                 Juego.opciones(screen)

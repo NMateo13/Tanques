@@ -119,12 +119,34 @@ def controles(screen):
             break
 
 def muestra_ganador(Ganador, screen, fuente): #Función para mostrar el ganador del juego
+    
     screen.fill(Datos.WHITE) 
     texto_ganador = fuente.render(f"Ganador: Jugador {Ganador}", True, Datos.BLACK) 
     screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2)) 
     pygame.display.flip() 
     pygame.time.delay(3000) 
     sys.exit() 
+
+def seleccion(screen, fuente):
+    
+    while True:
+        salir = False
+
+        Pantalla.pantalla.muestra_seleccion(screen, fuente)
+
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_ESCAPE]:
+                salir = True
+
+        if salir:
+            break
+
 
 def juego(screen, fuente):
 
@@ -339,8 +361,6 @@ def juego(screen, fuente):
                         for i in range(Datos.radioExplosion):
                             ancho= []
                             ancho.append(int(x)-Datos.radioExplosion+i)
-                    Pantalla.pantalla.prueba(screen, Datos.centroExplosion[0], Datos.centroExplosion[1])
-                    pygame.display.flip()
                     Datos.bala_tanque1 = None
                     Datos.tecla_espacio_presionada = False
                     Datos.turno1 = False
