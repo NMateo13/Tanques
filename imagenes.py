@@ -31,6 +31,17 @@ IMG_Background_seleccion = pygame.image.load(os.path.join("Assets", "imgnueva.pn
 #Reescalado de imagenes
 Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4))
 Tanque2 = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4))
+Tanque3 = pygame.transform.scale(IMG_Tanque3, (IMG_Tanque3.get_width() // 4, IMG_Tanque3.get_height() // 4))
+Tanque4 = pygame.transform.scale(IMG_Tanque4, (IMG_Tanque4.get_width() // 4, IMG_Tanque4.get_height() // 4))
+Tanque5 = pygame.transform.scale(IMG_Tanque5, (IMG_Tanque5.get_width() // 4, IMG_Tanque5.get_height() // 4))
+Tanque6 = pygame.transform.scale(IMG_Tanque6, (IMG_Tanque6.get_width() // 4, IMG_Tanque6.get_height() // 4))
+#Reescalado de imagenes para pantalla de selección de tanques
+Tanque1_sele = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 2.5, IMG_Tanque1.get_height() // 2))
+Tanque2_sele = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 2.5, IMG_Tanque2.get_height() // 2))
+Tanque3_sele = pygame.transform.scale(IMG_Tanque3, (IMG_Tanque3.get_width() // 2.5, IMG_Tanque3.get_height() // 2))
+Tanque4_sele = pygame.transform.scale(IMG_Tanque4, (IMG_Tanque4.get_width() // 2.5, IMG_Tanque4.get_height() // 2))
+Tanque5_sele = pygame.transform.scale(IMG_Tanque5, (IMG_Tanque5.get_width() // 2.5, IMG_Tanque5.get_height() // 2))
+Tanque6_sele = pygame.transform.scale(IMG_Tanque6, (IMG_Tanque6.get_width() // 2.5, IMG_Tanque6.get_height() // 2))
 Canon1 = pygame.transform.scale(IMG_Canon1, (IMG_Canon1.get_width() // 4, IMG_Canon1.get_height() // 4))
 Canon2 = pygame.transform.scale(IMG_Canon2, (IMG_Canon2.get_width() // 4, IMG_Canon2.get_height() // 4))
 Background = pygame.transform.scale(IMG_Background, (Datos.PANT_ANCHO, Datos.PANT_ALTO))

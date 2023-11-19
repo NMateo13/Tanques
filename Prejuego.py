@@ -24,35 +24,42 @@ def seleccion(screen):
         salir = False
         screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
         #las divisiones son para que queden exactamente separados los rectangulos independiente de la resolucion
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10 , Datos.PANT_ALTO / 10, 100, 100))
+        """pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10 , Datos.PANT_ALTO / 10, 100, 100))
         pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 10, 100, 100))
         pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 10, 100, 100))
         pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 2, 100, 100))
         pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 2, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, 100, 100))
-
-        draw_text('1', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 10, Datos.WHITE)
-        draw_text('2', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 10, Datos.WHITE)
-        draw_text('3', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 10, Datos.WHITE)
-        draw_text('4', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 2, Datos.WHITE)
-        draw_text('5', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 2, Datos.WHITE)
-        draw_text('6', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, Datos.WHITE)
+        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, 100, 100))"""
 
         #justo debajo de los rectangulos se debe mostrar otro rectangulo de altura 20 y ancho 100 que muestre mediante texto si es jugador o IA y que responda a los clicks para cambiar entre uno u otro
-        j1 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 3.5, 100, 20))
-        j2 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 3.5, 100, 20))
-        j3 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 3.5, 100, 20))
-        j4 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 1.457, 100, 20))
-        j5 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 1.457, 100, 20))
-        j6 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 1.457, 100, 20))
+        rect_j1 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 6, imagenes.Tanque1_sele.get_width(), 100))
+        j1 = screen.blit(imagenes.Tanque1_sele, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 6))
+        rect_j2 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 6, imagenes.Tanque2_sele.get_width(), 100))
+        j2 = screen.blit(imagenes.Tanque2_sele, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 6))
+        rect_j3 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 6, imagenes.Tanque3_sele.get_width(), 100))
+        j3 = screen.blit(imagenes.Tanque3_sele, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 6))
+        rect_j4 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 1.75, imagenes.Tanque4_sele.get_width(), 100))
+        j4 = screen.blit(imagenes.Tanque4_sele, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 1.75))
+        rect_j5 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 1.75, imagenes.Tanque5_sele.get_width(), 100))
+        j5 = screen.blit(imagenes.Tanque5_sele, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 1.75))
+        rect_j6 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 1.75, imagenes.Tanque6_sele.get_width(), 100))
+        j6 = screen.blit(imagenes.Tanque6_sele, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 1.75))
         if j1_v== 0:
             t_j1 = draw_text('Jugador', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 3.5, Datos.WHITE)
+            rect_j1 = pygame.draw.rect(screen, Datos.GREEN, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 6, imagenes.Tanque1_sele.get_width(), 100))
+            j1.set_alpha(255)
         elif j1_v== 1:
             t_j1 = draw_text('IA', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 3.5, Datos.WHITE)
+            rect_j1 = pygame.draw.rect(screen, Datos.BLUE, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 6, imagenes.Tanque1_sele.get_width(), 100))
+            j1.set_alpha(255)
         else:
             t_j1 = draw_text('No juega', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 3.5, Datos.WHITE)
+            rect_j1 = pygame.draw.rect(screen, Datos.GREY, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 6, imagenes.Tanque1_sele.get_width(), 100))
+            j1.set_alpha(100)
         if j2_v== 0:
             t_j2 = draw_text('Jugador', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 3.5, Datos.WHITE)
+            rect_j2 = pygame.draw.rect(screen, Datos.GREEN, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 6, imagenes.Tanque2_sele.get_width(), 100))
+            j2.set_alpha(255)
         elif j2_v== 1:
             t_j2 = draw_text('IA', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 3.5, Datos.WHITE)
         else:
