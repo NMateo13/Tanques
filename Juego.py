@@ -227,7 +227,7 @@ class Juego:
 
         terreno = Terreno(Datos.PANT_ANCHO, Datos.PANT_ALTO)
 
-
+        tanques = Tanque.creaTanques(Jugador.jugadores)
 
         tanque1 = Tanque.crearTanques(terreno, Datos.bandera_tanque)
         tanque2 = Tanque.crearTanques(terreno, Datos.bandera_tanque)
