@@ -1,4 +1,4 @@
-import pygame, Datos, os, random, imagenes
+import pygame, Datos, os, random, imagenes, sys
 
 
 class Pantalla:
@@ -52,10 +52,6 @@ class Pantalla:
         self.ancho = ancho
         self.alto = alto
 
-    def crearMatriz(self, alto, ancho):
-
-        Pantalla.matriz = [[0] * ancho for _ in range(alto - Datos.medidaHUD)]
-
     def dibujar(self, screen):
         
         for filas in range(0, (Datos.PANT_ALTO - Datos.medidaHUD)):
@@ -63,6 +59,12 @@ class Pantalla:
                 if pantalla.matriz[filas][columnas] == 1:
                     pygame.draw.rect(screen, pantalla.GREEN, (columnas, filas, 6, 6))
     
+    def draw_text(text, font, x, y, color, screen):
+        textobj = font.render(text, 1, color)
+        textrect = textobj.get_rect()
+        textrect.topleft = (x, y)
+        screen.blit(textobj, textrect)
+
     #Funciones para mostrar información en la pantalla
     def muestra_texto(self, screen, font, turno,balas1, balas2):
         balas1_texo = str(balas1)
@@ -153,7 +155,6 @@ class Pantalla:
 
         #NO TOCAR SON ESTÁTICOS
 
-    #ahora se iniciará una función para calcular la altura maxima de la bala y la distancia recorrida por la bala y se mostrará en pantalla
     def muestra_altura(self, screen, font, altura_maxima, mostrar1, mostrar2):
         if mostrar1:
             altura_texto1 = font.render(f"Altura máxima J1: {altura_maxima}", True, Datos.WHITE)
@@ -180,9 +181,6 @@ class Pantalla:
         x = rect.x
         y = rect.y
         return rotated_image, rect, x, y
-    
-    def prueba(self, surface, x, y):
-        pygame.draw.circle(surface, Datos.BLACK, (x, y), 2)
 
     def muestra_distancia(self, screen, font, distancia_maxima, mostrar1, mostrar2):
         if mostrar1:
@@ -199,6 +197,36 @@ class Pantalla:
             screen.blit(imagenes.Prebala80, (pos_x, 0))
         elif tipo_bala == 3:
             screen.blit(imagenes.Prebala60, (pos_x, 0))
+
+    def muestra_seleccion(self, screen, fuente):
+
+        screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
+
+        #Cuadro 1
+        screen.blit(imagenes.TanqueSeleccionVerde, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 6.5, 100, 100)) 
+        #Cuadro 2
+        screen.blit(imagenes.TanqueSeleccionRojo, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 6.5, 100, 100)) 
+        #Cuadro 3
+        screen.blit(imagenes.TanqueSeleccionAzul, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 6.5, 100, 100))
+        #Cuadro 4
+        screen.blit(imagenes.TanqueSeleccionAmarillo, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 1.8, 100, 100))
+        #Cuadro 5
+        screen.blit(imagenes.TanqueSeleccionRosa, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 1.8, 100, 100))
+        #Cuadro 6
+        screen.blit(imagenes.TanqueSeleccionCeleste, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 1.8, 100, 100))
+
+        #Divisiones necesarias para cuadros separados independiente la resolución
+        Pantalla.draw_text('1', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
+        Pantalla.draw_text('2', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
+        Pantalla.draw_text('3', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
+        Pantalla.draw_text('4', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
+        Pantalla.draw_text('5', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
+        Pantalla.draw_text('6', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
+
+        Pantalla.draw_text('Jugar', fuente, Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
+        Pantalla.draw_text('Volver', fuente, Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 1.53, Datos.WHITE, screen)
+        Pantalla.draw_text('Controles', fuente, Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 2.65, Datos.WHITE, screen)
+
 
 pantalla = Pantalla(Datos.PANT_ANCHO, Datos.PANT_ALTO)
 matriz = []
