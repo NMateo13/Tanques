@@ -148,7 +148,7 @@ class Juego:
             j5 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 1.457, 100, 20))
             j6 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 1.457, 100, 20))
 
-            for indice,jugador in enumerate(Jugador.jugadores):
+            for indice,jugador in enumerate(Jugador.seleccionJugadores):
                 if jugador == 0:
                         text = 'Jugador'
                 elif jugador == 1:
@@ -169,42 +169,45 @@ class Juego:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:  
                     if j1.collidepoint(event.pos):
-                        if Jugador.jugadores[0]==2:
-                            Jugador.jugadores[0] = 0
+                        if Jugador.seleccionJugadores[0]==2:
+                            Jugador.seleccionJugadores[0] = 0
                         else:
-                            Jugador.jugadores[0] += 1
+                            Jugador.seleccionJugadores[0] += 1
                         pygame.display.update()
                     if j2.collidepoint(event.pos):
-                            if Jugador.jugadores[1] == 2:
-                                Jugador.jugadores[1] = 0
+                            if Jugador.seleccionJugadores[1] == 2:
+                                Jugador.seleccionJugadores[1] = 0
                             else:
-                                Jugador.jugadores[1] += 1
+                                Jugador.seleccionJugadores[1] += 1
                             pygame.display.update()
                     if j3.collidepoint(event.pos):
-                            if Jugador.jugadores[2] == 2:
-                                Jugador.jugadores[2] = 0
+                            if Jugador.seleccionJugadores[2] == 2:
+                                Jugador.seleccionJugadores[2] = 0
                             else:
-                                Jugador.jugadores[2] += 1
+                                Jugador.seleccionJugadores[2] += 1
                             pygame.display.update()
                     if j4.collidepoint(event.pos):
-                            if Jugador.jugadores[3] == 2:
-                                Jugador.jugadores[3] = 0
+                            if Jugador.seleccionJugadores[3] == 2:
+                                Jugador.seleccionJugadores[3] = 0
                             else:
-                                Jugador.jugadores[3] += 1
+                                Jugador.seleccionJugadores[3] += 1
                             pygame.display.update()
                     if j5.collidepoint(event.pos):
-                            if Jugador.jugadores[4] == 2:
-                                Jugador.jugadores[4] = 0
+                            if Jugador.seleccionJugadores[4] == 2:
+                                Jugador.seleccionJugadores[4] = 0
                             else:
-                                Jugador.jugadores[4] += 1
+                                Jugador.seleccionJugadores[4] += 1
                             pygame.display.update()
                     if j6.collidepoint(event.pos):
-                            if Jugador.jugadores[5] == 2:
-                                Jugador.jugadores[5] = 0
+                            if Jugador.seleccionJugadores[5] == 2:
+                                Jugador.seleccionJugadores[5] = 0
                             else:
-                                Jugador.jugadores[5] += 1
+                                Jugador.seleccionJugadores[5] += 1
                             pygame.display.update()  
                     if jugar.collidepoint(event.pos):
+                        for indice,jugador in enumerate(Jugador.seleccionJugadores):
+                            if jugador == 0:
+                                Jugador.crearJugador(indice)
                         salir = True
                     if volver.collidepoint(event.pos):
                         salir = True
@@ -223,6 +226,9 @@ class Juego:
         salirJuego = False
 
         terreno = Terreno(Datos.PANT_ANCHO, Datos.PANT_ALTO)
+
+
+
         tanque1 = Tanque.crearTanques(terreno, Datos.bandera_tanque)
         tanque2 = Tanque.crearTanques(terreno, Datos.bandera_tanque)
 
