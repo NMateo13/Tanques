@@ -53,6 +53,7 @@ RED = (255, 0, 0)
 GREEN = (0, 153, 0)
 BLUE = (0,0,255)
 BROWN = (139, 69, 19)
+PURPLE = (40, 5, 107)
 
 
 def reiniciar_datos():

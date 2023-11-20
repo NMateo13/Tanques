@@ -78,6 +78,26 @@ class Tanque:
             tanque = Tanque(0, 0, jugadorActual.indice+1, 0)
             Tanque.tanques.append(tanque)
 
+    def spawnTanques(terreno):
+
+        for indice,tanque in enumerate(Tanque.tanques):
+            
+            Datos.bandera_tanque = random.choice([True, False])
+            
+            if Datos.bandera_tanque:
+
+                tanque.x = random.randint(0, Datos.PANT_ANCHO // 2)
+                tanque.indice = tanque.x
+                tanque.y = terreno.alto - terreno.terreno[indice] - 26
+                tanque.num = Pantalla.pantalla.tank1
+
+            else:
+                tanque.x = random.randint(0, (Datos.PANT_ANCHO // 2 - 50))
+                tanque.indice = ((Datos.PANT_ANCHO - 1) - tanque.x)    
+                tanque.y = terreno.alto -  terreno.terreno[indice] - 24
+                tanque.num = Pantalla.pantalla.tank2
+
+
     
     '''def crearTanques(terreno, bandera):
 

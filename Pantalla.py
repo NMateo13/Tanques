@@ -202,12 +202,18 @@ class Pantalla:
 
         screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
 
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10 , Datos.PANT_ALTO / 10, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 10, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 10, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 2, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 2, 100, 100))
-        pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, 100, 100))
+        #Cuadro 1
+        screen.blit(imagenes.TanqueSeleccionVerde, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 6.5, 100, 100)) 
+        #Cuadro 2
+        screen.blit(imagenes.TanqueSeleccionRojo, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 6.5, 100, 100)) 
+        #Cuadro 3
+        screen.blit(imagenes.TanqueSeleccionAzul, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 6.5, 100, 100))
+        #Cuadro 4
+        screen.blit(imagenes.TanqueSeleccionAmarillo, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 1.8, 100, 100))
+        #Cuadro 5
+        screen.blit(imagenes.TanqueSeleccionRosa, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 1.8, 100, 100))
+        #Cuadro 6
+        screen.blit(imagenes.TanqueSeleccionCeleste, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 1.8, 100, 100))
 
         #Divisiones necesarias para cuadros separados independiente la resolución
         Pantalla.draw_text('1', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 10, Datos.WHITE, screen)

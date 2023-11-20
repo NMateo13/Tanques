@@ -29,6 +29,12 @@ IMG_Prebala_60 = pygame.image.load(os.path.join("Assets", "prebala60.png"))
 IMG_Background_seleccion = pygame.image.load(os.path.join("Assets", "imgnueva.png"))
 
 #Reescalado de imagenes
+TanqueSeleccionVerde = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 3, IMG_Tanque1.get_height() // 3))
+TanqueSeleccionRojo = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 3, IMG_Tanque2.get_height() // 3))
+TanqueSeleccionAzul = pygame.transform.scale(IMG_Tanque3, (IMG_Tanque3.get_width() // 3, IMG_Tanque3.get_height() // 3))
+TanqueSeleccionAmarillo = pygame.transform.scale(IMG_Tanque4, (IMG_Tanque4.get_width() // 3, IMG_Tanque4.get_height() // 3))
+TanqueSeleccionRosa = pygame.transform.scale(IMG_Tanque5, (IMG_Tanque5.get_width() // 3, IMG_Tanque5.get_height() // 3))
+TanqueSeleccionCeleste = pygame.transform.scale(IMG_Tanque6, (IMG_Tanque6.get_width() // 3, IMG_Tanque6.get_height() // 3))
 Tanque1 = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4))
 Tanque2 = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4))
 Canon1 = pygame.transform.scale(IMG_Canon1, (IMG_Canon1.get_width() // 4, IMG_Canon1.get_height() // 4))

@@ -141,12 +141,12 @@ class Juego:
 
             Pantalla.pantalla.muestra_seleccion(screen, fuente) 
 
-            j1 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 3.5, 100, 20))
-            j2 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 3.5, 100, 20))
-            j3 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 3.5, 100, 20))
-            j4 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 1.457, 100, 20))
-            j5 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 1.457, 100, 20))
-            j6 = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 1.457, 100, 20))
+            j1 = pygame.draw.rect(screen, Datos.PURPLE, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 3.5, 100, 20))
+            j2 = pygame.draw.rect(screen, Datos.PURPLE, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 3.5, 100, 20))
+            j3 = pygame.draw.rect(screen, Datos.PURPLE, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 3.5, 100, 20))
+            j4 = pygame.draw.rect(screen, Datos.PURPLE, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 1.457, 100, 20))
+            j5 = pygame.draw.rect(screen, Datos.PURPLE, (Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 1.457, 100, 20))
+            j6 = pygame.draw.rect(screen, Datos.PURPLE, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 1.457, 100, 20))
 
             for indice,jugador in enumerate(Jugador.seleccionJugadores):
                 if jugador == 0:
@@ -227,7 +227,9 @@ class Juego:
 
         terreno = Terreno(Datos.PANT_ANCHO, Datos.PANT_ALTO)
 
-        tanques = Tanque.creaTanques(Jugador.jugadores)
+        Tanque.creaTanques(Jugador.jugadores)
+        Tanque.spawnTanques(terreno)
+        
 
         tanque1 = Tanque.crearTanques(terreno, Datos.bandera_tanque)
         tanque2 = Tanque.crearTanques(terreno, Datos.bandera_tanque)
