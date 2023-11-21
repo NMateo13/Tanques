@@ -59,3 +59,50 @@ class Terreno:
             if 0 <= x < self.ancho and self.alto - y >= self.terreno[int(x)]:
                 return False
         return True
+    
+
+    def modificar_terreno(self, terreno):
+        centro_explosion = self.calcular_centro_explosion()
+        puntos_explosion = self.calcular_puntos_explosion(centro_explosion)
+        puntos_x, puntos_y = self.obtener_puntos_x_y(puntos_explosion)
+        self.actualizar_terreno(terreno, puntos_x, puntos_y)
+        self.limpiar_variables()
+        return centro_explosion
+
+    def calcular_centro_explosion(self):
+        centro_explosion = []
+        for x, y in Datos.bala_tanque1.trayectoria:
+            centro_explosion.append(int(x))
+            centro_explosion.append(int(y))
+        return centro_explosion
+
+    def calcular_puntos_explosion(self, centro_explosion):
+        num_puntos_explosion = int(2 * math.pi * Datos.radioExplosion)
+        puntos_explosion = []
+        for i in range(num_puntos_explosion):
+            angle = (2 * math.pi / num_puntos_explosion) * i
+            x = int(centro_explosion[0] + Datos.radioExplosion * math.cos(angle))
+            y = int(centro_explosion[1] + Datos.radioExplosion * math.sin(angle))
+            puntos_explosion.append((x, y))
+        return puntos_explosion
+
+    def obtener_puntos_x_y(self, puntos_explosion):
+        puntos_x = [x for x, _ in puntos_explosion]
+        puntos_y = [y for _, y in puntos_explosion]
+        return puntos_x, puntos_y
+
+    def actualizar_terreno(self, terreno, puntos_x, puntos_y):
+        for i in range(len(puntos_x)):
+            x = puntos_x[i]
+            y = puntos_y[i]
+            if self.es_punto_valido(x):
+                y = Datos.PANT_ALTO - y
+                if x < Datos.PANT_ANCHO and x > 0 and terreno.terreno[x] > y:
+                    terreno.terreno[x] = y
+
+    def es_punto_valido(self, x):
+        return x < Datos.PANT_ANCHO and x > 0
+
+    def limpiar_variables(self):
+        Datos.centroExplosion.clear()
+        Datos.arrayaux.clear()

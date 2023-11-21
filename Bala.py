@@ -1,4 +1,4 @@
-import pygame, Datos
+import pygame, Datos, Terreno
 import math
 
 
@@ -104,6 +104,17 @@ class Bala:
             if (tanque.x <= puntosx[i] <= (tanque.x + tanque.ancho)) and (tanque.y <= puntosy[i] <= (tanque.y + tanque.altura)):
                 return True
         return False
+    
+    def calcular_puntos_explosion(self, bala, radioExplosion):
+        centroExplosion = Terreno.calcular_centro_explosion(bala)
+        puntox = []
+        puntoy = []
+        for x in range(centroExplosion[0] - radioExplosion, centroExplosion[0] + radioExplosion + 1):
+            for y in range(centroExplosion[1] - radioExplosion, centroExplosion[1] + radioExplosion + 1):
+                if (x - centroExplosion[0])**2 + (y - centroExplosion[1])**2 <= radioExplosion**2:
+                    puntox.append(x)
+                    puntoy.append(y)
+        return puntox, puntoy
     
     
 

@@ -8,7 +8,7 @@ class Tanque:
 
     tanques = []
 
-    def __init__(self, x, y, num, indice):
+    def __init__(self, x, y, num, indice, color):
         self.x = x
         self.y = y
         self.ancho = 60
@@ -23,6 +23,15 @@ class Tanque:
         self.Bala105mm = 50
         self.indice = indice
         self.pivote = []
+        self.extremo_canonx = 0
+        self.extremo_canony = 0
+        #el color del tanque depende del número de jugador siendo (0=verde, 1=rojo, 2=azul, 3=amarillo, 4=rosa, 5=celeste)
+        self.color = color
+        self.tipo_bala = 0
+        self.angulo = 30
+        self.velocidad = 50
+        self.tipo_bala = 1
+        self.radioExplosion = 75
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, Datos.RED, (self.x, self.y, self.ancho, self.altura))
@@ -75,7 +84,7 @@ class Tanque:
         
         for indice, jugador in enumerate(jugadores):
             jugadorActual = jugadores[indice]
-            tanque = Tanque(0, 0, jugadorActual.indice+1, 0)
+            tanque = Tanque(0, 0, jugadorActual.indice+1, 0, jugadorActual.color_tanque)
             Tanque.tanques.append(tanque)
 
     def spawnTanques(terreno):
