@@ -338,6 +338,7 @@ class Juego:
                         Datos.bala_tanque = Tanque.tanques[turno].disparar(Tanque.tanques[turno].extremo_canonx, Tanque.tanques[turno].extremo_canony, Datos.ang_tank[Tanque.tanques[turno].angulo], Tanque.tanques[turno].velocidad, Datos.tiempo_transcurrido, screen, Datos.BLACK, Tanque.tanques[turno].tipo_bala)
                 else:
                     Datos.altura_maxima = Datos.bala_tanque.punto_maximo(Datos.altura_maxima)
+                    Datos.bala_tanque.verificacion(Datos.tiempo_transcurrido, screen, Datos.BLACK)
                     Datos.distancia_maxima = Datos.bala_tanque.distancia_maxima(Tanque.tanques[turno].x, Datos.distancia_maxima)
                     for indice, tanque in enumerate(Tanque.tanques):
                         if Datos.bala_tanque.verificar_impacto_ancho(Datos.PANT_ANCHO):
@@ -387,7 +388,7 @@ class Juego:
             
 
                         
-            Datos.tiempo_transcurrido += incremento
+                Datos.tiempo_transcurrido += incremento
             for indice, tanque in enumerate(Tanque.tanques):
                 if Tanque.tanques[indice].y != (terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16):
                     Tanque.tanques[indice].y = terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16
@@ -409,14 +410,13 @@ class Juego:
             Pantalla.pantalla.muestra_angulo(screen, fuente,Datos.ang_tank[Datos.angulo_jugador1-30],Datos.ang_tank[Datos.angulo_jugador2-30])    
             Pantalla.pantalla.muestra_texto(screen, fuente ,Datos.turno1,Datos.cantidad_balas1,Datos.cantidad_balas2)"""
             #linea que muestra los tanques
-            Pantalla.pantalla.muestra_imagen(screen, Datos.tipo_bala1, Datos.tipo_bala2, Tanque.tanques)
+            #Pantalla.pantalla.muestra_imagen(screen, Datos.tipo_bala1, Datos.tipo_bala2, Tanque.tanques)
             #Pantalla.pantalla.muestra_altura(screen, fuente, Datos.altura_maxima, Datos.mostrar_altura1, Datos.mostrar_altura2)
             #Pantalla.pantalla.muestra_distancia(screen, fuente, Datos.distancia_maxima, Datos.mostrar_altura1, Datos.mostrar_altura2)
             if Datos.bala_tanque is not None and Datos.bala_tanque.visualizar():
                 Pantalla.pantalla.muestra_bala(screen, Datos.tipo_bala, Datos.bala_tanque.xactual())
-            
-            for indice, tanque in enumerate(Tanque.tanques):
-                Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, -(Datos.ang_tank[Tanque.tanques[indice].angulo]-90), Tanque.tanques[indice].pivote)
+            if Datos.bala_tanque is not None:
+                Tanque.tanques[turno].extremo_canonx, Tanque.tanques[turno].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[turno].color, -(Datos.ang_tank[Tanque.tanques[turno].angulo]-90), Tanque.tanques[turno].pivote)
             pygame.display.flip()
             if salirJuego:
                 break

@@ -55,4 +55,3 @@ while True:
             if quit_button.collidepoint(event.pos):
                 pygame.quit()
                 sys.exit()
-
