@@ -6,6 +6,39 @@ from Canon import Canon
 from Jugador import Jugador
 
 class Juego:
+    def draw_button(rect, text, font, text_color, button_color, hover_color, screen):
+        pygame.draw.rect(screen, hover_color if rect.collidepoint(pygame.mouse.get_pos()) else button_color, rect)
+        text_surface = font.render(text, True, text_color)
+        text_rect = text_surface.get_rect(center=rect.center)
+        screen.blit(text_surface, text_rect)
+
+    def manejar_controles(turno, keys):
+        if keys[pygame.K_w]:
+            if Tanque.tanques[turno].angulo == 66:
+                Tanque.tanques[turno].angulo = 0
+            else:
+                Tanque.tanques[turno].angulo += 1   
+        elif keys[pygame.K_s]:
+            if Tanque.tanques[turno].angulo == 0:
+                Tanque.tanques[turno].angulo = 66
+            else:
+                Tanque.tanques[turno].angulo -= 1
+        elif keys[pygame.K_a]:
+            Tanque.tanques[turno].velocidad -= 5
+            Tanque.tanques[turno].velocidad = max(0, Tanque.tanques[turno].velocidad)
+        elif keys[pygame.K_d]:
+            Tanque.tanques[turno].velocidad += 5
+            Tanque.tanques[turno].velocidad = min(300, Tanque.tanques[turno].velocidad)
+        elif keys[pygame.K_1]:
+            Tanque.tanques[turno].tipo_bala = 1
+            Tanque.tanques[turno].radioExplosion = 75
+        elif keys[pygame.K_2]:
+            Tanque.tanques[turno].tipo_bala = 2
+            Tanque.tanques[turno].radioExplosion = 50
+        elif keys[pygame.K_3]:
+            Tanque.tanques[turno].tipo_bala = 3
+            Tanque.tanques[turno].radioExplosion = 25
+
 
     def draw_text(text, font, x, y, color, screen):
         textobj = font.render(text, 1, color)
@@ -78,7 +111,16 @@ class Juego:
         while True:
             salir = False
             screen.fill(Datos.WHITE)
-            screen.blit(imagenes.FondoControles, (0, 0))
+
+            if Datos.PANT_ALTO == 600: #Default 1200x600
+                screen.blit(imagenes.FondoControles, (0, 0))
+            elif Datos.PANT_ALTO == 1080: #1920x1080
+                screen.blit(imagenes.FondoControles1080, (0, 0))
+            elif Datos.PANT_ALTO == 800: #800x800
+                screen.blit(imagenes.FondoControles800, (0, 0))
+            elif Datos.PANT_ALTO == 768: #1366x768
+                screen.blit(imagenes.FondoControles768, (0, 0))
+
             fuente = pygame.font.Font(None, 36)
             Juego.draw_text('controles', fuente, (Datos.PANT_ANCHO / 2) - 58, (Datos.PANT_ALTO / 2) - 250, Datos.BLACK, screen) 
             Juego.draw_text('Jugador 1', fuente, (Datos.PANT_ANCHO / 2) - 418, (Datos.PANT_ALTO / 2) - 200, Datos.BLACK, screen) 
@@ -120,6 +162,89 @@ class Juego:
                     salir = True    
             if salir:
                 break
+    
+    def verificar_creditos(turno, boton, fuente, screen):
+        if boton == 1:
+            if Tanque.tanques[turno].creditos < 4000:
+                Juego.draw_text('No te alcanzan los creditos', fuente, Datos.PANT_ANCHO / 2, Datos.PANT_ALTO / 2, Datos.BLACK, screen)
+                pygame.display.flip()
+                pygame.time.delay(1000)
+            else:
+                Tanque.tanques[turno].cantBala105mm += 1
+                Tanque.tanques[turno].creditos -= 4000
+        if boton == 2:
+            if Tanque.tanques[turno].creditos < 2500:
+                Juego.draw_text('No te alcanzan los creditos', fuente, Datos.PANT_ANCHO / 2, Datos.PANT_ALTO / 2, Datos.BLACK, screen)
+                pygame.display.flip()
+                pygame.time.delay(1000)
+            else:
+                Tanque.tanques[turno].cantBala80mm += 1
+                Tanque.tanques[turno].creditos -= 2500
+        if boton == 3:
+            if Tanque.tanques[turno].creditos < 1000:
+                Juego.draw_text('No te alcanzan los creditos', fuente, Datos.PANT_ANCHO / 2, Datos.PANT_ALTO / 2, Datos.BLACK, screen)
+                pygame.display.flip()
+                pygame.time.delay(1000)
+            else:
+                Tanque.tanques[turno].cantBala60mm += 1
+                Tanque.tanques[turno].creditos -= 1000
+
+    def shop(turno,screen):
+        tienda_abierta = True
+
+        while tienda_abierta:
+            screen.fill(Datos.WHITE)
+            fuente = pygame.font.Font(None, 36)
+
+            # Botón de Tienda (título)
+            Juego.draw_text('Tienda', fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 150, Datos.BLACK, screen)
+
+            # Subtítulo y botones para tipos de bala
+            Juego.draw_text('Tipos de Bala', fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 50, Datos.BLACK, screen)
+
+            # Mostrar creditos
+            Juego.draw_text(f"creditos: {Tanque.Tanques[turno].creditos}", fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 100, Datos.BLACK, screen)
+
+            bala1_button = pygame.Rect(Datos.PANT_ANCHO / 2 - 250, Datos.PANT_ALTO / 2, 100, 50)
+            Juego.draw_button(bala1_button, 'Bala 1', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
+
+            bala2_button = pygame.Rect(Datos.PANT_ANCHO / 2 - 250, Datos.PANT_ALTO / 2 + 60, 100, 50)
+            Juego.draw_button(bala2_button, 'Bala 2', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
+
+            bala3_button = pygame.Rect(Datos.PANT_ANCHO / 2 - 250, Datos.PANT_ALTO / 2 + 120, 100, 50)
+            Juego.draw_button(bala3_button, 'Bala 3', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
+
+            # Botón de Salir como una pestaña
+            salir_button = pygame.Rect(10, Datos.PANT_ALTO - 60, 60, 30)
+            Juego.draw_button(salir_button,'Salir', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
+
+            pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    tienda_abierta = False
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if salir_button.collidepoint(event.pos):
+                        tienda_abierta = False
+
+                    elif bala1_button.collidepoint(event.pos):
+                        if turno:
+                            Juego.verificar_creditos(turno, 1, fuente,screen)
+                        else:
+                            Juego.verificar_creditos(turno, 1, fuente,screen)
+
+                    elif bala2_button.collidepoint(event.pos):
+                        if turno:
+                            Juego.verificar_creditos(turno, 2, fuente,screen)
+                        else:
+                            Juego.verificar_creditos(turno, 2, fuente,screen)
+
+                    elif bala3_button.collidepoint(event.pos):
+                        if turno:
+                            Juego.verificar_creditos(turno, 3, fuente,screen)
+                        else:
+                            Juego.verificar_creditos(turno, 3, fuente,screen)
 
     def muestra_ganador(Ganador, screen, fuente): #Función para mostrar el ganador del juego
         
@@ -249,8 +374,9 @@ class Juego:
 
         incremento = 0.035
 
-        salir = screen.blit(imagenes.Exit, (Pantalla.pantalla.ancho - imagenes.Exit.get_width() - 650, 10))
-        reset = screen.blit(imagenes.Restart, (Pantalla.pantalla.ancho - imagenes.Restart.get_width() - 550, 10))
+        salir = screen.blit(imagenes.Exit, (Datos.PANT_ANCHO / 2.3, 10))
+        reset = screen.blit(imagenes.Restart, (Datos.PANT_ANCHO / 1.9, 10))
+        tienda = screen.blit(imagenes.Tienda, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 100))
         #antes de comenzar el juego se baraja el orden de los jugadores haciendo shuffle al arraylist de tanques
         random.shuffle(Tanque.tanques)
         #inicia el turno del jugador de Tanque.tanques[0] y se irá aumentando el indice para que jueguen todos los jugadores. iniciando en turno = 0
@@ -266,6 +392,8 @@ class Juego:
                         Datos.reiniciar = True  # Reiniciar el juego
                     if salir.collidepoint(pygame.mouse.get_pos()):
                         salirJuego = True  # Volver al menú principal
+                    if tienda.collidepoint(pygame.mouse.get_pos()):
+                        Juego.shop(turno, screen)
             
             keys = pygame.key.get_pressed()
 
@@ -276,31 +404,7 @@ class Juego:
                 Datos.tecla_espacio_presionada = True
             
             #Controles para el jugador Tanque.tanques[turno]
-            if keys[pygame.K_w]:
-                if Tanque.tanques[turno].angulo == 66:
-                    Tanque.tanques[turno].angulo = 0
-                else:
-                    Tanque.tanques[turno].angulo += 1   
-            elif keys[pygame.K_s]:
-                if Tanque.tanques[turno].angulo == 0:
-                    Tanque.tanques[turno].angulo = 66
-                else:
-                    Tanque.tanques[turno].angulo -= 1
-            elif keys[pygame.K_a]:
-                Tanque.tanques[turno].velocidad -= 5
-                Tanque.tanques[turno].velocidad = max(0, Tanque.tanques[turno].velocidad)
-            elif keys[pygame.K_d]:
-                Tanque.tanques[turno].velocidad += 5
-                Tanque.tanques[turno].velocidad = min(300, Tanque.tanques[turno].velocidad)
-            elif keys[pygame.K_1]:
-                Tanque.tanques[turno].tipo_bala = 1
-                Tanque.tanques[turno].radioExplosion = 75
-            elif keys[pygame.K_2]:
-                Tanque.tanques[turno].tipo_bala = 2
-                Tanque.tanques[turno].radioExplosion = 50
-            elif keys[pygame.K_3]:
-                Tanque.tanques[turno].tipo_bala = 3
-                Tanque.tanques[turno].radioExplosion = 25
+            Juego.manejar_controles(turno, keys)
 
             screen.blit(imagenes.Background, (0, 0))
             terreno.dibujar(screen)

@@ -32,6 +32,7 @@ class Tanque:
         self.velocidad = 50
         self.tipo_bala = 1
         self.radioExplosion = 75
+        self.creditos = 10000
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, Datos.RED, (self.x, self.y, self.ancho, self.altura))
