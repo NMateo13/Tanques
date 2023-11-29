@@ -229,6 +229,7 @@ class Juego:
 
         Tanque.creaTanques(Jugador.jugadores)
         Tanque.spawnTanques(terreno)
+        Canon.definirCanon()
         
 
         tanque1 = Tanque.crearTanques(terreno, Datos.bandera_tanque)

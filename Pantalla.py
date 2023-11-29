@@ -202,17 +202,12 @@ class Pantalla:
 
         screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
 
-        #Cuadro 1
+        #Imagenes de los tanques en la seleccion
         screen.blit(imagenes.TanqueSeleccionVerde, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 6.5, 100, 100)) 
-        #Cuadro 2
         screen.blit(imagenes.TanqueSeleccionRojo, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 6.5, 100, 100)) 
-        #Cuadro 3
         screen.blit(imagenes.TanqueSeleccionAzul, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 6.5, 100, 100))
-        #Cuadro 4
         screen.blit(imagenes.TanqueSeleccionAmarillo, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 1.8, 100, 100))
-        #Cuadro 5
         screen.blit(imagenes.TanqueSeleccionRosa, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 1.8, 100, 100))
-        #Cuadro 6
         screen.blit(imagenes.TanqueSeleccionCeleste, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 1.8, 100, 100))
 
         #Divisiones necesarias para cuadros separados independiente la resolución

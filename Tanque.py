@@ -8,12 +8,12 @@ class Tanque:
 
     tanques = []
 
-    def __init__(self, x, y, num, indice):
+    def __init__(self, x, y, color, indice):
         self.x = x
         self.y = y
         self.ancho = 60
         self.altura = 10 
-        self.num = num
+        self.color = color
         self.vida = 100 # vida tanque
         self.cantBala60mm = 3 #cantidad de balas 
         self.cantBala80mm = 10
@@ -22,7 +22,7 @@ class Tanque:
         self.Bala80mm = 40
         self.Bala105mm = 50
         self.indice = indice
-        self.pivote = []
+        self.pivote = [x+21, y+5]
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, Datos.RED, (self.x, self.y, self.ancho, self.altura))
@@ -89,17 +89,30 @@ class Tanque:
                 tanque.x = random.randint(0, Datos.PANT_ANCHO // 2)
                 tanque.indice = tanque.x
                 tanque.y = terreno.alto - terreno.terreno[indice] - 26
-                tanque.num = Pantalla.pantalla.tank1
 
             else:
                 tanque.x = random.randint(0, (Datos.PANT_ANCHO // 2 - 50))
                 tanque.indice = ((Datos.PANT_ANCHO - 1) - tanque.x)    
                 tanque.y = terreno.alto -  terreno.terreno[indice] - 24
-                tanque.num = Pantalla.pantalla.tank2
 
+    def definirColor(color):
+
+        if color == 1:
+            imagenes.IMG_Tanque1
+        elif color == 2:
+            imagenes.IMG_Tanque2
+        elif color == 3:
+            imagenes.IMG_Tanque3
+        elif color == 4:
+            imagenes.IMG_Tanque4
+        elif color == 5:
+            imagenes.IMG_Tanque5
+        elif color == 6:
+            imagenes.IMG_Tanque6
 
     
-    '''def crearTanques(terreno, bandera):
+    
+    def crearTanques(terreno, bandera):
 
         if bandera:
 
@@ -118,5 +131,4 @@ class Tanque:
             posY_Tanque = terreno.alto -  terreno.terreno[indice] - 24
             tank2 = Pantalla.pantalla.tank2
             tanque = Tanque(Datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque + 20, posY_Tanque + 10, tank2, indice)
-
-            return tanque'''
+            return tanque
