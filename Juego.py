@@ -482,16 +482,14 @@ class Juego:
                         if Datos.bala_tanque.verificar_impacto_ancho(Datos.PANT_ANCHO):
                             Datos.bala_tanque = None
                             Datos.tecla_espacio_presionada = False
-                            turno += 1
                             Datos.tiempo_transcurrido = 0
-                            if turno < len(Tanque.tanques):
+                            if turno < len(Tanque.tanques)-1:
                                 turno += 1
                             else:
                                 turno = 0
                             break
                         elif terreno.verificar_colision(Datos.bala_tanque):
                             Datos.tecla_espacio_presionada = False
-                            turno += 1
                             Datos.tiempo_transcurrido = 0
                             terreno.modificar_terreno(terreno)
                             puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(terreno.calcular_centro_explosion())
@@ -504,7 +502,7 @@ class Juego:
                                     elif Tanque.tanques[turno].tipo_bala == 3:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[turno].Bala60mm
                             Datos.bala_tanque = None
-                            if turno < len(Tanque.tanques):
+                            if turno < len(Tanque.tanques)-1:
                                 turno += 1
                             else:
                                 turno = 0
@@ -529,7 +527,7 @@ class Juego:
                                     elif Tanque.tanques[turno].tipo_bala == 3:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[turno].Bala60mm
                             Datos.bala_tanque = None
-                            if turno < len(Tanque.tanques):
+                            if turno < len(Tanque.tanques)-1:
                                 turno += 1
                             else:
                                 turno = 0
@@ -552,7 +550,7 @@ class Juego:
             Pantalla.pantalla.muestra_imagen(screen, Tanque.tanques, turno)
             Pantalla.pantalla.muestra_datos(screen, fuente, Datos.altura_maxima, Datos.distancia_maxima, Tanque.tanques)
             if Datos.bala_tanque is not None and Datos.bala_tanque.visualizar():
-                Pantalla.pantalla.muestra_bala(screen, Datos.tipo_bala, Datos.bala_tanque.xactual())
+                Pantalla.pantalla.muestra_bala(screen, Tanque.tanques[turno].tipo_bala, Datos.bala_tanque.xactual())
             for indice, tanque in enumerate(Tanque.tanques):
                 Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, -(Datos.ang_tank[Tanque.tanques[indice].angulo]-90), Tanque.tanques[indice].pivote)
             pygame.display.flip()
