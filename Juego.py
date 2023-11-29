@@ -456,6 +456,12 @@ class Juego:
                     else:
                         #si pasa las comprobaciones se dispara la bala
                         Datos.bala_tanque = Tanque.tanques[turno].disparar(Tanque.tanques[turno].extremo_canonx, Tanque.tanques[turno].extremo_canony, Datos.ang_tank[Tanque.tanques[turno].angulo], Tanque.tanques[turno].velocidad, Datos.tiempo_transcurrido, screen, Datos.BLACK, Tanque.tanques[turno].tipo_bala)
+                        if Tanque.tanques[turno].tipo_bala == 1:
+                            Tanque.tanques[turno].cantBala105mm -= 1
+                        elif Tanque.tanques[turno].tipo_bala == 2:
+                            Tanque.tanques[turno].cantBala80mm -= 1
+                        elif Tanque.tanques[turno].tipo_bala == 3:
+                            Tanque.tanques[turno].cantBala60mm -= 1
                 else:
                     Datos.altura_maxima = Datos.bala_tanque.punto_maximo(Datos.altura_maxima)
                     Datos.bala_tanque.verificacion(Datos.tiempo_transcurrido, screen, Datos.BLACK)
@@ -466,6 +472,10 @@ class Juego:
                             Datos.tecla_espacio_presionada = False
                             turno += 1
                             Datos.tiempo_transcurrido = 0
+                            if turno < len(Tanque.tanques):
+                                turno += 1
+                            else:
+                                turno = 0
                             break
                         elif Terreno.verificar_colision(terreno, Datos.bala_tanque):
                             Datos.tecla_espacio_presionada = False
@@ -482,6 +492,10 @@ class Juego:
                                     elif Tanque.tanques[turno].tipo_bala == 3:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[turno].Bala60mm
                             Datos.bala_tanque = None
+                            if turno < len(Tanque.tanques):
+                                turno += 1
+                            else:
+                                turno = 0
                             break
                         elif Datos.bala_tanque.verificar_impacto_tanque(Tanque.tanques[indice]):
                             if Tanque.tanques[turno].tipo_bala == 1:
@@ -491,7 +505,6 @@ class Juego:
                             elif Tanque.tanques[turno].tipo_bala == 3:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[turno].Bala60mm
                             Datos.tecla_espacio_presionada = False
-                            turno += 1
                             Datos.tiempo_transcurrido = 0
                             Terreno.modificar_terreno(terreno)
                             puntosExplosionX, puntosExplosionY = Terreno.calcular_puntos_explosion(Datos.bala_tanque, Tanque.tanques[turno].radioExplosion)
@@ -504,6 +517,10 @@ class Juego:
                                     elif Tanque.tanques[turno].tipo_bala == 3:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[turno].Bala60mm
                             Datos.bala_tanque = None
+                            if turno < len(Tanque.tanques):
+                                turno += 1
+                            else:
+                                turno = 0
                             break
             
 
@@ -516,19 +533,12 @@ class Juego:
                     Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, Datos.ang_tank[0], Tanque.tanques[indice].pivote)
 
 
-            # Descuento de balas        
-            if Datos.tipo_bala1 == 1:
-                Datos.cantidad_balas1 = Tanque.tanques[turno].cantBala105mm
-            elif Datos.tipo_bala1 == 2:
-                Datos.cantidad_balas1 = Tanque.tanques[turno].cantBala80mm
-            elif Datos.tipo_bala1 == 3:
-                Datos.cantidad_balas1 = Tanque.tanques[turno].cantBala60mm
 
-            """# Representacion gráfica de los Datos
+            # Representacion gráfica de los Datos
             Pantalla.pantalla.muestra_salud(screen, fuente,Tanque.tanques[indice].vida)
             Pantalla.pantalla.muestra_potencia(screen, fuente,Datos.velocidad_jugador1,Datos.velocidad_jugador2)
             Pantalla.pantalla.muestra_angulo(screen, fuente,Datos.ang_tank[Datos.angulo_jugador1-30],Datos.ang_tank[Datos.angulo_jugador2-30])    
-            Pantalla.pantalla.muestra_texto(screen, fuente ,Datos.turno1,Datos.cantidad_balas1,Datos.cantidad_balas2)"""
+            Pantalla.pantalla.muestra_texto(screen, fuente ,Datos.turno1,Datos.cantidad_balas1,Datos.cantidad_balas2)
             #linea que muestra los tanques
             #Pantalla.pantalla.muestra_imagen(screen, Datos.tipo_bala1, Datos.tipo_bala2, Tanque.tanques)
             #Pantalla.pantalla.muestra_altura(screen, fuente, Datos.altura_maxima, Datos.mostrar_altura1, Datos.mostrar_altura2)
