@@ -5,7 +5,10 @@ from Bala import Bala
 
 
 class Tanque:
-    def __init__(self, x, y, num, indice):
+
+    tanques = []
+
+    def __init__(self, x, y, num, indice, color):
         self.x = x
         self.y = y
         self.ancho = 60
@@ -20,6 +23,16 @@ class Tanque:
         self.Bala105mm = 50
         self.indice = indice
         self.pivote = []
+        self.extremo_canonx = 0
+        self.extremo_canony = 0
+        #el color del tanque depende del número de jugador siendo (0=verde, 1=rojo, 2=azul, 3=amarillo, 4=rosa, 5=celeste)
+        self.color = color
+        self.angulo = 30
+        self.velocidad = 50
+        self.tipo_bala = 1
+        self.radioExplosion = 75
+        self.creditos = 10000
+        self.mostrar_datos = False
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, Datos.RED, (self.x, self.y, self.ancho, self.altura))
@@ -67,7 +80,36 @@ class Tanque:
             tipo_bala = random.randint(1, 3)
         return angulo, velocidad, tipo_bala
     
-    def crearTanques(terreno, bandera):
+
+    def creaTanques(jugadores):
+        
+        for indice, jugador in enumerate(jugadores):
+            jugadorActual = jugadores[indice]
+            tanque = Tanque(0, 0, jugadorActual.indice+1, 0, jugadorActual.color_tanque)
+            Tanque.tanques.append(tanque)
+
+    def spawnTanques(terreno):
+
+        for indice,tanque in enumerate(Tanque.tanques):
+            
+            Datos.bandera_tanque = random.choice([True, False])
+            
+            if Datos.bandera_tanque:
+
+                tanque.x = random.randint(0, Datos.PANT_ANCHO // 2)
+                tanque.indice = tanque.x
+                tanque.y = terreno.alto - terreno.terreno[indice] - 26
+                tanque.num = Pantalla.pantalla.tank1
+
+            else:
+                tanque.x = random.randint(0, (Datos.PANT_ANCHO // 2 - 50))
+                tanque.indice = ((Datos.PANT_ANCHO - 1) - tanque.x)    
+                tanque.y = terreno.alto -  terreno.terreno[indice] - 24
+                tanque.num = Pantalla.pantalla.tank2
+
+
+    
+    '''def crearTanques(terreno, bandera):
 
         if bandera:
 
@@ -87,4 +129,4 @@ class Tanque:
             tank2 = Pantalla.pantalla.tank2
             tanque = Tanque(Datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque + 20, posY_Tanque + 10, tank2, indice)
 
-            return tanque
+            return tanque'''

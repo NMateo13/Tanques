@@ -1,4 +1,4 @@
-import pygame, Datos, os, random, imagenes
+import pygame, Datos, os, random, imagenes, sys
 
 
 class Pantalla:
@@ -52,10 +52,6 @@ class Pantalla:
         self.ancho = ancho
         self.alto = alto
 
-    def crearMatriz(self, alto, ancho):
-
-        Pantalla.matriz = [[0] * ancho for _ in range(alto - Datos.medidaHUD)]
-
     def dibujar(self, screen):
         
         for filas in range(0, (Datos.PANT_ALTO - Datos.medidaHUD)):
@@ -63,110 +59,106 @@ class Pantalla:
                 if pantalla.matriz[filas][columnas] == 1:
                     pygame.draw.rect(screen, pantalla.GREEN, (columnas, filas, 6, 6))
     
+    def draw_text(text, font, x, y, color, screen):
+        textobj = font.render(text, 1, color)
+        textrect = textobj.get_rect()
+        textrect.topleft = (x, y)
+        screen.blit(textobj, textrect)
+
     #Funciones para mostrar información en la pantalla
-    def muestra_texto(self, screen, font, turno,balas1, balas2):
-        balas1_texo = str(balas1)
-        balas2_texo = str(balas2)
-
-        jugador_texto1 = font.render("Jugador 1", True, Datos.WHITE)
-        screen.blit(jugador_texto1, (460, Datos.PANT_ALTO - 110))
-
-        jugador_texto2 = font.render("Jugador 2", True, Datos.WHITE)
-        screen.blit(jugador_texto2, (pantalla.ancho - jugador_texto2.get_width() - 460, Datos.PANT_ALTO - 110))
+    def muestra_texto(self, screen, font, tanque, angulo):
+        if tanque.tipo_bala == 1:
+            bala_texto = str(tanque.cantBala105mm)
+        elif tanque.tipo_bala == 2:
+            bala_texto = str(tanque.cantBala80mm)
+        elif tanque.tipo_bala == 3:
+            bala_texto = str(tanque.cantBala60mm)
 
         stats = font.render("STATS", True, Datos.RED)
-        screen.blit(stats, (300, Datos.PANT_ALTO - 110))
-        screen.blit(stats, (pantalla.ancho - stats.get_width() - 300, Datos.PANT_ALTO - 110))
+        screen.blit(stats, (Datos.PANT_ANCHO / 2.9, Datos.PANT_ALTO - 110))
 
         bala = font.render("TIPO DE BALA", True, Datos.RED)
         screen.blit(bala, (25, Datos.PANT_ALTO - 110))
-        screen.blit(bala, (pantalla.ancho - bala.get_width() - 25, Datos.PANT_ALTO - 110))
-        #tanque 1
-        cant_balas = font.render(balas1_texo, True, Datos.WHITE)
+        
+        cant_balas = font.render(bala_texto, True, Datos.WHITE)
+        salud_texto1 = font.render(f"Vida: {tanque.vida}%", True, Datos.WHITE)
+        #Funcion para dibujar el color del tanque que corresponda en el turno
+        self.que_tanque(tanque, screen)
+        screen.blit(salud_texto1, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 85))
+        potencia_texto1 = font.render(f"Potencia: {tanque.velocidad}", True, Datos.WHITE)
+        screen.blit(potencia_texto1, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 57))
+        angulo_texto1 = font.render(f"Ángulo: {angulo}°", True, Datos.WHITE)
+        screen.blit(angulo_texto1, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 30))
         screen.blit(cant_balas, (110, Datos.PANT_ALTO - 30))
-
-        #tanque 2
-        cant_balas = font.render(balas2_texo, True, Datos.WHITE)
-        screen.blit(cant_balas, (pantalla.ancho - cant_balas.get_width() - 110 , Datos.PANT_ALTO - 30))
-        
-        #Indica el turno del jugador
-        if turno:
-            turno_texto = font.render("J1", True, Datos.WHITE)
-        else:
-            turno_texto = font.render("J2", True, Datos.WHITE)
-        
-        screen.blit(turno_texto, (pantalla.ancho // 2 - turno_texto.get_width() // 2, Datos.PANT_ALTO - 140))
+      
+        turno_texto = font.render("Jugador Actual", True, Datos.WHITE)
+        screen.blit(turno_texto, ((Datos.PANT_ANCHO / 1.8, Datos.PANT_ALTO - 110)))
         nTurno_texto = font.render(f"Turno: {Datos.nTurnos}", True, Datos.WHITE)
-        screen.blit(nTurno_texto, (pantalla.ancho // 2 - nTurno_texto.get_width() // 2, Datos.PANT_ALTO - 170))
+        screen.blit(nTurno_texto, (Datos.PANT_ANCHO // 2 - nTurno_texto.get_width() // 2, Datos.PANT_ALTO - 150))
+    
+    def que_tanque(self, tanque, screen):
+        if tanque.color == 1:
+            screen.blit(imagenes.Tanque1_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque1_HUD.get_height() - 15))
+        elif tanque.color == 2:
+            screen.blit(imagenes.Tanque2_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque2_HUD.get_height() - 15))
+        elif tanque.color == 3:
+            screen.blit(imagenes.Tanque3_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque3_HUD.get_height() - 15))
+        elif tanque.color == 4:
+            screen.blit(imagenes.Tanque4_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque4_HUD.get_height() - 15))
+        elif tanque.color == 5:
+            screen.blit(imagenes.Tanque5_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque5_HUD.get_height() - 15))
+        elif tanque.color == 6:
+            screen.blit(imagenes.Tanque6_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque6_HUD.get_height() - 15))
 
-    def muestra_salud(self, screen, font, vida_tanque1, vida_tanque2): #falta agregar las variables de vida de los tanques
-        salud_texto1 = font.render(f"Vida: {vida_tanque1}%", True, Datos.WHITE)
-        screen.blit(salud_texto1, (250, Datos.PANT_ALTO - 85))
-
-        salud_texto2 = font.render(f"Vida: {vida_tanque2}%", True, Datos.WHITE) 
-        screen.blit(salud_texto2, (pantalla.ancho - salud_texto2.get_width() - 300, Datos.PANT_ALTO - 85))
-
-    def muestra_potencia(self, screen, font,velocidad_jugador1, velocidad_jugador2): 
-        potencia_texto1 = font.render(f"Potencia: {velocidad_jugador1}", True, Datos.WHITE)
-        screen.blit(potencia_texto1, (250, Datos.PANT_ALTO - 57))
-
-        potencia_texto2 = font.render(f"Potencia: {velocidad_jugador2}", True, Datos.WHITE)
-        screen.blit(potencia_texto2, (pantalla.ancho - potencia_texto2.get_width() - 280, Datos.PANT_ALTO - 57))
-
-    def muestra_angulo(self, screen, font,angulo_jugador1, angulo_jugador2): 
-        angulo_texto1 = font.render(f"Ángulo: {angulo_jugador1}°", True, Datos.WHITE)
-        screen.blit(angulo_texto1, (250, Datos.PANT_ALTO - 30))
-
-        angulo_texto2 = font.render(f"Ángulo: {angulo_jugador2}°", True, Datos.WHITE)
-        screen.blit(angulo_texto2, (pantalla.ancho - angulo_texto2.get_width() - 280, Datos.PANT_ALTO - 30))
-
-    def muestra_imagen(self, screen, tipo1, tipo2, posX1, posY1, posX2, posY2):
-        screen.blit(imagenes.Tanque1, (posX1, posY1-10)) 
-        screen.blit(imagenes.Tanque2, (posX2, posY2-10)) 
+    def muestra_imagen(self, screen, tanques, turno):
+        for indice, tanque in enumerate(tanques):
+            if tanque.color == 1:
+                screen.blit(imagenes.Tanque1, (tanque.x, tanque.y-10))
+            elif tanque.color == 2:
+                screen.blit(imagenes.Tanque2, (tanque.x, tanque.y-10))
+            elif tanque.color == 3:
+                screen.blit(imagenes.Tanque3, (tanque.x, tanque.y-10))
+            elif tanque.color == 4:
+                screen.blit(imagenes.Tanque4, (tanque.x, tanque.y-10))
+            elif tanque.color == 5:
+                screen.blit(imagenes.Tanque5, (tanque.x, tanque.y-10))
+            elif tanque.color == 6:
+                screen.blit(imagenes.Tanque6, (tanque.x, tanque.y-10))
         screen.blit(imagenes.Exit, (pantalla.ancho - imagenes.Exit.get_width()-650, 10))
         screen.blit(imagenes.Restart, (pantalla.ancho - imagenes.Restart.get_width()-550, 10))
-
-        #NO TOCAR SON ESTÁTICOS 
-
-        screen.blit(imagenes.Tanque1_HUD, (450, Datos.PANT_ALTO - imagenes.Tanque1_HUD.get_height() - 5)) 
-        screen.blit(imagenes.Tanque2_HUD, (pantalla.ancho - imagenes.Tanque2_HUD.get_width()-450, Datos.PANT_ALTO - imagenes.Tanque2_HUD.get_height()-5))
-
-        if tipo1 == 1:
+        screen.blit(imagenes.Tienda, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 100))
+        
+        if tanques[turno].tipo_bala == 1:
             #cambiar imagen a bala 105mm
             screen.blit(imagenes.Bala105, (50, Datos.PANT_ALTO - 75))
-        elif tipo1 == 2:
+        elif tanques[turno].tipo_bala == 2:
             #cambiar imagen a bala 80mm
             screen.blit(imagenes.Bala80, (60, Datos.PANT_ALTO - 75))
-        elif tipo1 == 3:
+        elif tanques[turno].tipo_bala == 3:
             #cambiar imagen a bala 60mm
             screen.blit(imagenes.Bala60, (70, Datos.PANT_ALTO - 75))
-        
-        if tipo2 == 1:
-            #cambiar imagen a bala 105mm
-            screen.blit(imagenes.Bala105, (pantalla.ancho - imagenes.Bala105.get_width() - 50, Datos.PANT_ALTO - 75))
-        elif tipo2 == 2:
-            #cambiar imagen a bala 80mm
-            screen.blit(imagenes.Bala80, (pantalla.ancho - imagenes.Bala80.get_width() - 60, Datos.PANT_ALTO - 75))
-        elif tipo2 == 3:
-            #cambiar imagen a bala 60mm
-            screen.blit(imagenes.Bala60, (pantalla.ancho - imagenes.Bala60.get_width() - 70, Datos.PANT_ALTO - 75))
 
-        #NO TOCAR SON ESTÁTICOS
-
-    #ahora se iniciará una función para calcular la altura maxima de la bala y la distancia recorrida por la bala y se mostrará en pantalla
-    def muestra_altura(self, screen, font, altura_maxima, mostrar1, mostrar2):
-        if mostrar1:
-            altura_texto1 = font.render(f"Altura máxima J1: {altura_maxima}", True, Datos.WHITE)
-            screen.blit(altura_texto1, (10, Datos.PANT_ALTO - 180))
-        elif mostrar2:
-            altura_texto2 = font.render(f"Altura máxima J2: {altura_maxima}", True, Datos.WHITE)
-            screen.blit(altura_texto2, (10, Datos.PANT_ALTO - 180))
-
+    def muestra_datos(self, screen, font, altura_maxima, distancia_maxima, tanques):
+        for indice, tanque in enumerate(tanques):
+            if tanques[indice].mostrar_datos:
+                altura_texto = font.render(f"Altura máxima J{tanques[indice].num}: {altura_maxima}", True, Datos.WHITE)
+                screen.blit(altura_texto, (10, Datos.PANT_ALTO - 100))
+                distancia_texto = font.render(f"Distancia máxima J{tanques[indice].num}: {distancia_maxima}", True, Datos.WHITE)
+                screen.blit(distancia_texto, (10, Datos.PANT_ALTO - 150))
+            
     def prerotate(self, screen, num, angle, pivote):
         if num==1:
             img, rect, x, y = Pantalla.rotate(imagenes.Canon1, angle, pivote)
         elif num==2:
             img, rect, x, y = Pantalla.rotate(imagenes.Canon2, angle, pivote)
+        elif num==3:
+            img, rect, x, y = Pantalla.rotate(imagenes.Canon3, angle, pivote)
+        elif num==4:    
+            img, rect, x, y = Pantalla.rotate(imagenes.Canon4, angle, pivote)
+        elif num==5:
+            img, rect, x, y = Pantalla.rotate(imagenes.Canon5, angle, pivote)
+        elif num==6:
+            img, rect, x, y = Pantalla.rotate(imagenes.Canon6, angle, pivote)
         screen.blit(img, rect)
         return x, y
     
@@ -180,17 +172,6 @@ class Pantalla:
         x = rect.x
         y = rect.y
         return rotated_image, rect, x, y
-    
-    def prueba(self, surface, x, y):
-        pygame.draw.circle(surface, Datos.BLACK, (x, y), 2)
-
-    def muestra_distancia(self, screen, font, distancia_maxima, mostrar1, mostrar2):
-        if mostrar1:
-            distancia_texto1 = font.render(f"Distancia máxima J1: {distancia_maxima}", True, Datos.WHITE)
-            screen.blit(distancia_texto1, (10, Datos.PANT_ALTO - 150))
-        elif mostrar2:
-            distancia_texto2 = font.render(f"Distancia máxima J2: {distancia_maxima}", True, Datos.WHITE)
-            screen.blit(distancia_texto2, (10, Datos.PANT_ALTO - 150))
 
     def muestra_bala(self, screen, tipo_bala, pos_x):
         if tipo_bala == 1:
@@ -199,6 +180,36 @@ class Pantalla:
             screen.blit(imagenes.Prebala80, (pos_x, 0))
         elif tipo_bala == 3:
             screen.blit(imagenes.Prebala60, (pos_x, 0))
+
+    def muestra_seleccion(self, screen, fuente):
+
+        screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
+
+        #Cuadro 1
+        screen.blit(imagenes.TanqueSeleccionVerde, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 6.5, 100, 100)) 
+        #Cuadro 2
+        screen.blit(imagenes.TanqueSeleccionRojo, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 6.5, 100, 100)) 
+        #Cuadro 3
+        screen.blit(imagenes.TanqueSeleccionAzul, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 6.5, 100, 100))
+        #Cuadro 4
+        screen.blit(imagenes.TanqueSeleccionAmarillo, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 1.8, 100, 100))
+        #Cuadro 5
+        screen.blit(imagenes.TanqueSeleccionRosa, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 1.8, 100, 100))
+        #Cuadro 6
+        screen.blit(imagenes.TanqueSeleccionCeleste, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 1.8, 100, 100))
+
+        #Divisiones necesarias para cuadros separados independiente la resolución
+        Pantalla.draw_text('1', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
+        Pantalla.draw_text('2', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
+        Pantalla.draw_text('3', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
+        Pantalla.draw_text('4', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
+        Pantalla.draw_text('5', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
+        Pantalla.draw_text('6', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
+
+        Pantalla.draw_text('Jugar', fuente, Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
+        Pantalla.draw_text('Volver', fuente, Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 1.53, Datos.WHITE, screen)
+        Pantalla.draw_text('Controles', fuente, Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 2.65, Datos.WHITE, screen)
+
 
 pantalla = Pantalla(Datos.PANT_ANCHO, Datos.PANT_ALTO)
 matriz = []
