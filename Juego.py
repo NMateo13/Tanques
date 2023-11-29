@@ -406,9 +406,25 @@ class Juego:
             #Controles para el jugador Tanque.tanques[turno]
             Juego.manejar_controles(turno, keys)
 
-            screen.blit(imagenes.Background, (0, 0))
+            if Datos.PANT_ALTO == 600: #Default 1200x600
+                screen.blit(imagenes.Background, (0, 0))
+            elif Datos.PANT_ALTO == 1080: #1920x1080
+                screen.blit(imagenes.Background1080, (0, 0))
+            elif Datos.PANT_ALTO == 800: #800x800
+                screen.blit(imagenes.Background800, (0, 0))
+            elif Datos.PANT_ALTO == 768: #1366x768
+                screen.blit(imagenes.Background768, (0, 0))
+
             terreno.dibujar(screen)
-            screen.blit(imagenes.HUD, (0, Datos.PANT_ALTO - 120))
+
+            if Datos.PANT_ALTO == 600: #Default 1200x600
+                screen.blit(imagenes.HUD, (0, Datos.PANT_ALTO - 120))
+            elif Datos.PANT_ALTO == 1080: #1920x1080
+                screen.blit(imagenes.HUD1080, (0, Datos.PANT_ALTO - 120))
+            elif Datos.PANT_ALTO == 800: #800x800
+                screen.blit(imagenes.HUD800, (0, Datos.PANT_ALTO - 120))
+            elif Datos.PANT_ALTO == 768: #1366x768
+                screen.blit(imagenes.HUD768, (0, Datos.PANT_ALTO - 120))
 
             #DIBUJAR HITBOXES
             for indice, tanque in enumerate(Tanque.tanques):
