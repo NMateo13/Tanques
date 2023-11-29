@@ -63,30 +63,35 @@ class Terreno:
 
     def modificar_terreno(self, terreno):
         centro_explosion = self.calcular_centro_explosion()
-        puntos_explosion = self.calcular_puntos_explosion(centro_explosion)
-        puntos_x, puntos_y = self.obtener_puntos_x_y(puntos_explosion)
+        puntosx, puntosy = self.calcular_puntos_explosion(centro_explosion)
+        puntos_x, puntos_y = self.obtener_puntos_x_y(puntosx, puntosy)
         self.actualizar_terreno(terreno, puntos_x, puntos_y)
         self.limpiar_variables()
         return centro_explosion
 
     def calcular_centro_explosion(self):
         centro_explosion = []
-        for x, y in Datos.bala_tanque1.trayectoria:
+        for x, y in Datos.bala_tanque.trayectoria:
             centro_explosion.append(int(x))
             centro_explosion.append(int(y))
         return centro_explosion
 
     def calcular_puntos_explosion(self, centro_explosion):
         num_puntos_explosion = int(2 * math.pi * Datos.radioExplosion)
-        puntos_explosion = []
+        puntosx = []
+        puntosy = []
         for i in range(num_puntos_explosion):
             angle = (2 * math.pi / num_puntos_explosion) * i
             x = int(centro_explosion[0] + Datos.radioExplosion * math.cos(angle))
             y = int(centro_explosion[1] + Datos.radioExplosion * math.sin(angle))
-            puntos_explosion.append((x, y))
-        return puntos_explosion
+            puntosx.append(x)
+            puntosy.append(y)
+        return puntosx, puntosy
 
-    def obtener_puntos_x_y(self, puntos_explosion):
+    def obtener_puntos_x_y(self, puntosx, puntosy):
+        puntos_explosion = []
+        for i in range(len(puntosx)):
+            puntos_explosion.append((puntosx[i], puntosy[i]))
         puntos_x = [x for x, _ in puntos_explosion]
         puntos_y = [y for _, y in puntos_explosion]
         return puntos_x, puntos_y

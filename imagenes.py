@@ -26,6 +26,7 @@ IMG_fondo_controles = pygame.image.load(os.path.join("Assets", "fondo_controles.
 IMG_Prebala_105 = pygame.image.load(os.path.join("Assets", "prebala105.png"))
 IMG_Prebala_80 = pygame.image.load(os.path.join("Assets", "prebala80.png"))
 IMG_Prebala_60 = pygame.image.load(os.path.join("Assets", "prebala60.png"))
+IMG_Tienda = pygame.image.load(os.path.join("Assets", "tienda.png"))
 IMG_Background_seleccion = pygame.image.load(os.path.join("Assets", "imgnueva.png"))
 
 #Reescalado de imagenes
@@ -58,6 +59,10 @@ Background = pygame.transform.scale(IMG_Background, (Datos.PANT_ANCHO, Datos.PAN
 HUD = pygame.transform.scale(IMG_HUD, (Datos.PANT_ANCHO, 120))    
 Tanque1_HUD = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 2, IMG_Tanque1.get_height() // 2))
 Tanque2_HUD = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 2, IMG_Tanque2.get_height() // 2))
+Tanque3_HUD = pygame.transform.scale(IMG_Tanque3, (IMG_Tanque3.get_width() // 2, IMG_Tanque3.get_height() // 2))
+Tanque4_HUD = pygame.transform.scale(IMG_Tanque4, (IMG_Tanque4.get_width() // 2, IMG_Tanque4.get_height() // 2))
+Tanque5_HUD = pygame.transform.scale(IMG_Tanque5, (IMG_Tanque5.get_width() // 2, IMG_Tanque5.get_height() // 2))
+Tanque6_HUD = pygame.transform.scale(IMG_Tanque6, (IMG_Tanque6.get_width() // 2, IMG_Tanque6.get_height() // 2))
 Bala105 = pygame.transform.scale(IMG_Bala105, (IMG_Bala105.get_width() // 1.5, IMG_Bala105.get_height() // 1.5))
 Bala80 = pygame.transform.scale(IMG_Bala80, (IMG_Bala80.get_width() // 1.75, IMG_Bala80.get_height() // 1.75))
 Bala60 = pygame.transform.scale(IMG_Bala60, (IMG_Bala60.get_width() // 2, IMG_Bala60.get_height() // 2))
@@ -69,4 +74,5 @@ Prebala80 = pygame.transform.scale(IMG_Prebala_80, (IMG_Prebala_80.get_width() /
 Prebala60 = pygame.transform.scale(IMG_Prebala_60, (IMG_Prebala_60.get_width() // 6, IMG_Prebala_60.get_height() // 6))
 FondoMenu = pygame.transform.scale(IMG_FondoMenu, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
 FondoControles = pygame.transform.scale(IMG_fondo_controles, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
+Tienda = pygame.transform.scale(IMG_Tienda, (IMG_Tienda.get_width() // 1.25, IMG_Tienda.get_height() // 1.25))
 FondoMenu_seleccion = pygame.transform.scale(IMG_Background_seleccion, (Datos.PANT_ANCHO, Datos.PANT_ALTO))

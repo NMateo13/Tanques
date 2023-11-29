@@ -381,6 +381,9 @@ class Juego:
         random.shuffle(Tanque.tanques)
         #inicia el turno del jugador de Tanque.tanques[0] y se irá aumentando el indice para que jueguen todos los jugadores. iniciando en turno = 0
         turno = 0
+        Tanque.tanques[turno].mostrar_datos = True
+        #Para mostrar correctamente los datos de la primera iteración se crea un nuevo booleando
+        primera_iteracion = True
         while True:
             Clock.tick(Datos.FPS)
             for event in pygame.event.get():
@@ -455,6 +458,15 @@ class Juego:
                         Datos.tiempo_transcurrido = 0
                     else:
                         #si pasa las comprobaciones se dispara la bala
+                        if primera_iteracion:
+                            primera_iteracion=False
+                        else:
+                            if turno==0:
+                                Tanque.tanques[len(Tanque.tanques)-1].mostrar_datos = False
+                                Tanque.tanques[turno].mostrar_datos = True
+                            else:
+                                Tanque.tanques[turno-1].mostrar_datos = False
+                                Tanque.tanques[turno].mostrar_datos = True
                         Datos.bala_tanque = Tanque.tanques[turno].disparar(Tanque.tanques[turno].extremo_canonx, Tanque.tanques[turno].extremo_canony, Datos.ang_tank[Tanque.tanques[turno].angulo], Tanque.tanques[turno].velocidad, Datos.tiempo_transcurrido, screen, Datos.BLACK, Tanque.tanques[turno].tipo_bala)
                         if Tanque.tanques[turno].tipo_bala == 1:
                             Tanque.tanques[turno].cantBala105mm -= 1
@@ -477,12 +489,12 @@ class Juego:
                             else:
                                 turno = 0
                             break
-                        elif Terreno.verificar_colision(terreno, Datos.bala_tanque):
+                        elif terreno.verificar_colision(Datos.bala_tanque):
                             Datos.tecla_espacio_presionada = False
                             turno += 1
                             Datos.tiempo_transcurrido = 0
-                            Terreno.modificar_terreno(terreno)
-                            puntosExplosionX, puntosExplosionY = Terreno.calcular_puntos_explosion(Datos.bala_tanque, Tanque.tanques[turno].radioExplosion)
+                            terreno.modificar_terreno(terreno)
+                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(terreno.calcular_centro_explosion())
                             for indice, tanque in enumerate(Tanque.tanques):
                                 if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice], puntosExplosionX, puntosExplosionY):
                                     if Tanque.tanques[turno].tipo_bala == 1:
@@ -506,8 +518,8 @@ class Juego:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[turno].Bala60mm
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
-                            Terreno.modificar_terreno(terreno)
-                            puntosExplosionX, puntosExplosionY = Terreno.calcular_puntos_explosion(Datos.bala_tanque, Tanque.tanques[turno].radioExplosion)
+                            terreno.modificar_terreno(terreno)
+                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(terreno.calcular_centro_explosion())
                             for indice, tanque in enumerate(Tanque.tanques):
                                 if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice], puntosExplosionX, puntosExplosionY):
                                     if Tanque.tanques[turno].tipo_bala == 1:
@@ -535,18 +547,14 @@ class Juego:
 
 
             # Representacion gráfica de los Datos
-            Pantalla.pantalla.muestra_salud(screen, fuente,Tanque.tanques[indice].vida)
-            Pantalla.pantalla.muestra_potencia(screen, fuente,Datos.velocidad_jugador1,Datos.velocidad_jugador2)
-            Pantalla.pantalla.muestra_angulo(screen, fuente,Datos.ang_tank[Datos.angulo_jugador1-30],Datos.ang_tank[Datos.angulo_jugador2-30])    
-            Pantalla.pantalla.muestra_texto(screen, fuente ,Datos.turno1,Datos.cantidad_balas1,Datos.cantidad_balas2)
+            Pantalla.pantalla.muestra_texto(screen, fuente ,Tanque.tanques[turno], Datos.ang_tank[Tanque.tanques[turno].angulo-30])
             #linea que muestra los tanques
-            #Pantalla.pantalla.muestra_imagen(screen, Datos.tipo_bala1, Datos.tipo_bala2, Tanque.tanques)
-            #Pantalla.pantalla.muestra_altura(screen, fuente, Datos.altura_maxima, Datos.mostrar_altura1, Datos.mostrar_altura2)
-            #Pantalla.pantalla.muestra_distancia(screen, fuente, Datos.distancia_maxima, Datos.mostrar_altura1, Datos.mostrar_altura2)
+            Pantalla.pantalla.muestra_imagen(screen, Tanque.tanques, turno)
+            Pantalla.pantalla.muestra_datos(screen, fuente, Datos.altura_maxima, Datos.distancia_maxima, Tanque.tanques)
             if Datos.bala_tanque is not None and Datos.bala_tanque.visualizar():
                 Pantalla.pantalla.muestra_bala(screen, Datos.tipo_bala, Datos.bala_tanque.xactual())
-            if Datos.bala_tanque is not None:
-                Tanque.tanques[turno].extremo_canonx, Tanque.tanques[turno].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[turno].color, -(Datos.ang_tank[Tanque.tanques[turno].angulo]-90), Tanque.tanques[turno].pivote)
+            for indice, tanque in enumerate(Tanque.tanques):
+                Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, -(Datos.ang_tank[Tanque.tanques[indice].angulo]-90), Tanque.tanques[indice].pivote)
             pygame.display.flip()
             if salirJuego:
                 break
