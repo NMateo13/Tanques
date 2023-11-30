@@ -246,11 +246,12 @@ class Juego:
                         else:
                             Juego.verificar_creditos(turno, 3, fuente,screen)
 
-    def muestra_ganador(Ganador, screen, fuente): #Función para mostrar el ganador del juego
+    def muestra_ganador(Ganador, screen, fuente, color): #Función para mostrar el ganador del juego
         
         screen.fill(Datos.WHITE) 
         texto_ganador = fuente.render(f"Ganador: Jugador {Ganador}", True, Datos.BLACK) 
-        screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2)) 
+        screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
+        screen.blit(imagenes.Tanque_HUDs[color], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
         pygame.display.flip() 
         pygame.time.delay(3000) 
         sys.exit() 
@@ -258,6 +259,7 @@ class Juego:
     def seleccion(screen, fuente):
         
         while True:
+            Jugador.jugadores.clear()
             salir = False
 
             jugar = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 10, 100, 50))
@@ -346,17 +348,15 @@ class Juego:
                 break
 
     def juego(screen, fuente):
-
         #Creacion clases (Terreno y tanques)
         salirJuego = False
 
         terreno = Terreno(Datos.PANT_ANCHO, Datos.PANT_ALTO)
-
+        Tanque.tanques.clear()
         Tanque.creaTanques(Jugador.jugadores)
         Tanque.spawnTanques(terreno)
         
         #una vez creado los tanques ahora se crean los cañones
-
         for indice, tanque in enumerate(Tanque.tanques):
             Canon(Tanque.tanques[indice])
 
@@ -437,9 +437,10 @@ class Juego:
             for indice, tanque in enumerate(Tanque.tanques):
                 if Tanque.tanques[indice].vida <=0:
                     del Tanque.tanques[indice]
+                    if turno == len(Tanque.tanques):
+                        turno = 0
                 if len(Tanque.tanques) == 1:
-                    Ganador = Tanque.tanques[0].indice
-                    Juego.muestra_ganador(Ganador, screen, fuente)
+                    Juego.muestra_ganador(Tanque.tanques[0].num, screen, fuente, Tanque.tanques[0].color)
             #comprobaciones de balas antes de disparar
             if Datos.tecla_espacio_presionada:
                 if Datos.bala_tanque is None:
@@ -468,12 +469,7 @@ class Juego:
                                 Tanque.tanques[turno-1].mostrar_datos = False
                                 Tanque.tanques[turno].mostrar_datos = True
                         Datos.bala_tanque = Tanque.tanques[turno].disparar(Tanque.tanques[turno].extremo_canonx, Tanque.tanques[turno].extremo_canony, Datos.ang_tank[Tanque.tanques[turno].angulo], Tanque.tanques[turno].velocidad, Datos.tiempo_transcurrido, screen, Datos.BLACK, Tanque.tanques[turno].tipo_bala)
-                        if Tanque.tanques[turno].tipo_bala == 1:
-                            Tanque.tanques[turno].cantBala105mm -= 1
-                        elif Tanque.tanques[turno].tipo_bala == 2:
-                            Tanque.tanques[turno].cantBala80mm -= 1
-                        elif Tanque.tanques[turno].tipo_bala == 3:
-                            Tanque.tanques[turno].cantBala60mm -= 1
+
                 else:
                     Datos.altura_maxima = Datos.bala_tanque.punto_maximo(Datos.altura_maxima)
                     Datos.bala_tanque.verificacion(Datos.tiempo_transcurrido, screen, Datos.BLACK)

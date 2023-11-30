@@ -83,7 +83,7 @@ class Pantalla:
         cant_balas = font.render(bala_texto, True, Datos.WHITE)
         salud_texto1 = font.render(f"Vida: {tanque.vida}%", True, Datos.WHITE)
         #Funcion para dibujar el color del tanque que corresponda en el turno
-        self.que_tanque(tanque, screen)
+        screen.blit(imagenes.Tanque_HUDs[tanque.color],  (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque_HUDs[tanque.color].get_height() - 15))
         screen.blit(salud_texto1, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 85))
         potencia_texto1 = font.render(f"Potencia: {tanque.velocidad}", True, Datos.WHITE)
         screen.blit(potencia_texto1, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 57))
@@ -96,34 +96,11 @@ class Pantalla:
         nTurno_texto = font.render(f"Turno: {Datos.nTurnos}", True, Datos.WHITE)
         screen.blit(nTurno_texto, (Datos.PANT_ANCHO // 2 - nTurno_texto.get_width() // 2, Datos.PANT_ALTO - 150))
     
-    def que_tanque(self, tanque, screen):
-        if tanque.color == 1:
-            screen.blit(imagenes.Tanque1_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque1_HUD.get_height() - 15))
-        elif tanque.color == 2:
-            screen.blit(imagenes.Tanque2_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque2_HUD.get_height() - 15))
-        elif tanque.color == 3:
-            screen.blit(imagenes.Tanque3_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque3_HUD.get_height() - 15))
-        elif tanque.color == 4:
-            screen.blit(imagenes.Tanque4_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque4_HUD.get_height() - 15))
-        elif tanque.color == 5:
-            screen.blit(imagenes.Tanque5_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque5_HUD.get_height() - 15))
-        elif tanque.color == 6:
-            screen.blit(imagenes.Tanque6_HUD, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque6_HUD.get_height() - 15))
-
+    
     def muestra_imagen(self, screen, tanques, turno):
         for indice, tanque in enumerate(tanques):
-            if tanque.color == 1:
-                screen.blit(imagenes.Tanque1, (tanque.x, tanque.y-10))
-            elif tanque.color == 2:
-                screen.blit(imagenes.Tanque2, (tanque.x, tanque.y-10))
-            elif tanque.color == 3:
-                screen.blit(imagenes.Tanque3, (tanque.x, tanque.y-10))
-            elif tanque.color == 4:
-                screen.blit(imagenes.Tanque4, (tanque.x, tanque.y-10))
-            elif tanque.color == 5:
-                screen.blit(imagenes.Tanque5, (tanque.x, tanque.y-10))
-            elif tanque.color == 6:
-                screen.blit(imagenes.Tanque6, (tanque.x, tanque.y-10))
+            screen.blit(imagenes.Tanque[tanque.color], (tanque.x, tanque.y-10))
+            
         screen.blit(imagenes.Exit, (pantalla.ancho - imagenes.Exit.get_width()-650, 10))
         screen.blit(imagenes.Restart, (pantalla.ancho - imagenes.Restart.get_width()-550, 10))
         screen.blit(imagenes.Tienda, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 100))
@@ -147,18 +124,7 @@ class Pantalla:
                 screen.blit(distancia_texto, (10, Datos.PANT_ALTO - 150))
             
     def prerotate(self, screen, num, angle, pivote):
-        if num==1:
-            img, rect, x, y = Pantalla.rotate(imagenes.Canon1, angle, pivote)
-        elif num==2:
-            img, rect, x, y = Pantalla.rotate(imagenes.Canon2, angle, pivote)
-        elif num==3:
-            img, rect, x, y = Pantalla.rotate(imagenes.Canon3, angle, pivote)
-        elif num==4:    
-            img, rect, x, y = Pantalla.rotate(imagenes.Canon4, angle, pivote)
-        elif num==5:
-            img, rect, x, y = Pantalla.rotate(imagenes.Canon5, angle, pivote)
-        elif num==6:
-            img, rect, x, y = Pantalla.rotate(imagenes.Canon6, angle, pivote)
+        img, rect, x, y = Pantalla.rotate(imagenes.Canon[num], angle, pivote)
         screen.blit(img, rect)
         return x, y
     
