@@ -53,11 +53,6 @@ Canon = {
     6: pygame.transform.scale(IMG_Canon6, (IMG_Canon6.get_width() // 4, IMG_Canon6.get_height() // 4))
 }
 
-
-
-
-
-
 Background = pygame.transform.scale(IMG_Background, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
 HUD = pygame.transform.scale(IMG_HUD, (Datos.PANT_ANCHO, 120))    
 Tanque_HUDs = {
@@ -67,6 +62,14 @@ Tanque_HUDs = {
     4: pygame.transform.scale(IMG_Tanque4, (IMG_Tanque4.get_width() // 2, IMG_Tanque4.get_height() // 2)),
     5: pygame.transform.scale(IMG_Tanque5, (IMG_Tanque5.get_width() // 2, IMG_Tanque5.get_height() // 2)),
     6: pygame.transform.scale(IMG_Tanque6, (IMG_Tanque6.get_width() // 2, IMG_Tanque6.get_height() // 2))
+}
+Tanque_Tooltip = {
+    1: pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4)),
+    2: pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4)),
+    3: pygame.transform.scale(IMG_Tanque3, (IMG_Tanque3.get_width() // 4, IMG_Tanque3.get_height() // 4)),
+    4: pygame.transform.scale(IMG_Tanque4, (IMG_Tanque4.get_width() // 4, IMG_Tanque4.get_height() // 4)),
+    5: pygame.transform.scale(IMG_Tanque5, (IMG_Tanque5.get_width() // 4, IMG_Tanque5.get_height() // 4)),
+    6: pygame.transform.scale(IMG_Tanque6, (IMG_Tanque6.get_width() // 4, IMG_Tanque6.get_height() // 4))
 }
 Bala105 = pygame.transform.scale(IMG_Bala105, (IMG_Bala105.get_width() // 1.5, IMG_Bala105.get_height() // 1.5))
 Bala80 = pygame.transform.scale(IMG_Bala80, (IMG_Bala80.get_width() // 1.75, IMG_Bala80.get_height() // 1.75))

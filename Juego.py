@@ -347,6 +347,13 @@ class Juego:
             if salir:
                 break
 
+    def mostrar_tooltip(tanque, screen, x, y):
+        pygame.draw.rect(screen, Datos.WHITE, (x, y, 100, 75))
+        screen.blit(imagenes.Tanque_Tooltip[tanque.color], (x + 20, y + 10))
+        fuente = pygame.font.Font(None, 30)
+        Juego.draw_text(f"Vida: {tanque.vida}", fuente, x + 10, y + 50, Datos.BLACK, screen)
+        pygame.display.update()
+
     def juego(screen, fuente):
         #Creacion clases (Terreno y tanques)
         salirJuego = False
@@ -405,6 +412,8 @@ class Juego:
             
             if keys[pygame.K_SPACE]:
                 Datos.tecla_espacio_presionada = True
+
+            
             
             #Controles para el jugador Tanque.tanques[turno]
             Juego.manejar_controles(turno, keys)
@@ -549,6 +558,14 @@ class Juego:
                 Pantalla.pantalla.muestra_bala(screen, Tanque.tanques[turno].tipo_bala, Datos.bala_tanque.xactual())
             for indice, tanque in enumerate(Tanque.tanques):
                 Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, -(Datos.ang_tank[Tanque.tanques[indice].angulo]-90), Tanque.tanques[indice].pivote)
+            #Mostrar tooltip para la vida y el color del tanque
+            #Detectar la posicion del mause
+            posMause_x, posMause_y = pygame.mouse.get_pos()
+
+            #mostrar el tooltip si el mause esta sobre el tanque
+            for indice, tanque in enumerate(Tanque.tanques):
+                if Tanque.tanques[indice].x < posMause_x < Tanque.tanques[indice].x + 42 and Tanque.tanques[indice].y < posMause_y < Tanque.tanques[indice].y + 42:
+                    Juego.mostrar_tooltip(Tanque.tanques[indice], screen, posMause_x, posMause_y)
             pygame.display.flip()
             if salirJuego:
                 break
