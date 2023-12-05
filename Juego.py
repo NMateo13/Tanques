@@ -39,7 +39,6 @@ class Juego:
             Tanque.tanques[turno].tipo_bala = 3
             Tanque.tanques[turno].radioExplosion = 25
 
-
     def draw_text(text, font, x, y, color, screen):
         textobj = font.render(text, 1, color)
         textrect = textobj.get_rect()
@@ -246,7 +245,7 @@ class Juego:
                         else:
                             Juego.verificar_creditos(turno, 3, fuente,screen)
 
-    def muestra_ganador(Ganador, screen, fuente): #Función para mostrar el ganador del juego
+    def muestra_ganador(Ganador, screen, fuente): 
         
         screen.fill(Datos.WHITE) 
         texto_ganador = fuente.render(f"Ganador: Jugador {Ganador}", True, Datos.BLACK) 
@@ -258,6 +257,9 @@ class Juego:
     def seleccion(screen, fuente):
         
         while True:
+
+            Jugador.jugadores.clear()
+
             salir = False
 
             jugar = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 10, 100, 50))
@@ -355,7 +357,7 @@ class Juego:
         Tanque.creaTanques(Jugador.jugadores)
         Tanque.spawnTanques(terreno)
         
-        #una vez creado los tanques ahora se crean los cañones
+        #Una vez creado los tanques ahora se crean los cañones
 
         for indice, tanque in enumerate(Tanque.tanques):
             Canon(Tanque.tanques[indice])
@@ -363,22 +365,25 @@ class Juego:
         #Inicio de variables 
         Datos.reiniciar_datos()
 
-        Clock = pygame.time.Clock()
-        #ajuste de pivotes de los tanques
+        #Ajuste de pivotes de los tanques
         for indice, tanque in enumerate(Tanque.tanques):
             Tanque.tanques[indice].pivote = [Tanque.tanques[indice].x+21, Tanque.tanques[indice].y-5]
 
-        #ubicacion de los extremos de los cañones
+        #Ubicacion de los extremos de los cañones
         for indice, tanque in enumerate(Tanque.tanques):
             Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, Datos.ang_tank[0], Tanque.tanques[indice].pivote)
+
+        Clock = pygame.time.Clock()
 
         incremento = 0.035
 
         salir = screen.blit(imagenes.Exit, (Datos.PANT_ANCHO / 2.3, 10))
         reset = screen.blit(imagenes.Restart, (Datos.PANT_ANCHO / 1.9, 10))
         tienda = screen.blit(imagenes.Tienda, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 100))
-        #antes de comenzar el juego se baraja el orden de los jugadores haciendo shuffle al arraylist de tanques
+
+        #Antes de comenzar el juego se baraja el orden de los jugadores haciendo shuffle al arraylist de tanques
         random.shuffle(Tanque.tanques)
+
         #inicia el turno del jugador de Tanque.tanques[0] y se irá aumentando el indice para que jueguen todos los jugadores. iniciando en turno = 0
         turno = 0
         Tanque.tanques[turno].mostrar_datos = True
@@ -468,12 +473,6 @@ class Juego:
                                 Tanque.tanques[turno-1].mostrar_datos = False
                                 Tanque.tanques[turno].mostrar_datos = True
                         Datos.bala_tanque = Tanque.tanques[turno].disparar(Tanque.tanques[turno].extremo_canonx, Tanque.tanques[turno].extremo_canony, Datos.ang_tank[Tanque.tanques[turno].angulo], Tanque.tanques[turno].velocidad, Datos.tiempo_transcurrido, screen, Datos.BLACK, Tanque.tanques[turno].tipo_bala)
-                        if Tanque.tanques[turno].tipo_bala == 1:
-                            Tanque.tanques[turno].cantBala105mm -= 1
-                        elif Tanque.tanques[turno].tipo_bala == 2:
-                            Tanque.tanques[turno].cantBala80mm -= 1
-                        elif Tanque.tanques[turno].tipo_bala == 3:
-                            Tanque.tanques[turno].cantBala60mm -= 1
                 else:
                     Datos.altura_maxima = Datos.bala_tanque.punto_maximo(Datos.altura_maxima)
                     Datos.bala_tanque.verificacion(Datos.tiempo_transcurrido, screen, Datos.BLACK)
@@ -532,17 +531,13 @@ class Juego:
                             else:
                                 turno = 0
                             break
-            
-
-                        
+                
                 Datos.tiempo_transcurrido += incremento
             for indice, tanque in enumerate(Tanque.tanques):
                 if Tanque.tanques[indice].y != (terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16):
                     Tanque.tanques[indice].y = terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16
                     Tanque.tanques[indice].pivote = [Tanque.tanques[indice].x+21, Tanque.tanques[indice].y-5]
                     Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, Datos.ang_tank[0], Tanque.tanques[indice].pivote)
-
-
 
             # Representacion gráfica de los Datos
             Pantalla.pantalla.muestra_texto(screen, fuente ,Tanque.tanques[turno], Datos.ang_tank[Tanque.tanques[turno].angulo-30])
@@ -555,4 +550,5 @@ class Juego:
                 Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, -(Datos.ang_tank[Tanque.tanques[indice].angulo]-90), Tanque.tanques[indice].pivote)
             pygame.display.flip()
             if salirJuego:
+                Tanque.tanques.clear()
                 break

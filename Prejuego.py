@@ -1,4 +1,4 @@
-import pygame, imagenes, Datos, sys, Pantalla
+import pygame, imagenes, Datos, sys, Pantalla, Tanque
 from Juego import Juego
 
 

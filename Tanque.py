@@ -91,21 +91,23 @@ class Tanque:
     def spawnTanques(terreno):
 
         for indice,tanque in enumerate(Tanque.tanques):
-            
-            Datos.bandera_tanque = random.choice([True, False])
-            
-            if Datos.bandera_tanque:
+        
+            tanque.x = random.randint(0, Datos.PANT_ANCHO - 50)
 
-                tanque.x = random.randint(0, Datos.PANT_ANCHO // 2)
-                tanque.indice = tanque.x
-                tanque.y = terreno.alto - terreno.terreno[indice] - 26
-                tanque.num = Pantalla.pantalla.tank1
+            if indice > 0 and tanque[1].x != 0:
 
-            else:
-                tanque.x = random.randint(0, (Datos.PANT_ANCHO // 2 - 50))
-                tanque.indice = ((Datos.PANT_ANCHO - 1) - tanque.x)    
-                tanque.y = terreno.alto -  terreno.terreno[indice] - 24
-                tanque.num = Pantalla.pantalla.tank2
+                if tanque.x > tanque[indice-1].x:
+                    tanque.x = tanque.x + 10
+
+                elif tanque.x < tanque[indice-1].x:
+                    tanque.x = tanque.x -10
+
+                elif tanque.x == tanque[indice-1].x:
+                    tanque.x = tanque.x + 20
+
+            tanque.x = tanque.x
+            tanque.y = terreno.alto - terreno.terreno[indice] - 26
+            tanque.num = Pantalla.pantalla.tank1
 
 
     
