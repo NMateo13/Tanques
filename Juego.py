@@ -203,7 +203,7 @@ class Juego:
             Juego.draw_text('Tipos de Bala', fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 50, Datos.BLACK, screen)
 
             # Mostrar creditos
-            Juego.draw_text(f"creditos: {Tanque.Tanques[turno].creditos}", fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 100, Datos.BLACK, screen)
+            Juego.draw_text(f"creditos: {Tanque.tanques[turno].creditos}", fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 100, Datos.BLACK, screen)
 
             bala1_button = pygame.Rect(Datos.PANT_ANCHO / 2 - 250, Datos.PANT_ALTO / 2, 100, 50)
             Juego.draw_button(bala1_button, 'Bala 1', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
@@ -366,7 +366,6 @@ class Juego:
         #una vez creado los tanques ahora se crean los cañones
         for indice, tanque in enumerate(Tanque.tanques):
             Canon(Tanque.tanques[indice])
-
         #Inicio de variables 
         Datos.reiniciar_datos()
 
