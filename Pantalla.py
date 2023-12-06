@@ -4,48 +4,8 @@ import pygame, Datos, os, random, imagenes, sys
 class Pantalla:
     offset = pygame.math.Vector2(0, -10)
 
-    #Seleccion aleatoria de los tanques
-    tank1 = random.randint(1, 4)
-    tank2 = random.randint(1, 4)
-    while tank1 == tank2:
-        tank2 = random.randint(1, 4)
-
-    #Imagenes
-    if tank1 == 1:
-        imagenes.IMG_Tanque1
-    elif tank1 == 2:
-        imagenes.IMG_Tanque2
-    elif tank1 == 3:
-        imagenes.IMG_Tanque3
-    elif tank1 == 4:
-        imagenes.IMG_Tanque4
-
-    if tank2 == 1:
-        imagenes.IMG_Tanque1
-    elif tank2 == 2:
-        imagenes.IMG_Tanque2
-    elif tank2 == 3:
-        imagenes.IMG_Tanque3
-    elif tank2 == 4:
-        imagenes.IMG_Tanque4
-
-    if tank1 == 1:
-        imagenes.IMG_Canon1
-    elif tank1 == 2:
-        imagenes.IMG_Canon2
-    elif tank1 == 3:
-        imagenes.IMG_Canon3
-    elif tank1 == 4:
-        imagenes.IMG_Canon4
-
-    if tank2 == 1:
-        imagenes.IMG_Canon1
-    elif tank2 == 2:
-        imagenes.IMG_Canon2
-    elif tank2 == 3:
-        imagenes.IMG_Canon3
-    elif tank2 == 4:
-        imagenes.IMG_Canon4
+    tank1 = 1
+    tank2 = 2
         
     def __init__(self, ancho, alto):
         
@@ -81,14 +41,14 @@ class Pantalla:
         screen.blit(bala, (25, Datos.PANT_ALTO - 110))
         
         cant_balas = font.render(bala_texto, True, Datos.WHITE)
-        salud_texto1 = font.render(f"Vida: {tanque.vida}%", True, Datos.WHITE)
+        salud_texto = font.render(f"Vida: {tanque.vida}%", True, Datos.WHITE)
         #Funcion para dibujar el color del tanque que corresponda en el turno
         screen.blit(imagenes.Tanque_HUDs[tanque.color],  (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque_HUDs[tanque.color].get_height() - 15))
-        screen.blit(salud_texto1, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 85))
-        potencia_texto1 = font.render(f"Potencia: {tanque.velocidad}", True, Datos.WHITE)
-        screen.blit(potencia_texto1, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 57))
-        angulo_texto1 = font.render(f"Ángulo: {angulo}°", True, Datos.WHITE)
-        screen.blit(angulo_texto1, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 30))
+        screen.blit(salud_texto, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 85))
+        potencia_texto = font.render(f"Potencia: {int(tanque.velocidad/2)}", True, Datos.WHITE)
+        screen.blit(potencia_texto, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 57))
+        angulo_texto = font.render(f"Ángulo: {angulo}°", True, Datos.WHITE)
+        screen.blit(angulo_texto, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 30))
         screen.blit(cant_balas, (110, Datos.PANT_ALTO - 30))
       
         turno_texto = font.render("Jugador Actual", True, Datos.WHITE)
@@ -101,8 +61,8 @@ class Pantalla:
         for indice, tanque in enumerate(tanques):
             screen.blit(imagenes.Tanque[tanque.color], (tanque.x, tanque.y-10))
             
-        screen.blit(imagenes.Exit, (pantalla.ancho - imagenes.Exit.get_width()-650, 10))
-        screen.blit(imagenes.Restart, (pantalla.ancho - imagenes.Restart.get_width()-550, 10))
+        screen.blit(imagenes.Exit, (Datos.PANT_ANCHO / 2.5, 10)) 
+        screen.blit(imagenes.Restart, (Datos.PANT_ANCHO / 2, 10)) 
         screen.blit(imagenes.Tienda, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 100))
         
         if tanques[turno].tipo_bala == 1:
@@ -119,7 +79,7 @@ class Pantalla:
         for indice, tanque in enumerate(tanques):
             if tanques[indice].mostrar_datos:
                 altura_texto = font.render(f"Altura máxima J{tanques[indice].num}: {altura_maxima}", True, Datos.WHITE)
-                screen.blit(altura_texto, (10, Datos.PANT_ALTO - 100))
+                screen.blit(altura_texto, (10, Datos.PANT_ALTO - 175))
                 distancia_texto = font.render(f"Distancia máxima J{tanques[indice].num}: {distancia_maxima}", True, Datos.WHITE)
                 screen.blit(distancia_texto, (10, Datos.PANT_ALTO - 150))
             
@@ -147,9 +107,45 @@ class Pantalla:
         elif tipo_bala == 3:
             screen.blit(imagenes.Prebala60, (pos_x, 0))
 
-    def muestra_seleccion(self, screen, fuente):
+    def fondomenu(self, screen):
+        if Datos.PANT_ALTO == 600:
+            screen.blit(imagenes.FondoMenu, (0, 0))
+        elif Datos.PANT_ALTO == 800:
+            screen.blit(imagenes.FondoMenu800, (0, 0))
+        elif Datos.PANT_ALTO == 1080:
+            screen.blit(imagenes.FondoMenu1080, (0, 0))
+        elif Datos.PANT_ALTO == 768: 
+            screen.blit(imagenes.FondoMenu768, (0, 0))
 
-        screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
+    def fondoseleccion(self, screen):
+        if Datos.PANT_ALTO == 600:
+            screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
+        elif Datos.PANT_ALTO == 800:
+            screen.blit(imagenes.FondoMenu_seleccion800, (0, 0))
+        elif Datos.PANT_ALTO == 1080:
+            screen.blit(imagenes.FondoMenu_seleccion1080, (0, 0))
+        elif Datos.PANT_ALTO == 768:
+            screen.blit(imagenes.FondoMenu_seleccion768, (0, 0))
+
+    def fondocontroles(self, screen):
+        if Datos.PANT_ALTO == 600:
+            screen.blit(imagenes.FondoControles, (0, 0))
+        elif Datos.PANT_ALTO == 800:
+            screen.blit(imagenes.FondoControles800, (0, 0))
+        elif Datos.PANT_ALTO == 1080:
+            screen.blit(imagenes.FondoControles1080, (0, 0))
+        elif Datos.PANT_ALTO == 768:
+            screen.blit(imagenes.FondoControles768, (0, 0))
+
+    def muestra_seleccion(self, screen, fuente):
+        if Datos.PANT_ALTO == 600:
+            screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
+        elif Datos.PANT_ALTO == 800:
+            screen.blit(imagenes.FondoMenu_seleccion800, (0, 0))
+        elif Datos.PANT_ALTO == 1080:
+            screen.blit(imagenes.FondoMenu_seleccion1080, (0, 0))
+        elif Datos.PANT_ALTO == 768:
+            screen.blit(imagenes.FondoMenu_seleccion768, (0, 0))
 
         #Cuadro 1
         screen.blit(imagenes.TanqueSeleccionVerde, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 6.5, 100, 100)) 

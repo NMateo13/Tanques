@@ -1,11 +1,10 @@
 import pygame, imagenes, Datos, sys, Pantalla
 from Juego import Juego
 
-
 pygame.init()
 pygame.display.set_icon(imagenes.IMG_Explosion) 
 pygame.display.set_caption("PROYECTO TANQUE")
-pygame.mixer.music.load('Assets/musica1.mp3')
+pygame.mixer.music.load('Assets/musica.mp3')
 pygame.mixer.music.set_volume(Datos.volumen)
 #pygame.mixer.music.play(-1)
 fuente = pygame.font.Font(None, 36)
@@ -18,6 +17,12 @@ def draw_text(text, font, x, y, color):
     textrect = textobj.get_rect()
     textrect.topleft = (x, y)
     screen.blit(textobj, textrect)
+    
+def draw_button(rect, text, font, text_color, button_color, hover_color, screen):
+    pygame.draw.rect(screen, hover_color if rect.collidepoint(pygame.mouse.get_pos()) else button_color, rect)
+    text_surface = font.render(text, True, text_color)
+    text_rect = text_surface.get_rect(center=rect.center)
+    screen.blit(text_surface, text_rect)
 
 while True:
     if Datos.reiniciar == True:
@@ -29,16 +34,16 @@ while True:
         pygame.time.delay(300)
         Datos.bandera_tanque = True
         Juego.juego(screen, fuente)
-    screen.blit(imagenes.FondoMenu, (0, 0))
 
-    play_button = pygame.Rect((Datos.PANT_ANCHO / 2) + 95, (Datos.PANT_ALTO / 2) - 98, 100, 50)
-    control_button = pygame.Rect((Datos.PANT_ANCHO / 2) + 75, (Datos.PANT_ALTO / 2) - 5, 100, 50)
-    quit_button = pygame.Rect((Datos.PANT_ANCHO / 2) + 100, (Datos.PANT_ALTO / 2) + 90, 100, 50)
+    Pantalla.pantalla.fondomenu(screen)
 
-    draw_text('Jugar', fuente, (Datos.PANT_ANCHO / 2) + 95, (Datos.PANT_ALTO / 2) - 98, Datos.WHITE)
-    draw_text('Opciones', fuente, (Datos.PANT_ANCHO / 2) + 75, (Datos.PANT_ALTO / 2) - 5, Datos.WHITE)
-    draw_text('Salir', fuente, (Datos.PANT_ANCHO / 2) + 100, (Datos.PANT_ALTO / 2) + 88, Datos.WHITE)
+    play_button = pygame.Rect((Datos.PANT_ANCHO / 1.72), (Datos.PANT_ALTO / 3), 100, 50)
+    settings_button = pygame.Rect((Datos.PANT_ANCHO / 1.72), (Datos.PANT_ALTO / 2.2), 100, 50)
+    quit_button = pygame.Rect((Datos.PANT_ANCHO / 1.72), (Datos.PANT_ALTO / 1.75), 100, 50)
 
+    draw_button(play_button, 'Jugar', fuente, Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
+    draw_button(settings_button, 'Opciones', fuente, Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
+    draw_button(quit_button, 'Salir', fuente, Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
 
     pygame.display.update()
 
@@ -50,7 +55,7 @@ while True:
             if play_button.collidepoint(event.pos):
                 Juego.seleccion(screen, fuente)
                 Juego.juego(screen, fuente)
-            if control_button.collidepoint(event.pos):
+            if settings_button.collidepoint(event.pos):
                 Juego.opciones(screen)
             if quit_button.collidepoint(event.pos):
                 pygame.quit()
