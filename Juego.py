@@ -132,14 +132,7 @@ class Juego:
             salir = False 
             screen.fill(Datos.WHITE) 
     
-            if Datos.PANT_ALTO == 600: #Default 1200x600 
-                screen.blit(imagenes.FondoControles, (0, 0)) 
-            elif Datos.PANT_ALTO == 1080: #1920x1080 
-                screen.blit(imagenes.FondoControles1080, (0, 0)) 
-            elif Datos.PANT_ALTO == 800: #800x800 
-                screen.blit(imagenes.FondoControles800, (0, 0)) 
-            elif Datos.PANT_ALTO == 768: #1366x768 
-                screen.blit(imagenes.FondoControles768, (0, 0)) 
+            Pantalla.pantalla.fondocontroles(screen)
     
             fuente = pygame.font.Font(None, 36) #Fuente inicial de tamaño 36 
             draw_text('Controles', fuente, (Datos.PANT_ANCHO / 2.2), (Datos.PANT_ALTO / 12), Datos.BLACK, screen)  
