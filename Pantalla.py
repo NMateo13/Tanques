@@ -107,46 +107,58 @@ class Pantalla:
         elif tipo_bala == 3:
             screen.blit(imagenes.Prebala60, (pos_x, 0))
 
+    #Las siguientes funciones consisten en cambiar el tamaño de las imagenes para que se adapten a la resolución de la pantalla
+    def background(self, screen):
+        if Datos.PANT_ALTO == 600: #Default 1200x600
+            screen.blit(imagenes.Background, (0, 0))
+        elif Datos.PANT_ALTO == 1080: #1920x1080
+            screen.blit(imagenes.Background1080, (0, 0))
+        elif Datos.PANT_ALTO == 800: #800x800
+            screen.blit(imagenes.Background800, (0, 0))
+        elif Datos.PANT_ALTO == 768: #1366x768
+            screen.blit(imagenes.Background768, (0, 0))
+
+    def hud(self, screen):
+        if Datos.PANT_ALTO == 600: #Default 1200x600
+            screen.blit(imagenes.HUD, (0, Datos.PANT_ALTO - 120))
+        elif Datos.PANT_ALTO == 1080: #1920x1080
+            screen.blit(imagenes.HUD1080, (0, Datos.PANT_ALTO - 120))
+        elif Datos.PANT_ALTO == 800: #800x800
+            screen.blit(imagenes.HUD800, (0, Datos.PANT_ALTO - 120))
+        elif Datos.PANT_ALTO == 768: #1366x768
+            screen.blit(imagenes.HUD768, (0, Datos.PANT_ALTO - 120))        
+
     def fondomenu(self, screen):
-        if Datos.PANT_ALTO == 600:
+        if Datos.PANT_ALTO == 600: #Default 1200x600
             screen.blit(imagenes.FondoMenu, (0, 0))
-        elif Datos.PANT_ALTO == 800:
+        elif Datos.PANT_ALTO == 800: #800x800
             screen.blit(imagenes.FondoMenu800, (0, 0))
-        elif Datos.PANT_ALTO == 1080:
+        elif Datos.PANT_ALTO == 1080: #1920x1080    
             screen.blit(imagenes.FondoMenu1080, (0, 0))
-        elif Datos.PANT_ALTO == 768: 
+        elif Datos.PANT_ALTO == 768: #1366x768
             screen.blit(imagenes.FondoMenu768, (0, 0))
 
     def fondoseleccion(self, screen):
-        if Datos.PANT_ALTO == 600:
+        if Datos.PANT_ALTO == 600: #Default 1200x600
             screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
-        elif Datos.PANT_ALTO == 800:
+        elif Datos.PANT_ALTO == 800: #800x800
             screen.blit(imagenes.FondoMenu_seleccion800, (0, 0))
-        elif Datos.PANT_ALTO == 1080:
+        elif Datos.PANT_ALTO == 1080: #1920x1080
             screen.blit(imagenes.FondoMenu_seleccion1080, (0, 0))
-        elif Datos.PANT_ALTO == 768:
+        elif Datos.PANT_ALTO == 768: #1366x768
             screen.blit(imagenes.FondoMenu_seleccion768, (0, 0))
 
     def fondocontroles(self, screen):
-        if Datos.PANT_ALTO == 600:
+        if Datos.PANT_ALTO == 600: #Default 1200x600
             screen.blit(imagenes.FondoControles, (0, 0))
-        elif Datos.PANT_ALTO == 800:
+        elif Datos.PANT_ALTO == 800: #800x800
             screen.blit(imagenes.FondoControles800, (0, 0))
-        elif Datos.PANT_ALTO == 1080:
+        elif Datos.PANT_ALTO == 1080: #1920x1080
             screen.blit(imagenes.FondoControles1080, (0, 0))
-        elif Datos.PANT_ALTO == 768:
+        elif Datos.PANT_ALTO == 768: #1366x768
             screen.blit(imagenes.FondoControles768, (0, 0))
 
     def muestra_seleccion(self, screen, fuente):
-        if Datos.PANT_ALTO == 600:
-            screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
-        elif Datos.PANT_ALTO == 800:
-            screen.blit(imagenes.FondoMenu_seleccion800, (0, 0))
-        elif Datos.PANT_ALTO == 1080:
-            screen.blit(imagenes.FondoMenu_seleccion1080, (0, 0))
-        elif Datos.PANT_ALTO == 768:
-            screen.blit(imagenes.FondoMenu_seleccion768, (0, 0))
-
         #Cuadro 1
         screen.blit(imagenes.TanqueSeleccionVerde, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 6.5, 100, 100)) 
         #Cuadro 2

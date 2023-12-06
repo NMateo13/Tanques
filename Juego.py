@@ -276,6 +276,7 @@ class Juego:
             volver = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 1.53, 100, 50))
             controles = pygame.draw.rect(screen, Datos.BLACK, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 2.65, 100, 50))
 
+            Pantalla.pantalla.fondoseleccion(screen)
             Pantalla.pantalla.muestra_seleccion(screen, fuente) 
 
             j1 = pygame.draw.rect(screen, Datos.PURPLE, (Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 3.5, 100, 20))
@@ -428,25 +429,10 @@ class Juego:
             #Controles para el jugador Tanque.tanques[turno]
             Juego.manejar_controles(turno, keys)
 
-            if Datos.PANT_ALTO == 600: #Default 1200x600
-                screen.blit(imagenes.Background, (0, 0))
-            elif Datos.PANT_ALTO == 1080: #1920x1080
-                screen.blit(imagenes.Background1080, (0, 0))
-            elif Datos.PANT_ALTO == 800: #800x800
-                screen.blit(imagenes.Background800, (0, 0))
-            elif Datos.PANT_ALTO == 768: #1366x768
-                screen.blit(imagenes.Background768, (0, 0))
-
+            #Dibuja el terreno y aplica imagenes de fondo y hud
+            Pantalla.pantalla.background(screen)
             terreno.dibujar(screen)
-
-            if Datos.PANT_ALTO == 600: #Default 1200x600
-                screen.blit(imagenes.HUD, (0, Datos.PANT_ALTO - 120))
-            elif Datos.PANT_ALTO == 1080: #1920x1080
-                screen.blit(imagenes.HUD1080, (0, Datos.PANT_ALTO - 120))
-            elif Datos.PANT_ALTO == 800: #800x800
-                screen.blit(imagenes.HUD800, (0, Datos.PANT_ALTO - 120))
-            elif Datos.PANT_ALTO == 768: #1366x768
-                screen.blit(imagenes.HUD768, (0, Datos.PANT_ALTO - 120))
+            Pantalla.pantalla.hud(screen)
 
             #DIBUJAR HITBOXES
             for indice, tanque in enumerate(Tanque.tanques):
