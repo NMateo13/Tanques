@@ -61,12 +61,11 @@ class Terreno:
         return True
     
 
-    def modificar_terreno(self, terreno):
+    def modificar_terreno(self, terreno, tanque):
         centro_explosion = self.calcular_centro_explosion()
-        puntosx, puntosy = self.calcular_puntos_explosion(centro_explosion)
+        puntosx, puntosy = self.calcular_puntos_explosion(centro_explosion, tanque)
         puntos_x, puntos_y = self.obtener_puntos_x_y(puntosx, puntosy)
         self.actualizar_terreno(terreno, puntos_x, puntos_y)
-        self.limpiar_variables()
         return centro_explosion
 
     def calcular_centro_explosion(self):
@@ -76,14 +75,14 @@ class Terreno:
             centro_explosion.append(int(y))
         return centro_explosion
 
-    def calcular_puntos_explosion(self, centro_explosion):
-        num_puntos_explosion = int(2 * math.pi * Datos.radioExplosion)
+    def calcular_puntos_explosion(self, centro_explosion, tanque):
+        num_puntos_explosion = int(2 * math.pi * tanque.radioExplosion)
         puntosx = []
         puntosy = []
         for i in range(num_puntos_explosion):
             angle = (2 * math.pi / num_puntos_explosion) * i
-            x = int(centro_explosion[0] + Datos.radioExplosion * math.cos(angle))
-            y = int(centro_explosion[1] + Datos.radioExplosion * math.sin(angle))
+            x = int(centro_explosion[0] + tanque.radioExplosion * math.cos(angle))
+            y = int(centro_explosion[1] + tanque.radioExplosion * math.sin(angle))
             puntosx.append(x)
             puntosy.append(y)
         return puntosx, puntosy
@@ -108,6 +107,3 @@ class Terreno:
     def es_punto_valido(self, x):
         return x < Datos.PANT_ANCHO and x > 0
 
-    def limpiar_variables(self):
-        Datos.centroExplosion.clear()
-        Datos.arrayaux.clear()

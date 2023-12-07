@@ -30,12 +30,15 @@ IMG_Tienda = pygame.image.load(os.path.join("Assets", "tienda.png"))
 IMG_Background_seleccion = pygame.image.load(os.path.join("Assets", "fondo_menu.png"))
 
 #Reescalado de imagenes
-TanqueSeleccionVerde = pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 3, IMG_Tanque1.get_height() // 3))
-TanqueSeleccionRojo = pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 3, IMG_Tanque2.get_height() // 3))
-TanqueSeleccionAzul = pygame.transform.scale(IMG_Tanque3, (IMG_Tanque3.get_width() // 3, IMG_Tanque3.get_height() // 3))
-TanqueSeleccionAmarillo = pygame.transform.scale(IMG_Tanque4, (IMG_Tanque4.get_width() // 3, IMG_Tanque4.get_height() // 3))
-TanqueSeleccionRosa = pygame.transform.scale(IMG_Tanque5, (IMG_Tanque5.get_width() // 3, IMG_Tanque5.get_height() // 3))
-TanqueSeleccionCeleste = pygame.transform.scale(IMG_Tanque6, (IMG_Tanque6.get_width() // 3, IMG_Tanque6.get_height() // 3))
+TanqueSeleccion = {
+    1: pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 3, IMG_Tanque1.get_height() // 3)),
+    2: pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 3, IMG_Tanque2.get_height() // 3)),
+    3: pygame.transform.scale(IMG_Tanque3, (IMG_Tanque3.get_width() // 3, IMG_Tanque3.get_height() // 3)),
+    4: pygame.transform.scale(IMG_Tanque4, (IMG_Tanque4.get_width() // 3, IMG_Tanque4.get_height() // 3)),
+    5: pygame.transform.scale(IMG_Tanque5, (IMG_Tanque5.get_width() // 3, IMG_Tanque5.get_height() // 3)),
+    6: pygame.transform.scale(IMG_Tanque6, (IMG_Tanque6.get_width() // 3, IMG_Tanque6.get_height() // 3))
+}
+
 Tanque = {
     1: pygame.transform.scale(IMG_Tanque1, (IMG_Tanque1.get_width() // 4, IMG_Tanque1.get_height() // 4)),
     2: pygame.transform.scale(IMG_Tanque2, (IMG_Tanque2.get_width() // 4, IMG_Tanque2.get_height() // 4)),

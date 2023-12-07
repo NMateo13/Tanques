@@ -1,17 +1,15 @@
 #Variables de juego
 bala_tanque = None
-centroExplosion = []
-radioExplosion = 75
-arrayaux = []
-arrayaux2 = []
-aux_x=0
-aux_y=0
-turno1 = True
-turno2 = False
 mostrar_altura = 0
 tecla_espacio_presionada = False
 tiempo_transcurrido = 0
 numero_jugadores = 0
+num_partidas = 1
+partida_actual = 1
+anima_quedan_balas = False
+sube_texto = 0
+turnos = 0
+rondas = 1
 
 # Variables y Constantes
 FPS = 60
@@ -19,18 +17,29 @@ medidaHUD = 120
 gravedad = 9.8
 PANT_ANCHO = 1200
 PANT_ALTO = 600
-cantidad_balas1 = 0
-cantidad_balas2 = 0
 altura_maxima = 0
 distancia_maxima = 0
 volumen = 0.25
-nTurnos = 1
 reiniciar = False
 bandera_tanque = True
-bala_tanque1 = None
-bala_tanque2 = None
 lista_cuadrar_jugadores_texto_x = [10, 3, 1.764]
 lista_cuadrar_jugadores_texto_y = [3.5, 1.457]
+Tanque_sele_ancho ={
+    1: 9.5,
+    2: 2.95,
+    3: 1.75,
+    4: 9.5,
+    5: 2.95,
+    6: 1.75
+}
+Tanque_sele_alto ={
+    1: 6.5,
+    2: 6.5,
+    3: 6.5,
+    4: 1.8,
+    5: 1.8,
+    6: 1.8
+}
 
 #arraylist hasta 150, 0 = 30, 61 en total
 ang_tank = [210,215,220,225,230,235,240,245,250,255,260,265,270,275,280,285,290,295,300,305,310,315,320,325,330,335,340,345,350,355,0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,185,190,195,200,205]
@@ -47,34 +56,14 @@ PURPLE = (40, 5, 107)
 
 
 def reiniciar_datos():
-    global bala_tanque1, tipo_bala1, mostrar_altura1
-    global bala_tanque2, tipo_bala2, mostrar_altura2
-    global turno1, angulo_jugador1, velocidad_jugador1
-    global turno2, angulo_jugador2, velocidad_jugador2
-    global extremo_canonx_1, extremo_canony_1, extremo_canonx_2,extremo_canony_2
-    global arrayaux ,arrayaux2 ,aux_x ,aux_y
-    global tecla_espacio_presionada
-    global centroExplosion, radioExplosion, tiempo_transcurrido
+    global mostrar_altura, tecla_espacio_presionada, tiempo_transcurrido, turnos, rondas, bala_tanque
     
-    bala_tanque1 = None
-    bala_tanque2 = None
-    centroExplosion = []
-    radioExplosion = 75
-    arrayaux = []
-    arrayaux2 = []
-    aux_x=0
-    aux_y=0
-    tipo_bala1 = 1
-    tipo_bala2 = 1
-    turno1 = True
-    turno2 = False
-    extremo_canonx_1 = 0
-    extremo_canony_1 = 0
-    extremo_canonx_2 = 0
-    extremo_canony_2 = 0
     mostrar_altura = False
     tecla_espacio_presionada = False
     tiempo_transcurrido = 0
+    turnos = 0
+    rondas = 1
+    bala_tanque = None
 
 
 

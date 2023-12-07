@@ -43,17 +43,14 @@ class Tanque:
         if tipo_bala == 1:
             bala.verificacion(tiempo, screen, color)
             self.cantBala105mm -= 1
-            print(self.cantBala105mm)
             return bala
         elif tipo_bala == 2:
             bala.verificacion(tiempo, screen, color)
             self.cantBala80mm -= 1
-            print(self.cantBala80mm)
             return bala
         elif tipo_bala == 3:
             bala.verificacion(tiempo, screen, color)
             self.cantBala60mm -= 1
-            print(self.cantBala60mm)
             return bala
 
     def ia(tanque):

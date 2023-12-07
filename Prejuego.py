@@ -25,10 +25,10 @@ def draw_button(rect, text, font, text_color, button_color, hover_color, screen)
     screen.blit(text_surface, text_rect)
 
 while True:
-    if Datos.reiniciar == True:
+    if Datos.reiniciar == True:   
         Datos.reiniciar = False
         screen.fill(Datos.WHITE)
-        texto_espera = fuente.render(f"Cargando...", True, Datos.BLACK)
+        texto_espera = fuente.render("Cargando...", True, Datos.BLACK)
         screen.blit(texto_espera, (Datos.PANT_ANCHO / 2 - texto_espera.get_width() / 2, Datos.PANT_ALTO / 2 - texto_espera.get_height() / 2))
         pygame.display.flip()
         pygame.time.delay(300)
@@ -53,8 +53,9 @@ while True:
             sys.exit()
         if event.type == pygame.MOUSEBUTTONDOWN:
             if play_button.collidepoint(event.pos):
-                Juego.seleccion(screen, fuente)
-                Juego.juego(screen, fuente)
+                jugar = Juego.seleccion(screen, fuente)
+                if jugar == True:
+                    Juego.juego(screen, fuente)
             if settings_button.collidepoint(event.pos):
                 Juego.opciones(screen)
             if quit_button.collidepoint(event.pos):
