@@ -33,6 +33,7 @@ class Tanque:
         self.radioExplosion = 75
         self.creditos = 10000
         self.mostrar_datos = False
+        self.esIA = False
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, Datos.RED, (self.x, self.y, self.ancho, self.altura))
@@ -55,26 +56,33 @@ class Tanque:
             print(self.cantBala60mm)
             return bala
 
-    def ia(self):
+    def ia(tanque):
         #61 valores disponibles en el arrayist ang_tank
         #numero aleatorio entre 0 y 60
         angulo = random.randint(0, 60)
-        #Velocidad aleatoria entre 0 y 150 
-        velocidad = random.randint(0, 150)
+        #Dependiendo del tamaño de la pantalla, la velocidad de la bala será mayor o menor
+        if Datos.PANT_ALTO == 600: #Default 1200x600
+            velocidad = random.randint(0, 150)
+        elif Datos.PANT_ALTO == 1080: #1920x1080
+            velocidad = random.randint(0, 300)
+        elif Datos.PANT_ALTO == 800: #800x800
+            velocidad = random.randint(0, 200)
+        elif Datos.PANT_ALTO == 768: #1366x768
+            velocidad = random.randint(0, 200)
         #Tipo de bala aleatoria entre 1 y 3
-        if self.cantBala105mm == 0:
+        if tanque.cantBala105mm == 0:
             tipo_bala = random.randint(2, 3)
-        elif self.cantBala80mm == 0:
+        elif tanque.cantBala80mm == 0:
             tipo_bala = random.randint(1, 3)
             while tipo_bala == 2:
                 tipo_bala = random.randint(1, 3)
-        elif self.cantBala60mm == 0:
+        elif tanque.cantBala60mm == 0:
             tipo_bala = random.randint(1, 2)
-        elif self.cantBala105mm == 0 and self.cantBala80mm == 0:
+        elif tanque.cantBala105mm == 0 and tanque.cantBala80mm == 0:
             tipo_bala = 3
-        elif self.cantBala105mm == 0 and self.cantBala60mm == 0:
+        elif tanque.cantBala105mm == 0 and tanque.cantBala60mm == 0:
             tipo_bala = 2
-        elif self.cantBala80mm == 0 and self.cantBala60mm == 0:
+        elif tanque.cantBala80mm == 0 and tanque.cantBala60mm == 0:
             tipo_bala = 1
         else:
             tipo_bala = random.randint(1, 3)
@@ -86,6 +94,7 @@ class Tanque:
         for indice, jugador in enumerate(jugadores):
             jugadorActual = jugadores[indice]
             tanque = Tanque(0, 0, jugadorActual.indice+1, 0, jugadorActual.color_tanque)
+            tanque.esIA = jugadorActual.IA
             Tanque.tanques.append(tanque)
 
     def spawnTanques(terreno):

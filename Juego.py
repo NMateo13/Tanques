@@ -345,7 +345,9 @@ class Juego:
                     if jugar.collidepoint(event.pos):
                         for indice,jugador in enumerate(Jugador.seleccionJugadores):
                             if jugador == 0:
-                                Jugador.crearJugador(indice)
+                                Jugador.crearJugador(indice, False)
+                            if jugador == 1:
+                                Jugador.crearJugador(indice, True)
                         salir = True
                     if volver.collidepoint(event.pos):
                         salir = True
@@ -417,17 +419,18 @@ class Juego:
                         Juego.shop(turno, screen)
             
             keys = pygame.key.get_pressed()
+            if Tanque.tanques[turno].esIA ==False:
+                if keys[pygame.K_ESCAPE]:
+                    salirJuego = True
 
-            if keys[pygame.K_ESCAPE]:
-                salirJuego = True
-            
-            if keys[pygame.K_SPACE]:
-                Datos.tecla_espacio_presionada = True
+                if keys[pygame.K_SPACE]:
+                    Datos.tecla_espacio_presionada = True
 
-            
-            
-            #Controles para el jugador Tanque.tanques[turno]
-            Juego.manejar_controles(turno, keys)
+                #Controles para el jugador Tanque.tanques[turno]
+                Juego.manejar_controles(turno, keys)
+            elif Tanque.tanques[turno].esIA == True and Datos.bala_tanque is None:
+                pygame.time.delay(1000)
+                Tanque.tanques[turno].angulo, Tanque.tanques[turno].velocidad, Tanque.tanques[turno].tipo_bala = Tanque.ia(Tanque.tanques[turno])
 
             #Dibuja el terreno y aplica imagenes de fondo y hud
             Pantalla.pantalla.background(screen)

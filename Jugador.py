@@ -10,13 +10,15 @@ class Jugador:
         self.indice = None
         self.tanque = None
         self.color_tanque = None
+        self.IA = False
         pass
 
-    def crearJugador(indice):
+    def crearJugador(indice, ia):
         jugador = Jugador()
         jugador.indice = indice
         #el color del tanque depende del número de jugador siendo (0=verde, 1=rojo, 2=azul, 3=amarillo, 4=rosa, 5=celeste)
         jugador.color_tanque = indice+1
+        jugador.IA = ia
         Jugador.jugadores.append(jugador)
 
         
