@@ -53,8 +53,16 @@ class Pantalla:
       
         turno_texto = font.render("Jugador Actual", True, Datos.WHITE)
         screen.blit(turno_texto, ((Datos.PANT_ANCHO / 1.8, Datos.PANT_ALTO - 110)))
-        nTurno_texto = font.render(f"Turno: {Datos.nTurnos}", True, Datos.WHITE)
-        screen.blit(nTurno_texto, (Datos.PANT_ANCHO // 2 - nTurno_texto.get_width() // 2, Datos.PANT_ALTO - 150))
+
+        #mostrar el numero de rondas, partidas y turnos
+        texto_turnos = font.render(f"Turnos: {Datos.turnos + 1}", True, Datos.WHITE)
+        texto_rondas = font.render(f"Ronda: {Datos.rondas}", True, Datos.WHITE)
+        texto_partidas = font.render(f"Partida: {Datos.partida_actual}", True, Datos.WHITE)
+
+        screen.blit(texto_turnos, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 100))
+        screen.blit(texto_rondas, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 75))
+        screen.blit(texto_partidas, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 50))
+
     
     
     def muestra_imagen(self, screen, tanques, turno):
@@ -63,7 +71,7 @@ class Pantalla:
             
         screen.blit(imagenes.Exit, (Datos.PANT_ANCHO / 2.5, 10)) 
         screen.blit(imagenes.Restart, (Datos.PANT_ANCHO / 2, 10)) 
-        screen.blit(imagenes.Tienda, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 100))
+        
         
         if tanques[turno].tipo_bala == 1:
             #cambiar imagen a bala 105mm
@@ -159,18 +167,8 @@ class Pantalla:
             screen.blit(imagenes.FondoControles768, (0, 0))
 
     def muestra_seleccion(self, screen, fuente):
-        #Cuadro 1
-        screen.blit(imagenes.TanqueSeleccionVerde, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 6.5, 100, 100)) 
-        #Cuadro 2
-        screen.blit(imagenes.TanqueSeleccionRojo, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 6.5, 100, 100)) 
-        #Cuadro 3
-        screen.blit(imagenes.TanqueSeleccionAzul, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 6.5, 100, 100))
-        #Cuadro 4
-        screen.blit(imagenes.TanqueSeleccionAmarillo, (Datos.PANT_ANCHO / 9.5, Datos.PANT_ALTO / 1.8, 100, 100))
-        #Cuadro 5
-        screen.blit(imagenes.TanqueSeleccionRosa, (Datos.PANT_ANCHO / 2.95, Datos.PANT_ALTO / 1.8, 100, 100))
-        #Cuadro 6
-        screen.blit(imagenes.TanqueSeleccionCeleste, (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO / 1.8, 100, 100))
+        for i in range (1,7):
+            screen.blit(imagenes.TanqueSeleccion[i], (Datos.PANT_ANCHO / Datos.Tanque_sele_ancho[i], Datos.PANT_ALTO / Datos.Tanque_sele_alto[i], 100, 100))
 
         #Divisiones necesarias para cuadros separados independiente la resolución
         Pantalla.draw_text('1', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
@@ -180,9 +178,22 @@ class Pantalla:
         Pantalla.draw_text('5', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
         Pantalla.draw_text('6', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
 
-        Pantalla.draw_text('Jugar', fuente, Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
-        Pantalla.draw_text('Volver', fuente, Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 1.53, Datos.WHITE, screen)
-        Pantalla.draw_text('Controles', fuente, Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO / 2.65, Datos.WHITE, screen)
+
+
+    def muestra_no_balas(self, screen, fuente, tanque):
+        #el texto ira subiendo y desapareciendo con cada iteración hasta que suba 100 pixeles y desaparezca
+        texto = fuente.render("No quedan balas", True, Datos.BLACK)
+        #ajustamos el tamaño del texto
+        texto = pygame.transform.scale(texto, (texto.get_width() // 2, texto.get_height() // 2))
+        texto.set_alpha(255 - Datos.sube_texto)
+        screen.blit(texto, (tanque.x, tanque.y - Datos.sube_texto))
+        Datos.sube_texto += 1
+        pygame.display.update()
+        if Datos.sube_texto == 255:
+            Datos.sube_texto = 0
+            Datos.anima_quedan_balas = False
+
+
 
 
 pantalla = Pantalla(Datos.PANT_ANCHO, Datos.PANT_ALTO)
