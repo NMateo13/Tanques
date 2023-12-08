@@ -17,7 +17,7 @@ class Tanque:
         self.vida = 100 # vida tanque
         self.cantBala60mm = 0 #cantidad de balas 
         self.cantBala80mm = 0
-        self.cantBala105mm = 1
+        self.cantBala105mm = 0
         self.Bala60mm = 30 # daño de las balas
         self.Bala80mm = 40
         self.Bala105mm = 50

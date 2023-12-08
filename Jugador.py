@@ -12,6 +12,9 @@ class Jugador:
         self.color_tanque = None
         self.IA = False
         self.partidas_ganadas = 2
+        self.kills = 0
+        self.muertes = 0
+        self.suicidios = 0
         pass
 
     def crearJugador(indice, ia):

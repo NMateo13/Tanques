@@ -199,6 +199,51 @@ class Juego:
                 Tanque.tanques[Datos.turnos].cantBala60mm += 1
                 Tanque.tanques[Datos.turnos].creditos -= 1000
 
+    def mostrar_tabla_jugadores(screen, fuente, jugadores):
+        tabla_abierta = True
+        tab_presionada = False
+
+        while tabla_abierta:
+            screen.fill(Datos.WHITE)
+
+            # Título de la tabla
+            Juego.draw_text('Tabla de Jugadores', fuente, Datos.PANT_ANCHO / 2 - 200, 20, Datos.BLACK, screen)
+
+            # Encabezados de las columnas
+            Juego.draw_text('Jugador', fuente, 50, 80, Datos.BLACK, screen)
+            Juego.draw_text('Kills', fuente, 200, 80, Datos.BLACK, screen)
+            Juego.draw_text('Muertes', fuente, 350, 80, Datos.BLACK, screen)
+            Juego.draw_text('Suicidios', fuente, 500, 80, Datos.BLACK, screen)
+
+            salir_button = pygame.Rect(40, Datos.PANT_ALTO - 60, 120, 30)
+            Juego.draw_button(salir_button, 'Siguiente', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
+
+            # Mostrar información de cada jugador en la tabla
+            for i, jugador in enumerate(jugadores):
+                Juego.draw_text(f'Jugador {i+1}', fuente, 50, 120 + i * 40, Datos.BLACK, screen)
+                Juego.draw_text(str(jugador.kills), fuente, 200, 120 + i * 40, Datos.BLACK, screen)
+                Juego.draw_text(str(jugador.muertes), fuente, 350, 120 + i * 40, Datos.BLACK, screen)
+                Juego.draw_text(str(jugador.suicidios), fuente, 500, 120 + i * 40, Datos.BLACK, screen)
+
+                # Muestra la imagen del tanque asociado al jugador
+                screen.blit(imagenes.Tanque_HUDs[jugadores[i].color_tanque], (50, 150 + i * 40))
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    tabla_abierta = False
+
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if salir_button.collidepoint(event.pos):
+                        tabla_abierta = False
+
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_TAB:
+                    tabla_abierta = False
+                    tab_presionada = True
+                    print("hola")
+
+            pygame.display.flip()
+
+
     def shop(screen):
         tienda_abierta = True
 
@@ -514,6 +559,9 @@ class Juego:
             Juego.shop(screen)
             Datos.turnos += 1
         Datos.turnos = 0
+        
+        tab_presionada = False
+        mostrando_tabla = False
 
         while True:
             Juego.cambiar_sin_balas()
@@ -528,6 +576,7 @@ class Juego:
             Datos.tanque_sin_balas = 0    
 
             Clock.tick(Datos.FPS)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -539,9 +588,19 @@ class Juego:
                         salirJuego = True  # Volver al menú principal
                     if tienda.collidepoint(pygame.mouse.get_pos()):
                         Juego.shop(Datos.turnos, screen)
-            
+                        
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_TAB:
+                        Juego.mostrar_tabla_jugadores(screen, fuente, Jugador.jugadores)
+                        tab_presionada = True
+
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_TAB:
+                        tab_presionada = False
+
             keys = pygame.key.get_pressed()
-            if Tanque.tanques[Datos.turnos].esIA ==False:
+
+            if Tanque.tanques[Datos.turnos].esIA == False:
                 if keys[pygame.K_ESCAPE]:
                     salirJuego = True
 
@@ -553,7 +612,7 @@ class Juego:
             elif Tanque.tanques[Datos.turnos].esIA == True and Datos.bala_tanque is None:
                 Tanque.tanques[Datos.turnos].angulo, Tanque.tanques[Datos.turnos].velocidad, Tanque.tanques[Datos.turnos].tipo_bala = Tanque.ia(Tanque.tanques[Datos.turnos])
                 Datos.tecla_espacio_presionada = True
-                pygame.time.delay(1000)
+                pygame.time.delay(4000)
 
             #Dibuja el terreno y aplica imagenes de fondo y hud
             Pantalla.pantalla.background(screen)
