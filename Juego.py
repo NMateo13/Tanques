@@ -277,14 +277,57 @@ class Juego:
     def muestra_ganador(Ganador, screen, fuente, color): #Función para mostrar el ganador del juego
         
         screen.fill(Datos.WHITE) 
-        texto_ganador = fuente.render(f"Ganador: Jugador {Ganador}", True, Datos.BLACK) 
+        texto_ganador = fuente.render(f"Ganador ronda: Jugador {Ganador-1}", True, Datos.BLACK) 
         screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
         screen.blit(imagenes.Tanque_HUDs[color], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
+        for indice, jugador in enumerate(Jugador.jugadores):
+            if color == Jugador.jugadores[indice].color_tanque:
+                Jugador.jugadores[indice].partidas_ganadas += 1
+
         Datos.partida_actual += 1
         pygame.display.flip() 
         pygame.time.delay(3000)
         if Datos.partida_actual > Datos.num_partidas:
-            sys.exit()
+            Juego.muestra_ganador_final(screen, fuente)
+
+    def muestra_ganador_final(screen, fuente):
+        screen.fill(Datos.WHITE)
+        jugador_ganador = None
+        jugador_auxiliar = None
+        empate = 0
+        #verificamos cual jugador tiene la cantidad de victorias más alta, si es un empate, se muestra un mensaje de empate entre los jugadores empatados
+        for indice, jugador in enumerate(Jugador.jugadores):
+            jugador_auxiliar = Jugador.jugadores[indice]
+            if indice == 0:
+                jugador_ganador = jugador_auxiliar
+            elif jugador_auxiliar.partidas_ganadas > jugador_ganador.partidas_ganadas:
+                jugador_ganador = jugador_auxiliar
+                empate = 0
+            elif jugador_auxiliar.partidas_ganadas == jugador_ganador.partidas_ganadas:
+                empate = 1
+        if empate == 1:
+            texto_ganador = fuente.render("Empate entre 2 o más jugadores", True, Datos.BLACK)
+            screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
+        else:
+            texto_ganador = fuente.render(f"Ganador: Jugador {jugador_ganador.color_tanque}", True, Datos.BLACK)
+            screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
+            screen.blit(imagenes.Tanque_HUDs[jugador_ganador.color_tanque], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
+        pygame.display.flip()
+        pygame.time.delay(3000)
+        sys.exit()
+        
+
+    def sin_balas(screen, fuente):
+        screen.fill(Datos.WHITE)
+        texto_ganador = fuente.render("Todos se quedaron sin balas", True, Datos.BLACK)
+        screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
+        pygame.display.flip()
+        pygame.time.delay(1000)
+        Datos.partida_actual += 1
+        pygame.display.flip() 
+        pygame.time.delay(3000)
+        if Datos.partida_actual > Datos.num_partidas:
+            Juego.muestra_ganador_final(screen, fuente)
 
 
     def seleccion(screen, fuente):
@@ -411,7 +454,26 @@ class Juego:
         Juego.draw_text(f"Vida: {tanque.vida}", fuente, x + 10, y + 50, Datos.BLACK, screen)
         pygame.display.update()
 
+    def cambiar_sin_balas():
+        for indice, tanque in enumerate(Tanque.tanques):
+            if Tanque.tanques[indice].sin_balas == False and Datos.bala_tanque is None:
+                    if Tanque.tanques[indice].cantBala105mm == 0 and Tanque.tanques[indice].cantBala80mm == 0 and Tanque.tanques[indice].cantBala60mm == 0:
+                        Tanque.tanques[indice].sin_balas = True
+    
+    def comprobar_sin_balas():
+        if Tanque.tanques[Datos.turnos].sin_balas == True and Datos.bala_tanque is None:
+                if Datos.turnos < len(Tanque.tanques)-1:
+                    Datos.turnos += 1
+                else:
+                    Datos.turnos = 0
+                    Datos.rondas += 1
+                Datos.anima_quedan_balas = True
+                Datos.tecla_espacio_presionada = False
+                Datos.tiempo_transcurrido = 0
+
+
     def juego(screen, fuente):
+        
         #Creacion clases (Terreno y tanques)
         salirJuego = False
 
@@ -452,7 +514,19 @@ class Juego:
             Juego.shop(screen)
             Datos.turnos += 1
         Datos.turnos = 0
+
         while True:
+            Juego.cambiar_sin_balas()
+            Juego.comprobar_sin_balas()
+            for indice, tanque in enumerate(Tanque.tanques):
+                if Tanque.tanques[indice].sin_balas == True:
+                    Datos.tanque_sin_balas += 1
+                elif Tanque.tanques[indice].sin_balas == False:
+                    Datos.tanque_sin_balas -= 1
+                if Datos.tanque_sin_balas == len(Tanque.tanques):
+                    Juego.sin_balas(screen, fuente)       
+            Datos.tanque_sin_balas = 0    
+
             Clock.tick(Datos.FPS)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -500,7 +574,6 @@ class Juego:
                     Juego.muestra_ganador(Tanque.tanques[0].num, screen, fuente, Tanque.tanques[0].color)
                     salirJuego = True
                     Datos.reiniciar = True
-            #comprobaciones de balas antes de disparar
             if Datos.tecla_espacio_presionada:
                 if Datos.bala_tanque is None:
                     Datos.mostrar_altura = Tanque.tanques[Datos.turnos].indice
@@ -543,6 +616,7 @@ class Juego:
                             else:
                                 Datos.turnos = 0
                                 Datos.rondas += 1
+                                
                             break
                         elif terreno.verificar_colision(Datos.bala_tanque):
                             Datos.tecla_espacio_presionada = False

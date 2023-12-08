@@ -15,9 +15,9 @@ class Tanque:
         self.altura = 10 
         self.num = num
         self.vida = 100 # vida tanque
-        self.cantBala60mm = 3 #cantidad de balas 
-        self.cantBala80mm = 10
-        self.cantBala105mm = 3
+        self.cantBala60mm = 0 #cantidad de balas 
+        self.cantBala80mm = 0
+        self.cantBala105mm = 1
         self.Bala60mm = 30 # daño de las balas
         self.Bala80mm = 40
         self.Bala105mm = 50
@@ -34,6 +34,7 @@ class Tanque:
         self.creditos = 10000
         self.mostrar_datos = False
         self.esIA = False
+        self.sin_balas = False
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, Datos.RED, (self.x, self.y, self.ancho, self.altura))
