@@ -11,6 +11,7 @@ class Jugador:
         self.tanque = None
         self.color_tanque = None
         self.IA = False
+        self.partidas_ganadas = 2
         pass
 
     def crearJugador(indice, ia):

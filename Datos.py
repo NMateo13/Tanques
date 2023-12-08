@@ -10,6 +10,7 @@ anima_quedan_balas = False
 sube_texto = 0
 turnos = 0
 rondas = 1
+tanque_sin_balas = 0
 
 # Variables y Constantes
 FPS = 60
@@ -56,7 +57,7 @@ PURPLE = (40, 5, 107)
 
 
 def reiniciar_datos():
-    global mostrar_altura, tecla_espacio_presionada, tiempo_transcurrido, turnos, rondas, bala_tanque
+    global mostrar_altura, tecla_espacio_presionada, tiempo_transcurrido, turnos, rondas, bala_tanque, tanque_sin_balas
     
     mostrar_altura = False
     tecla_espacio_presionada = False
@@ -64,6 +65,7 @@ def reiniciar_datos():
     turnos = 0
     rondas = 1
     bala_tanque = None
+    tanque_sin_balas = 0
 
 
 
