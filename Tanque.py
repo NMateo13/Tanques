@@ -15,9 +15,9 @@ class Tanque:
         self.altura = 10 
         self.num = num
         self.vida = 100 # vida tanque
-        self.cantBala60mm = 0 #cantidad de balas 
-        self.cantBala80mm = 0
-        self.cantBala105mm = 0
+        self.cantBala60mm = 10 #cantidad de balas 
+        self.cantBala80mm = 10
+        self.cantBala105mm = 10
         self.Bala60mm = 30 # daño de las balas
         self.Bala80mm = 40
         self.Bala105mm = 50
