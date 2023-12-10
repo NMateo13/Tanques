@@ -161,7 +161,7 @@ class Tanque:
 
     def danoCaida(alturaTanque, alturaTerreno, indice):
 
-        caida = alturaTerreno - alturaTanque:
+        caida = alturaTerreno - alturaTanque
 
         if caida >= 50:
             Tanque.tanques[indice].vida -= 15
