@@ -10,6 +10,10 @@ anima_quedan_balas = False
 sube_texto = 0
 turnos = 0
 rondas = 1
+viento_habilitado = False
+velocidad_viento = 0
+viento_x = 0
+viento_y = 0
 tanque_sin_balas = 0
 
 # Variables y Constantes

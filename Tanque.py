@@ -23,7 +23,7 @@ class Tanque:
         self.pivote = []
         self.extremo_canonx = 0
         self.extremo_canony = 0
-        #el color del tanque depende del número de jugador siendo (0=verde, 1=rojo, 2=azul, 3=amarillo, 4=rosa, 5=celeste)
+        #el color del tanque depende del número de jugador siendo (1=verde, 2=rojo, 3=azul, 4=amarillo, 5=rosa, 6=celeste)
         self.color = color
         self.angulo = 30
         self.velocidad = 50
@@ -33,6 +33,9 @@ class Tanque:
         self.mostrar_datos = False
         self.esIA = False
         self.sin_balas = False
+        self.kills = 0
+        self.muertes = 0
+        self.suicidios = 0
 
     def dibujar(self, screen):
         pygame.draw.rect(screen, Datos.RED, (self.x, self.y, self.ancho, self.altura))
