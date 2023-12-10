@@ -772,11 +772,8 @@ class Juego:
                             break
               
                 Datos.tiempo_transcurrido += incremento
-            for indice, tanque in enumerate(Tanque.tanques):
-                if Tanque.tanques[indice].y != (terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16):
-                    Tanque.tanques[indice].y = terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16
-                    Tanque.tanques[indice].pivote = [Tanque.tanques[indice].x+21, Tanque.tanques[indice].y-5]
-                    Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, Datos.ang_tank[0], Tanque.tanques[indice].pivote)
+
+            Tanque.acomodarTanque(screen, terreno)
 
             # Representacion gráfica de los Datos
             Pantalla.pantalla.muestra_texto(screen, fuente ,Tanque.tanques[Datos.turnos], Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo-30],Datos.bala_tanque)
