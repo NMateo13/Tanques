@@ -15,9 +15,9 @@ class Tanque:
         self.altura = 10 
         self.num = num
         self.vida = 100 # vida tanque
-        self.cantBala60mm = 10 #cantidad de balas 
-        self.cantBala80mm = 10
-        self.cantBala105mm = 10
+        self.cantBala60mm = 0 #cantidad de balas 
+        self.cantBala80mm = 0
+        self.cantBala105mm = 0
         self.Bala60mm = 30 # daño de las balas
         self.Bala80mm = 40
         self.Bala105mm = 50
@@ -64,7 +64,7 @@ class Tanque:
         elif Datos.PANT_ALTO == 1080: #1920x1080
             velocidad = random.randint(0, 300)
         elif Datos.PANT_ALTO == 800: #800x800
-            velocidad = random.randint(0, 200)
+            velocidad = random.randint(0, 100)
         elif Datos.PANT_ALTO == 768: #1366x768
             velocidad = random.randint(0, 200)
         #Tipo de bala aleatoria entre 1 y 3, si no hay balas de ese tipo, se elige otro tipo incluyendo si no hay 2 tipos de balas
@@ -111,34 +111,8 @@ class Tanque:
                 tanque.x = random.randint(0, Datos.PANT_ANCHO // 2)
                 tanque.indice = tanque.x
                 tanque.y = terreno.alto - terreno.terreno[indice] - 26
-                tanque.num = Pantalla.pantalla.tank1
 
             else:
                 tanque.x = random.randint(0, (Datos.PANT_ANCHO // 2 - 50))
                 tanque.indice = ((Datos.PANT_ANCHO - 1) - tanque.x)    
                 tanque.y = terreno.alto -  terreno.terreno[indice] - 24
-                tanque.num = Pantalla.pantalla.tank2
-
-
-    
-    '''def crearTanques(terreno, bandera):
-
-        if bandera:
-
-            posX_Tanque = random.randint(0, Datos.PANT_ANCHO // 2)
-            indice = posX_Tanque
-            posY_Tanque = terreno.alto - terreno.terreno[indice] - 26
-            tank1 = Pantalla.pantalla.tank1
-            tanque = Tanque(posX_Tanque - 10, posY_Tanque + 10, tank1, indice)
-            Datos.bandera_tanque = False
-
-            return tanque
-
-        else:
-            posX_Tanque = random.randint(0, (Datos.PANT_ANCHO // 2 - 50))
-            indice = ((Datos.PANT_ANCHO - 1) - posX_Tanque)    
-            posY_Tanque = terreno.alto -  terreno.terreno[indice] - 24
-            tank2 = Pantalla.pantalla.tank2
-            tanque = Tanque(Datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque + 20, posY_Tanque + 10, tank2, indice)
-
-            return tanque'''

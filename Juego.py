@@ -30,7 +30,7 @@ class Juego:
         text_rect = text_surface.get_rect(center=rect.center)
         screen.blit(text_surface, text_rect)
 
-    def manejar_controles(keys):
+    def manejar_controles(keys): # Función que maneja los controles del juego
         if keys[pygame.K_w]:
             if Tanque.tanques[Datos.turnos].angulo == 66:
                 Tanque.tanques[Datos.turnos].angulo = 0
@@ -57,7 +57,7 @@ class Juego:
             Tanque.tanques[Datos.turnos].tipo_bala = 3
             Tanque.tanques[Datos.turnos].radioExplosion = 25
 
-    def opciones(screen):
+    def opciones(screen): # Función que maneja la pestaña de opciones del juego
         while True:
             salir = False
             Pantalla.pantalla.fondoseleccion(screen)
@@ -127,7 +127,7 @@ class Juego:
             if salir:
                 break
 
-    def controles(screen): 
+    def controles(screen): # Función que maneja la pestaña que muestra los controles del juego
         while True: 
             salir = False 
             screen.fill(Datos.WHITE) 
@@ -173,7 +173,7 @@ class Juego:
             if salir: 
                 break         
     
-    def verificar_creditos(boton, fuente, screen):
+    def verificar_creditos(boton, fuente, screen): # Función que verifica si el jugador tiene los créditos suficientes para comprar una bala
         if boton == 1:
             if Tanque.tanques[Datos.turnos].creditos < 4000:
                 Juego.draw_text('No te alcanzan los creditos', fuente, Datos.PANT_ANCHO / 2, Datos.PANT_ALTO / 2 -100, Datos.BLACK, screen)
@@ -199,7 +199,7 @@ class Juego:
                 Tanque.tanques[Datos.turnos].cantBala60mm += 1
                 Tanque.tanques[Datos.turnos].creditos -= 1000
 
-    def mostrar_tabla_jugadores(screen, fuente, jugadores):
+    def mostrar_tabla_jugadores(screen, fuente, jugadores): # Función que muestra el leaderboard
         tabla_abierta = True
         tab_presionada = False
 
@@ -247,8 +247,7 @@ class Juego:
 
             pygame.display.flip()
 
-
-    def shop(screen):
+    def shop(screen): # Función que maneja la pestaña de la tienda del juego
         tienda_abierta = True
 
         while tienda_abierta:
@@ -341,7 +340,7 @@ class Juego:
         if Datos.partida_actual > Datos.num_partidas:
             Juego.muestra_ganador_final(screen, fuente)
 
-    def muestra_ganador_final(screen, fuente):
+    def muestra_ganador_final(screen, fuente): #Función para mostrar el ganador final del juego
         screen.fill(Datos.WHITE)
         jugador_ganador = None
         jugador_auxiliar = None
@@ -367,8 +366,7 @@ class Juego:
         pygame.time.delay(3000)
         sys.exit()
         
-
-    def sin_balas(screen, fuente):
+    def sin_balas(screen, fuente): #Función para mostrar el mensaje de que todos los jugadores se quedaron sin balas
         screen.fill(Datos.WHITE)
         texto_ganador = fuente.render("Todos se quedaron sin balas", True, Datos.BLACK)
         screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
@@ -380,8 +378,7 @@ class Juego:
         if Datos.partida_actual > Datos.num_partidas:
             Juego.muestra_ganador_final(screen, fuente)
 
-
-    def seleccion(screen, fuente):
+    def seleccion(screen, fuente): #Función de selección de jugadores
         clock = pygame.time.Clock()
 
         key_repeat_delay = 200  # Milisegundos
@@ -498,7 +495,7 @@ class Juego:
                 if keys[pygame.K_ESCAPE]:
                     salir = True       
 
-    def mostrar_tooltip(tanque, screen, x, y):
+    def mostrar_tooltip(tanque, screen, x, y): # Función tooltip (muestra la vida de cada tanque con el mouse)
         pygame.draw.rect(screen, Datos.WHITE, (x, y, 100, 75))
         screen.blit(imagenes.Tanque_Tooltip[tanque.color], (x + 20, y + 10))
         fuente = pygame.font.Font(None, 30)
@@ -522,8 +519,7 @@ class Juego:
                 Datos.tecla_espacio_presionada = False
                 Datos.tiempo_transcurrido = 0
 
-
-    def juego(screen, fuente):
+    def juego(screen, fuente): # Función que maneja el juego en sí
         primera_iteracion = True
         #Creacion clases (Terreno y tanques)
         salirJuego = False
@@ -780,17 +776,13 @@ class Juego:
                                 Datos.turnos = 0
                                 Datos.rondas += 1
                             break
-            
-
-                        
+              
                 Datos.tiempo_transcurrido += incremento
             for indice, tanque in enumerate(Tanque.tanques):
                 if Tanque.tanques[indice].y != (terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16):
                     Tanque.tanques[indice].y = terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16
                     Tanque.tanques[indice].pivote = [Tanque.tanques[indice].x+21, Tanque.tanques[indice].y-5]
                     Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, Datos.ang_tank[0], Tanque.tanques[indice].pivote)
-
-
 
             # Representacion gráfica de los Datos
             Pantalla.pantalla.muestra_texto(screen, fuente ,Tanque.tanques[Datos.turnos], Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo-30])

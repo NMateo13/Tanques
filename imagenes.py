@@ -88,7 +88,7 @@ FondoControles = pygame.transform.scale(IMG_fondo_controles, (Datos.PANT_ANCHO, 
 Tienda = pygame.transform.scale(IMG_Tienda, (IMG_Tienda.get_width() // 1.25, IMG_Tienda.get_height() // 1.25))
 FondoMenu_seleccion = pygame.transform.scale(IMG_Background_seleccion, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
 
-#Reescalado de imagenes para diferentes resoluciones 
+#Reescalado de imagenes de fondo para diferentes resoluciones 
 Background800 = pygame.transform.scale(IMG_Background, (800, 800)) 
 Background1080 = pygame.transform.scale(IMG_Background, (1920, 1080)) 
 Background768 = pygame.transform.scale(IMG_Background, (1366, 768)) 

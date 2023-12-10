@@ -1,6 +1,7 @@
 import pygame, imagenes, Datos, sys, Pantalla
 from Juego import Juego
 
+# Se inicializa pygame
 pygame.init()
 pygame.display.set_icon(imagenes.IMG_Explosion) 
 pygame.display.set_caption("PROYECTO TANQUE")
@@ -35,12 +36,14 @@ while True:
         Datos.bandera_tanque = True
         Juego.juego(screen, fuente)
 
+    # Se llama a funcion que muestra la imagen de fondo del menu
     Pantalla.pantalla.fondomenu(screen)
-
+    
+    # Se crean los botones del menu
     play_button = pygame.Rect((Datos.PANT_ANCHO / 1.72), (Datos.PANT_ALTO / 3), 100, 50)
     settings_button = pygame.Rect((Datos.PANT_ANCHO / 1.72), (Datos.PANT_ALTO / 2.2), 100, 50)
     quit_button = pygame.Rect((Datos.PANT_ANCHO / 1.72), (Datos.PANT_ALTO / 1.75), 100, 50)
-
+    # Se dibujan los botones del menu
     draw_button(play_button, 'Jugar', fuente, Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
     draw_button(settings_button, 'Opciones', fuente, Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
     draw_button(quit_button, 'Salir', fuente, Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)

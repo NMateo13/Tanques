@@ -1,11 +1,7 @@
 import pygame, Datos, os, random, imagenes, sys
 
-
 class Pantalla:
     offset = pygame.math.Vector2(0, -10)
-
-    tank1 = 1
-    tank2 = 2
         
     def __init__(self, ancho, alto):
         
@@ -26,7 +22,7 @@ class Pantalla:
         screen.blit(textobj, textrect)
 
     #Funciones para mostrar información en la pantalla
-    def muestra_texto(self, screen, font, tanque, angulo):
+    def muestra_texto(self, screen, font, tanque, angulo): # Muestra textos en el juego
         if tanque.tipo_bala == 1:
             bala_texto = str(tanque.cantBala105mm)
         elif tanque.tipo_bala == 2:
@@ -64,14 +60,12 @@ class Pantalla:
         screen.blit(texto_partidas, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 50))
 
     
-    
-    def muestra_imagen(self, screen, tanques, turno):
+    def muestra_imagen(self, screen, tanques, turno): # Muestra imagenes del juego
         for indice, tanque in enumerate(tanques):
             screen.blit(imagenes.Tanque[tanque.color], (tanque.x, tanque.y-10))
             
         screen.blit(imagenes.Exit, (Datos.PANT_ANCHO / 2.5, 10)) 
         screen.blit(imagenes.Restart, (Datos.PANT_ANCHO / 2, 10)) 
-        
         
         if tanques[turno].tipo_bala == 1:
             #cambiar imagen a bala 105mm
@@ -107,7 +101,7 @@ class Pantalla:
         y = rect.y
         return rotated_image, rect, x, y
 
-    def muestra_bala(self, screen, tipo_bala, pos_x):
+    def muestra_bala(self, screen, tipo_bala, pos_x): # Muestra la bala en el juego
         if tipo_bala == 1:
             screen.blit(imagenes.Prebala105, (pos_x, 0))
         elif tipo_bala == 2:
@@ -115,7 +109,7 @@ class Pantalla:
         elif tipo_bala == 3:
             screen.blit(imagenes.Prebala60, (pos_x, 0))
 
-    #Las siguientes funciones consisten en cambiar el tamaño de las imagenes para que se adapten a la resolución de la pantalla
+    #Las siguientes 5 funciones consisten en cambiar el tamaño de las imagenes para que se adapten a la resolución de la pantalla
     def background(self, screen):
         if Datos.PANT_ALTO == 600: #Default 1200x600
             screen.blit(imagenes.Background, (0, 0))
@@ -166,7 +160,7 @@ class Pantalla:
         elif Datos.PANT_ALTO == 768: #1366x768
             screen.blit(imagenes.FondoControles768, (0, 0))
 
-    def muestra_seleccion(self, screen, fuente):
+    def muestra_seleccion(self, screen, fuente): # Muestra la pantalla de seleccion de tanques
         for i in range (1,7):
             screen.blit(imagenes.TanqueSeleccion[i], (Datos.PANT_ANCHO / Datos.Tanque_sele_ancho[i], Datos.PANT_ALTO / Datos.Tanque_sele_alto[i], 100, 100))
 
@@ -178,9 +172,7 @@ class Pantalla:
         Pantalla.draw_text('5', fuente, Datos.PANT_ANCHO / 3, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
         Pantalla.draw_text('6', fuente, Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 2, Datos.WHITE, screen)
 
-
-
-    def muestra_no_balas(self, screen, fuente, tanque):
+    def muestra_no_balas(self, screen, fuente, tanque): # Muestra el texto de no quedan balas
         #el texto ira subiendo y desapareciendo con cada iteración hasta que suba 100 pixeles y desaparezca
         texto = fuente.render("No quedan balas", True, Datos.BLACK)
         #ajustamos el tamaño del texto
@@ -192,9 +184,6 @@ class Pantalla:
         if Datos.sube_texto == 255:
             Datos.sube_texto = 0
             Datos.anima_quedan_balas = False
-
-
-
 
 pantalla = Pantalla(Datos.PANT_ANCHO, Datos.PANT_ALTO)
 matriz = []
