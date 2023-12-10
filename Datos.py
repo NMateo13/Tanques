@@ -27,7 +27,6 @@ distancia_maxima = 0
 volumen = 0.25
 reiniciar = False
 bandera_tanque = True
-coordenadaCorrecta = True
 lista_cuadrar_jugadores_texto_x = [10, 3, 1.764]
 lista_cuadrar_jugadores_texto_y = [3.5, 1.457]
 Tanque_sele_ancho ={

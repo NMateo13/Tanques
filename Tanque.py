@@ -146,11 +146,31 @@ class Tanque:
                 tanque.indice = tanque.x
                 tanque.y = terreno.alto - terreno.terreno[indice] - 26
 
-    def acomodarTanque(screen, terreno):
+    def acomodarTanque(screen, terreno, primera_iteracion):
         for indice, tanque in enumerate(Tanque.tanques):
             if Tanque.tanques[indice].y != (terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16):
+                alturaTanque = Tanque.tanques[indice].y
+                alturaTerreno = terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16
                 Tanque.tanques[indice].y = terreno.alto - terreno.terreno[Tanque.tanques[indice].indice] - 16
+                if primera_iteracion != True:
+                    Tanque.danoCaida(alturaTanque, alturaTerreno, indice)                
                 if Tanque.tanques[indice].y >= 465:
                     Tanque.tanques[indice].y = 465
                 Tanque.tanques[indice].pivote = [Tanque.tanques[indice].x+21, Tanque.tanques[indice].y-5]
                 Tanque.tanques[indice].extremo_canonx, Tanque.tanques[indice].extremo_canony = Pantalla.pantalla.prerotate(screen, Tanque.tanques[indice].color, Datos.ang_tank[0], Tanque.tanques[indice].pivote)
+
+    def danoCaida(alturaTanque, alturaTerreno, indice):
+
+        caida = alturaTerreno - alturaTanque:
+
+        if caida >= 50:
+            Tanque.tanques[indice].vida -= 15
+        elif caida >= 25:
+            Tanque.tanques[indice].vida -= 10
+        elif caida >= 1:
+            Tanque.tanques[indice].vida -= 5
+
+        if Datos.gravedad == 5:
+            Tanque.tanques[indice].vida -= 5 
+        elif Datos.gravedad == 40:
+            Tanque.tanques[indice].vida -= 20    

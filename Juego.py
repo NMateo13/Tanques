@@ -773,7 +773,7 @@ class Juego:
               
                 Datos.tiempo_transcurrido += incremento
 
-            Tanque.acomodarTanque(screen, terreno)
+            Tanque.acomodarTanque(screen, terreno, primera_iteracion)
 
             # Representacion gráfica de los Datos
             Pantalla.pantalla.muestra_texto(screen, fuente ,Tanque.tanques[Datos.turnos], Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo-30],Datos.bala_tanque)
