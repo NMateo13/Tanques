@@ -69,6 +69,8 @@ class Juego:
             boton_gravedad_baja = pygame.Rect((Datos.PANT_ANCHO / 1.4), (Datos.PANT_ALTO / 3.25), 100, 50)
             boton_gravedad_default = pygame.Rect((Datos.PANT_ANCHO / 1.4), (Datos.PANT_ALTO / 2.5), 100, 50)
             boton_gravedad_alta = pygame.Rect((Datos.PANT_ANCHO / 1.4), (Datos.PANT_ALTO / 2), 100, 50)
+            boton_viento_habilitado = pygame.Rect((Datos.PANT_ANCHO / 2.3), (Datos.PANT_ALTO / 2.8), 100, 50)
+            boton_viento_deshabilitado = pygame.Rect((Datos.PANT_ANCHO / 2.3), (Datos.PANT_ALTO / 2.2), 100, 50)
 
             draw_button(boton_800, '800x800', pygame.font.Font(None, 36), Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
             draw_button(boton_default, 'Default', pygame.font.Font(None, 36), Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
@@ -77,6 +79,8 @@ class Juego:
             draw_button(boton_gravedad_baja, 'Baja', pygame.font.Font(None, 36), Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
             draw_button(boton_gravedad_default, 'Default', pygame.font.Font(None, 36), Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
             draw_button(boton_gravedad_alta, 'Alta', pygame.font.Font(None, 36), Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
+            draw_button(boton_viento_habilitado, 'Habilitar', pygame.font.Font(None, 36), Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
+            draw_button(boton_viento_deshabilitado, 'Deshabilitar', pygame.font.Font(None, 36), Datos.WHITE, Datos.BLACK, Datos.GREEN, screen)
 
             fuente = pygame.font.Font(None, 50)
             draw_text('Opciones', fuente, (Datos.PANT_ANCHO / 2.25), (Datos.PANT_ALTO / 7), Datos.WHITE, screen)
@@ -86,6 +90,9 @@ class Juego:
             draw_text('Volver: Escape', fuente, (Datos.PANT_ANCHO / 2.3), (Datos.PANT_ALTO / 1.4), Datos.WHITE, screen)
             draw_text('Resolución actual: ' + str(Datos.PANT_ANCHO) + 'x' + str(Datos.PANT_ALTO), fuente, (Datos.PANT_ANCHO / 10), (Datos.PANT_ALTO / 1.5), Datos.WHITE, screen)
             draw_text('Gravedad actual: ' + str(Datos.gravedad), fuente, (Datos.PANT_ANCHO / 1.5), (Datos.PANT_ALTO / 1.5), Datos.WHITE, screen)
+            draw_text('Viento', fuente, (Datos.PANT_ANCHO / 2.3), (Datos.PANT_ALTO / 4), Datos.WHITE, screen)
+            draw_text('Viento actual: ' + str(Datos.viento_habilitado), fuente, (Datos.PANT_ANCHO / 2.5), (Datos.PANT_ALTO / 1.75), Datos.WHITE, screen)
+            
 
             pygame.display.update()
 
@@ -123,6 +130,13 @@ class Juego:
                         Datos.gravedad = 9.8
                     if boton_gravedad_alta.collidepoint(event.pos):
                         Datos.gravedad = 40
+                    
+                    #botones de la configuracion del viento
+                    if boton_viento_habilitado.collidepoint(event.pos):
+                        Datos.viento_habilitado = True
+                        
+                    if boton_viento_deshabilitado.collidepoint(event.pos):
+                        Datos.viento_habilitado = False
 
             if salir:
                 break
@@ -220,7 +234,7 @@ class Juego:
 
             # Mostrar información de cada jugador en la tabla
             for i, jugador in enumerate(jugadores):
-                Juego.draw_text(f'Jugador {i+1}', fuente, 250, 170 + i * 60, Datos.BLACK, screen)
+                Juego.draw_text(f'Jugador {jugador.indice + 1}', fuente, 250, 170 + i * 60, Datos.BLACK, screen)
                 Juego.draw_text(str(jugador.kills), fuente, 400, 170 + i * 60, Datos.BLACK, screen)
                 Juego.draw_text(str(jugador.muertes), fuente, 550, 170 + i * 60, Datos.BLACK, screen)
                 Juego.draw_text(str(jugador.suicidios), fuente, 700, 170 + i * 60, Datos.BLACK, screen)
@@ -563,24 +577,21 @@ class Juego:
             for indice, tanque in enumerate(Tanque.tanques):
                 Tanque.tanques[indice].dibujar(screen)
 
+            #VERIFICA LA VIDA 
             for indice, tanque in enumerate(Tanque.tanques):
+                #KILL Y SUICIDIO
                 if Tanque.tanques[indice].vida <= 0:
-                    if Datos.turnos == indice:
-                        # Suicidio
-                        Jugador.jugadores[Datos.turnos].suicidios += 1
-                        Tanque.tanques[Datos.turnos].creditos = -3000
+        
                     del Tanque.tanques[indice]
                     if Datos.turnos == len(Tanque.tanques):
                         Datos.turnos = 0
-
-            if len(Tanque.tanques) == 1:
-                # Mostrar el ganador si solo queda un tanque
-                Juego.mostrar_tabla_jugadores(screen, fuente, Jugador.jugadores)
-                Juego.muestra_ganador(Tanque.tanques[0].num, screen, fuente, Tanque.tanques[0].color)
-                salirJuego = True
-                Datos.reiniciar = True
-
-            # comprobaciones de balas antes de disparar
+                        
+                if len(Tanque.tanques) == 1:
+                    Juego.mostrar_tabla_jugadores(screen, fuente, Jugador.jugadores)
+                    Juego.muestra_ganador(Tanque.tanques[0].num, screen, fuente, Tanque.tanques[0].color)
+                    salirJuego = True
+                    Datos.reiniciar = True
+                    
             if Datos.tecla_espacio_presionada:
                 if Datos.bala_tanque is None:
                     Datos.mostrar_altura = Tanque.tanques[Datos.turnos].indice
@@ -597,108 +608,124 @@ class Juego:
                         Datos.tecla_espacio_presionada = False
                         Datos.tiempo_transcurrido = 0
                     else:
+                        #si pasa las comprobaciones se dispara la bala
                         if primera_iteracion:
-                            primera_iteracion = False
+                            primera_iteracion=False
                         else:
-                            if Datos.turnos == 0:
-                                Tanque.tanques[len(Tanque.tanques) - 1].mostrar_datos = False
+                            if Datos.turnos==0:
+                                Tanque.tanques[len(Tanque.tanques)-1].mostrar_datos = False
                                 Tanque.tanques[Datos.turnos].mostrar_datos = True
                             else:
-                                Tanque.tanques[Datos.turnos - 1].mostrar_datos = False
+                                Tanque.tanques[Datos.turnos-1].mostrar_datos = False
                                 Tanque.tanques[Datos.turnos].mostrar_datos = True
-                        Datos.bala_tanque = Tanque.tanques[Datos.turnos].disparar(
-                            Tanque.tanques[Datos.turnos].extremo_canonx,
-                            Tanque.tanques[Datos.turnos].extremo_canony,
-                            Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo],
-                            Tanque.tanques[Datos.turnos].velocidad,
-                            Datos.tiempo_transcurrido,
-                            screen,
-                            Datos.BLACK,
-                            Tanque.tanques[Datos.turnos].tipo_bala
-                        )
+                        Datos.bala_tanque = Bala(Tanque.tanques[Datos.turnos].extremo_canonx,Tanque.tanques[Datos.turnos].extremo_canony,Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo],Tanque.tanques[Datos.turnos].velocidad,Tanque.tanques[Datos.turnos].tipo_bala)
+                        
+                        
+                        # En tu código principal
+                        # Obtén la velocidad del viento en m/s
+                        velocidad_viento_m_s = Datos.velocidad_viento
+
+                        # Convierte la velocidad a km/h
+                        velocidad_viento_kmh = velocidad_viento_m_s * 1000
+
+                        # Determina la dirección del viento
+                        direccion_viento_x = 'Derecha' if Datos.viento_x > 0 else 'Izquierda'
+                        direccion_viento_y = 'Arriba' if Datos.viento_y < 0 else 'Abajo'
+
+                        # Imprime la información
+                        print(f"Velocidad del viento: {velocidad_viento_kmh:.2f} m/s, Dirección X: {direccion_viento_x}, Dirección Y: {direccion_viento_y}")
 
                 else:
                     Datos.altura_maxima = Datos.bala_tanque.punto_maximo(Datos.altura_maxima)
                     Datos.bala_tanque.verificacion(Datos.tiempo_transcurrido, screen, Datos.BLACK)
-                    Datos.distancia_maxima = Datos.bala_tanque.distancia_maxima(Tanque.tanques[Datos.turnos].x,
-                                                                            Datos.distancia_maxima)
+                    Datos.distancia_maxima = Datos.bala_tanque.distancia_maxima(Tanque.tanques[Datos.turnos].x, Datos.distancia_maxima)
                     for indice, tanque in enumerate(Tanque.tanques):
                         if Datos.bala_tanque.verificar_impacto_ancho(Datos.PANT_ANCHO):
                             Datos.bala_tanque = None
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
-                            if Datos.turnos < len(Tanque.tanques) - 1:
+                            if Datos.turnos < len(Tanque.tanques)-1:
                                 Datos.turnos += 1
                             else:
                                 Datos.turnos = 0
                                 Datos.rondas += 1
+                                
                             break
                         elif terreno.verificar_colision(Datos.bala_tanque):
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
                             terreno.modificar_terreno(terreno, Tanque.tanques[Datos.turnos])
-                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(
-                                terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
+                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
                             for indice, tanque in enumerate(Tanque.tanques):
-                                if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice],puntosExplosionX, puntosExplosionY):
-                                    # Contar kills y suicidios
-                                    if Tanque.tanques[indice].vida <= 0:
-                                        if Datos.turnos == indice:
-                                            Jugador.jugadores[Datos.turnos].suicidios += 1
-                                            Tanque.tanques[Datos.turnos].creditos = -3000
-                                        else:
-                                            Jugador.jugadores[Datos.turnos].kills += 1
-                                            
-                                            
+                                if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice], puntosExplosionX, puntosExplosionY):
                                     if Tanque.tanques[Datos.turnos].tipo_bala == 1:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala105mm
                                     elif Tanque.tanques[Datos.turnos].tipo_bala == 2:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
                                     elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
-
+                                    
+                                    #KILL Y SUICIDIO
+                                    if Tanque.tanques[indice].vida <= 0:
+                                        print("vida 1")
+                                        if Datos.turnos == indice:
+                                            Jugador.jugadores[Datos.turnos].suicidios += 1
+                                            print("suicidio 1")
+                                        else:
+                                            Jugador.jugadores[Datos.turnos].kills += 1
+                                            print("kill 1 ")
+                                            
                             Datos.bala_tanque = None
-                            if Datos.turnos < len(Tanque.tanques) - 1:
+                            if Datos.turnos < len(Tanque.tanques)-1:
                                 Datos.turnos += 1
                             else:
                                 Datos.turnos = 0
                                 Datos.rondas += 1
                             break
                         elif Datos.bala_tanque.verificar_impacto_tanque(Tanque.tanques[indice]):
-                            # Contar kills y suicidios
-                            if Tanque.tanques[indice].vida <=0:
-                                if Datos.turnos == indice:
-                                    # Suicidio
-                                    Jugador.jugadores[Datos.turnos].suicidios += 1
-                                    Tanque.tanques[Datos.turnos].creditos = -3000
-                                else: # kill
-                                    Jugador.jugadores[Datos.turnos].kills += 1
-
                             if Tanque.tanques[Datos.turnos].tipo_bala == 1:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala105mm
                             elif Tanque.tanques[Datos.turnos].tipo_bala == 2:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
                             elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
-
+                                
+                            #KILL Y SUICIDIO
+                            if Tanque.tanques[indice].vida <= 0:
+                                print("vida 2")
+                                if Datos.turnos == indice:
+                                    Jugador.jugadores[Datos.turnos].suicidios += 1
+                                    print("suicidio 2")
+                                else:
+                                    Jugador.jugadores[Datos.turnos].kills += 1
+                                    print("kill 2")
+                                
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
-                            terreno.modificar_terreno(terreno, Tanque.tanques[Datos.turnos])
-                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(
-                                terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
-                            for indice, tanque in enumerate(Tanque.tanques):
-                                if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice],puntosExplosionX, puntosExplosionY):
-                                    # Contar kills y suicidios
-                                    if Tanque.tanques[indice].vida <=0:
-                                        if Datos.turnos == indice:
-                                            # Suicidio
-                                            Jugador.jugadores[Datos.turnos].suicidios += 1
-                                            Tanque.tanques[Datos.turnos].creditos = -3000
-                                        else: # kill
-                                            Jugador.jugadores[Datos.turnos].kills += 1
-
+                            terreno.modificar_terreno(terreno, Tanque.tanques[Datos.turnos]) 
+                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
+                            #for indice, tanque in enumerate(Tanque.tanques):
+                            if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice], puntosExplosionX, puntosExplosionY):
+                                #KILL Y SUICIDIO
+                                
+                                if Tanque.tanques[Datos.turnos].tipo_bala == 1:
+                                    Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala105mm
+                                elif Tanque.tanques[Datos.turnos].tipo_bala == 2:
+                                    Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
+                                elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
+                                    Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
+                                    
+                                if Tanque.tanques[indice].vida <= 0:
+                                    print("vida 3")
+                                    if Datos.turnos == indice:
+                                        Jugador.jugadores[Datos.turnos].suicidios += 1
+                                        print("suicidio 3")
+                                    else:
+                                        Jugador.jugadores[Datos.turnos].kills += 1
+                                        print("kill 3")
+                                            
                             Datos.bala_tanque = None
-                            if Datos.turnos < len(Tanque.tanques) - 1:
+                            if Datos.turnos < len(Tanque.tanques)-1:
                                 Datos.turnos += 1
                             else:
                                 Datos.turnos = 0
@@ -717,7 +744,7 @@ class Juego:
 
 
             # Representacion gráfica de los Datos
-            Pantalla.pantalla.muestra_texto(screen, fuente ,Tanque.tanques[Datos.turnos], Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo-30])
+            Pantalla.pantalla.muestra_texto(screen, fuente ,Tanque.tanques[Datos.turnos], Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo-30],Datos.bala_tanque)
             #linea que muestra los tanques
             Pantalla.pantalla.muestra_imagen(screen, Tanque.tanques, Datos.turnos)
             Pantalla.pantalla.muestra_datos(screen, fuente, Datos.altura_maxima, Datos.distancia_maxima, Tanque.tanques)

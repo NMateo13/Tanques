@@ -26,7 +26,7 @@ class Pantalla:
         screen.blit(textobj, textrect)
 
     #Funciones para mostrar información en la pantalla
-    def muestra_texto(self, screen, font, tanque, angulo):
+    def muestra_texto(self, screen, font, tanque, angulo, bala):
         if tanque.tipo_bala == 1:
             bala_texto = str(tanque.cantBala105mm)
         elif tanque.tipo_bala == 2:
@@ -58,11 +58,26 @@ class Pantalla:
         texto_turnos = font.render(f"Turnos: {Datos.turnos + 1}", True, Datos.WHITE)
         texto_rondas = font.render(f"Ronda: {Datos.rondas}", True, Datos.WHITE)
         texto_partidas = font.render(f"Partida: {Datos.partida_actual}", True, Datos.WHITE)
-
+        
+        
+        # Obtén la velocidad del viento en m/s
+        velocidad_viento_m_s = Datos.velocidad_viento
+        # Convierte la velocidad a km/h
+        velocidad_viento_kmh = velocidad_viento_m_s * 1000
+        # Determina la dirección del viento
+        direccion_viento_x = 'Derecha' if Datos.viento_x > 0 else 'Izquierda'
+        direccion_viento_y = 'Arriba' if Datos.viento_y < 0 else 'Abajo'
+        
+        viento_texto = font.render(f"Viento: {velocidad_viento_kmh:.2f} m/s",True, Datos.WHITE)
+        Direccion_viento = font.render(f"Direccion: {direccion_viento_x}",True, Datos.WHITE)
+        if Datos.viento_habilitado:
+            screen.blit(viento_texto, (10, Datos.PANT_ALTO / 100))
+            screen.blit(Direccion_viento, (10, Datos.PANT_ALTO / 20))
         screen.blit(texto_turnos, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 100))
         screen.blit(texto_rondas, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 75))
         screen.blit(texto_partidas, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 50))
 
+        
     
     
     def muestra_imagen(self, screen, tanques, turno):
