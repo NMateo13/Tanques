@@ -322,10 +322,10 @@ class Juego:
         texto_ganador = fuente.render("Todos se quedaron sin balas", True, Datos.BLACK)
         screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
         pygame.display.flip()
-        pygame.time.delay(1000)
-        Datos.partida_actual += 1
-        pygame.display.flip() 
         pygame.time.delay(3000)
+        Datos.partida_actual += 1
+        for indice, tanque in enumerate(Tanque.tanques):
+            Tanque.tanques[indice].sin_balas = False
         if Datos.partida_actual > Datos.num_partidas:
             Juego.muestra_ganador_final(screen, fuente)
 
@@ -473,7 +473,7 @@ class Juego:
 
 
     def juego(screen, fuente):
-        
+        primera_iteracion = True
         #Creacion clases (Terreno y tanques)
         salirJuego = False
 
@@ -507,7 +507,7 @@ class Juego:
         random.shuffle(Tanque.tanques)
         Tanque.tanques[Datos.turnos].mostrar_datos = True
         #Para mostrar correctamente los datos de la primera iteración se crea un nuevo booleando
-        primera_iteracion = True
+        
 
         #Compra de cada partida
         for indice, tanque in enumerate(Tanque.tanques):
@@ -516,15 +516,18 @@ class Juego:
         Datos.turnos = 0
 
         while True:
-            Juego.cambiar_sin_balas()
-            Juego.comprobar_sin_balas()
+            if primera_iteracion is False:
+                Juego.cambiar_sin_balas()
+                Juego.comprobar_sin_balas()
             for indice, tanque in enumerate(Tanque.tanques):
                 if Tanque.tanques[indice].sin_balas == True:
                     Datos.tanque_sin_balas += 1
                 elif Tanque.tanques[indice].sin_balas == False:
                     Datos.tanque_sin_balas -= 1
                 if Datos.tanque_sin_balas == len(Tanque.tanques):
-                    Juego.sin_balas(screen, fuente)       
+                    Juego.sin_balas(screen, fuente)
+                    salirJuego = True
+                    Datos.reiniciar = True  
             Datos.tanque_sin_balas = 0    
 
             Clock.tick(Datos.FPS)
