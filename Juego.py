@@ -127,42 +127,11 @@ class Juego:
             if salir:
                 break
 
-    def controles(screen): # Función que maneja la pestaña que muestra los controles del juego
+    def controles(screen): # Función para la pestaña que muestra los controles del juego
         while True: 
-            salir = False 
-            screen.fill(Datos.WHITE) 
-    
+            salir = False   
             Pantalla.pantalla.fondocontroles(screen)
-    
-            fuente = pygame.font.Font(None, 36) #Fuente inicial de tamaño 36 
-            draw_text('Controles', fuente, (Datos.PANT_ANCHO / 2.2), (Datos.PANT_ALTO / 12), Datos.BLACK, screen)  
-            draw_text('Jugador 1', fuente, (Datos.PANT_ANCHO / 7), (Datos.PANT_ALTO / 6), Datos.BLACK, screen)  
-            draw_text('Jugador 2', fuente, (Datos.PANT_ANCHO / 1.35), (Datos.PANT_ALTO / 6), Datos.BLACK, screen)  
-            fuente = pygame.font.Font(None, 23) #Cambio en el tamaño de la fuente 
-            draw_text('W: Más ángulo', fuente, (Datos.PANT_ANCHO / 7), (Datos.PANT_ALTO / 3.75), Datos.BLACK, screen) 
-            fuente = pygame.font.Font(None, 21) #Cambio en el tamaño de la fuente 
-            draw_text('Arriba: Más ángulo', fuente, (Datos.PANT_ANCHO / 1.36), (Datos.PANT_ALTO / 3.75), Datos.BLACK, screen) 
-            fuente = pygame.font.Font(None, 23) #Cambio en el tamaño de la fuente 
-            draw_text('S: Menos ángulo', fuente, (Datos.PANT_ANCHO / 7), (Datos.PANT_ALTO / 2.7), Datos.BLACK, screen) 
-            fuente = pygame.font.Font(None, 21) #Cambio en el tamaño de la fuente 
-            draw_text('Abajo: Menos ángulo', fuente, (Datos.PANT_ANCHO / 1.36), (Datos.PANT_ALTO / 2.7), Datos.BLACK, screen) 
-            fuente = pygame.font.Font(None, 23) #Cambio en el tamaño de la fuente 
-            draw_text('A: Menos potencia', fuente, (Datos.PANT_ANCHO / 7), (Datos.PANT_ALTO / 2.15), Datos.BLACK, screen) 
-            fuente = pygame.font.Font(None, 17) #Cambio en el tamaño de la fuente 
-            draw_text('Izquierda: Menos potencia', fuente, (Datos.PANT_ANCHO / 1.36), (Datos.PANT_ALTO / 2.15), Datos.BLACK, screen) 
-            fuente = pygame.font.Font(None, 23) #Cambio en el tamaño de la fuente 
-            draw_text('D: Más potencia', fuente, (Datos.PANT_ANCHO / 7), (Datos.PANT_ALTO / 1.75), Datos.BLACK, screen) 
-            fuente = pygame.font.Font(None, 20) #Cambio en el tamaño de la fuente 
-            draw_text('Derecha: Más potencia', fuente, (Datos.PANT_ANCHO / 1.36), (Datos.PANT_ALTO / 1.75), Datos.BLACK, screen) 
-            fuente = pygame.font.Font(None, 26) #Cambio en el tamaño de la fuente 
-            draw_text('1: Bala 105mm', fuente, (Datos.PANT_ANCHO / 7), (Datos.PANT_ALTO / 1.45), Datos.BLACK, screen) 
-            draw_text('2: Bala 80mm', fuente, (Datos.PANT_ANCHO / 2.2), (Datos.PANT_ALTO / 1.45), Datos.BLACK, screen) 
-            draw_text('3: Bala 60mm', fuente, (Datos.PANT_ANCHO / 1.35), (Datos.PANT_ALTO / 1.45), Datos.BLACK, screen) 
-            draw_text('Espacio: Disparar', fuente, (Datos.PANT_ANCHO / 2.3), (Datos.PANT_ALTO / 1.75), Datos.BLACK, screen) 
-            draw_text('Menu: Escape', fuente, (Datos.PANT_ANCHO / 2.2), (Datos.PANT_ALTO / 1.23), Datos.BLACK, screen) 
-    
-            pygame.display.update() 
-    
+            pygame.display.update()
             for event in pygame.event.get(): 
                 if event.type == pygame.QUIT: 
                     pygame.quit() 
@@ -230,7 +199,6 @@ class Juego:
                     if i < len(jugadores):
                         #screen.blit(imagenes.Tanque_HUDs[aux[i].color], (50, 150 + i * 60))
                         screen.blit(Imagenes.Tanque_HUDs[jugadores[i].color_tanque], (50, 150 + i * 60))
-        
             
     
             for event in pygame.event.get():
