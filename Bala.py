@@ -84,13 +84,6 @@ class Bala:
                 return True
         return False
     
-    def verificar_impacto_terreno(self, terreno):
-        for punto in self.trayectoria:
-            x, y = punto
-            if 0 <= x < len(terreno.terreno) and y >= terreno.terreno[int(x)]:
-                return True
-        return False
-    
     def punto_maximo(self, valor=0):
         for punto in self.trayectoria:
             _ , y = punto

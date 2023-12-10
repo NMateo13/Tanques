@@ -106,4 +106,6 @@ class Terreno:
 
     def es_punto_valido(self, x):
         return x < Datos.PANT_ANCHO and x > 0
+    
+    
 
