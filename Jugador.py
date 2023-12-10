@@ -11,7 +11,7 @@ class Jugador:
         self.tanque = None
         self.color_tanque = None
         self.IA = False
-        self.partidas_ganadas = 2
+        self.partidas_ganadas = 0
         self.kills = 0
         self.muertes = 0
         self.suicidios = 0
