@@ -1,5 +1,8 @@
-import pygame, Datos, Terreno
+import pygame
+import Datos
+import Terreno
 import math
+import random
 
 class Bala:
     def __init__(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tipo):
@@ -11,6 +14,13 @@ class Bala:
         self.trayectoria = []
         self.pretrayectoria = []
         self.tipo = tipo
+        #self.viento_x = 0
+        #self.viento_y = 0
+
+        # Si el viento está habilitado, inicializa su dirección de forma aleatoria
+        if Datos.viento_habilitado:
+            self.actualizar_direccion_viento()
+
         if tipo == 1:
             self.imagen = pygame.image.load(f"Assets/bala105.png")
             self.imagen = pygame.transform.scale(self.imagen, (self.imagen.get_width() // 7, self.imagen.get_height() // 7))
@@ -30,9 +40,24 @@ class Bala:
         self.xanterior = pos_inicial_x
         self.yanterior = pos_inicial_y
 
+    def actualizar_direccion_viento(self):
+        # Actualiza la dirección del viento de forma aleatoria
+        # Puedes ajustar la magnitud del viento modificando estos valores
+        Datos.viento_x = random.uniform(-0.1, 0.1)
+        Datos.viento_y = random.uniform(-0.1, 0.1)
+        escala_pixeles_a_metros = 0.1
+        Datos.velocidad_viento = math.sqrt(Datos.viento_x**2 + Datos.viento_y**2) * escala_pixeles_a_metros
+
     def calcular_posiciones(self, time):
+        if Datos.viento_habilitado:
+            # Aplica el efecto del viento a la posición en el eje x
+            viento_x = Datos.viento_x * time
+            self.pos_inicial_x += viento_x
+
+        # Calcula las nuevas posiciones teniendo en cuenta el tiempo y la velocidad
         x = self.pos_inicial_x + self.velocidad_inicial * math.cos(self.angulo) * time
         y = self.pos_inicial_y - (self.velocidad_inicial * math.sin(self.angulo) * time - 0.5 * Datos.gravedad * time ** 2)
+
         return x, y
 
     def verificacion(self, tiempo, screen, color):
@@ -114,7 +139,6 @@ class Bala:
                     puntox.append(x)
                     puntoy.append(y)
         return puntox, puntoy
-    
     
 
 
