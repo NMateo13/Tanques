@@ -67,23 +67,28 @@ class Tanque:
             velocidad = random.randint(0, 200)
         elif Datos.PANT_ALTO == 768: #1366x768
             velocidad = random.randint(0, 200)
-        #Tipo de bala aleatoria entre 1 y 3
-        if tanque.cantBala105mm == 0:
-            tipo_bala = random.randint(2, 3)
-        elif tanque.cantBala80mm == 0:
-            tipo_bala = random.randint(1, 3)
-            while tipo_bala == 2:
-                tipo_bala = random.randint(1, 3)
-        elif tanque.cantBala60mm == 0:
-            tipo_bala = random.randint(1, 2)
-        elif tanque.cantBala105mm == 0 and tanque.cantBala80mm == 0:
-            tipo_bala = 3
-        elif tanque.cantBala105mm == 0 and tanque.cantBala60mm == 0:
-            tipo_bala = 2
-        elif tanque.cantBala80mm == 0 and tanque.cantBala60mm == 0:
-            tipo_bala = 1
-        else:
-            tipo_bala = random.randint(1, 3)
+        #Tipo de bala aleatoria entre 1 y 3, si no hay balas de ese tipo, se elige otro tipo incluyendo si no hay 2 tipos de balas
+        tipo_bala = random.randint(1, 3)
+        if tipo_bala == 1:
+            if tanque.cantBala105mm == 0:
+                if tanque.cantBala80mm == 0:
+                    tipo_bala = 3
+                else:
+                    tipo_bala = 2
+        elif tipo_bala == 2:
+            if tanque.cantBala80mm == 0:
+                if tanque.cantBala105mm == 0:
+                    tipo_bala = 3
+                else:
+                    tipo_bala = 1
+        elif tipo_bala == 3:
+            if tanque.cantBala60mm == 0:
+                if tanque.cantBala105mm == 0:
+                    tipo_bala = 2
+                else:
+                    tipo_bala = 1
+
+
         return angulo, velocidad, tipo_bala
     
 

@@ -322,12 +322,14 @@ class Juego:
     def muestra_ganador(Ganador, screen, fuente, color): #Función para mostrar el ganador del juego
         
         screen.fill(Datos.WHITE) 
-        texto_ganador = fuente.render(f"Ganador ronda: Jugador {Ganador-1}", True, Datos.BLACK) 
-        screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
-        screen.blit(imagenes.Tanque_HUDs[color], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
         for indice, jugador in enumerate(Jugador.jugadores):
             if color == Jugador.jugadores[indice].color_tanque:
                 Jugador.jugadores[indice].partidas_ganadas += 1
+                winner = Jugador.jugadores[indice].color_tanque
+        
+        texto_ganador = fuente.render(f"Ganador ronda: Jugador {winner}", True, Datos.BLACK) 
+        screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
+        screen.blit(imagenes.Tanque_HUDs[color], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
 
         Datos.partida_actual += 1
         pygame.display.flip() 
@@ -547,7 +549,6 @@ class Juego:
 
         salir = screen.blit(imagenes.Exit, (Datos.PANT_ANCHO / 2.5, 10)) 
         reset = screen.blit(imagenes.Restart, (Datos.PANT_ANCHO / 2, 10)) 
-        tienda = screen.blit(imagenes.Tienda, (Datos.PANT_ANCHO / 1.2, Datos.PANT_ALTO - 100))
         #antes de comenzar el juego se baraja el orden de los jugadores haciendo shuffle al arraylist de tanques
         random.shuffle(Tanque.tanques)
         Tanque.tanques[Datos.turnos].mostrar_datos = True
@@ -589,8 +590,6 @@ class Juego:
                         Datos.reiniciar = True  # Reiniciar el juego
                     if salir.collidepoint(pygame.mouse.get_pos()):
                         salirJuego = True  # Volver al menú principal
-                    if tienda.collidepoint(pygame.mouse.get_pos()):
-                        Juego.shop(Datos.turnos, screen)
                         
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_TAB:
