@@ -93,22 +93,25 @@ class Tanque:
         for indice,tanque in enumerate(Tanque.tanques):
         
             tanque.x = random.randint(0, Datos.PANT_ANCHO - 50)
-
-            if indice > 0 and tanque[1].x != 0:
-
-                if tanque.x > tanque[indice-1].x:
-                    tanque.x = tanque.x + 10
-
-                elif tanque.x < tanque[indice-1].x:
-                    tanque.x = tanque.x -10
-
-                elif tanque.x == tanque[indice-1].x:
-                    tanque.x = tanque.x + 20
-
-            tanque.x = tanque.x
+            tanque.indice = tanque.x
             tanque.y = terreno.alto - terreno.terreno[indice] - 26
             tanque.num = Pantalla.pantalla.tank1
 
+
+    def compobarSpawn():
+
+        for indice,tanque in enumerate(Tanque.tanques):
+
+            tanqueSig = Tanque.tanques[indice+1]
+
+            if tanque.x > tanqueSig.x:
+                tanque.x = tanque.x + 100
+
+            elif tanque.x < tanqueSig.x:
+                tanque.x = tanque.x - 100
+
+            elif tanque.x == tanqueSig.x:
+                tanque.x = tanque.x + 150
 
     
     '''def crearTanques(terreno, bandera):
