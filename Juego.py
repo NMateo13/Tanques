@@ -210,24 +210,29 @@ class Juego:
             Juego.draw_text('Tabla de Jugadores', fuente, Datos.PANT_ANCHO / 2 - 200, 20, Datos.BLACK, screen)
 
             # Encabezados de las columnas
-            Juego.draw_text('Jugador', fuente, 50, 80, Datos.BLACK, screen)
-            Juego.draw_text('Kills', fuente, 200, 80, Datos.BLACK, screen)
-            Juego.draw_text('Muertes', fuente, 350, 80, Datos.BLACK, screen)
-            Juego.draw_text('Suicidios', fuente, 500, 80, Datos.BLACK, screen)
+            Juego.draw_text('Jugador', fuente, 250, 80, Datos.BLACK, screen)
+            Juego.draw_text('Kills', fuente, 400, 80, Datos.BLACK, screen)
+            Juego.draw_text('Muertes', fuente, 550, 80, Datos.BLACK, screen)
+            Juego.draw_text('Suicidios', fuente, 700, 80, Datos.BLACK, screen)
 
             salir_button = pygame.Rect(40, Datos.PANT_ALTO - 60, 120, 30)
-            Juego.draw_button(salir_button, 'Siguiente', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
+            Juego.draw_button(salir_button, 'Cerrar', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
 
             # Mostrar información de cada jugador en la tabla
             for i, jugador in enumerate(jugadores):
-                Juego.draw_text(f'Jugador {i+1}', fuente, 50, 120 + i * 40, Datos.BLACK, screen)
-                Juego.draw_text(str(jugador.kills), fuente, 200, 120 + i * 40, Datos.BLACK, screen)
-                Juego.draw_text(str(jugador.muertes), fuente, 350, 120 + i * 40, Datos.BLACK, screen)
-                Juego.draw_text(str(jugador.suicidios), fuente, 500, 120 + i * 40, Datos.BLACK, screen)
+                Juego.draw_text(f'Jugador {i+1}', fuente, 250, 170 + i * 60, Datos.BLACK, screen)
+                Juego.draw_text(str(jugador.kills), fuente, 400, 170 + i * 60, Datos.BLACK, screen)
+                Juego.draw_text(str(jugador.muertes), fuente, 550, 170 + i * 60, Datos.BLACK, screen)
+                Juego.draw_text(str(jugador.suicidios), fuente, 700, 170 + i * 60, Datos.BLACK, screen)
 
                 # Muestra la imagen del tanque asociado al jugador
-                screen.blit(imagenes.Tanque_HUDs[jugadores[i].color_tanque], (50, 150 + i * 40))
-
+                for i, jugador in enumerate(jugadores):
+                    if i < len(jugadores):
+                        #screen.blit(imagenes.Tanque_HUDs[aux[i].color], (50, 150 + i * 60))
+                        screen.blit(imagenes.Tanque_HUDs[jugadores[i].color_tanque], (50, 150 + i * 60))
+        
+            
+    
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     tabla_abierta = False
@@ -239,7 +244,6 @@ class Juego:
                 if event.type == pygame.KEYDOWN and event.key == pygame.K_TAB:
                     tabla_abierta = False
                     tab_presionada = True
-                    print("hola")
 
             pygame.display.flip()
 
@@ -550,7 +554,16 @@ class Juego:
         salir = screen.blit(imagenes.Exit, (Datos.PANT_ANCHO / 2.5, 10)) 
         reset = screen.blit(imagenes.Restart, (Datos.PANT_ANCHO / 2, 10)) 
         #antes de comenzar el juego se baraja el orden de los jugadores haciendo shuffle al arraylist de tanques
-        random.shuffle(Tanque.tanques)
+        
+        listas_combinadas = list(zip(Tanque.tanques, Jugador.jugadores))
+
+        # Desordena la lista combinada
+        random.shuffle(listas_combinadas)
+
+        # Descomprime las listas nuevamente
+        Tanque.tanques, Jugador.jugadores = map(list, zip(*listas_combinadas))
+        
+        #random.shuffle(Tanque.tanques)
         Tanque.tanques[Datos.turnos].mostrar_datos = True
         #Para mostrar correctamente los datos de la primera iteración se crea un nuevo booleando
         
@@ -625,16 +638,24 @@ class Juego:
             for indice, tanque in enumerate(Tanque.tanques):
                 Tanque.tanques[indice].dibujar(screen)
 
-            #Verificar vida de los tanques, si la vida es menor o igual a 0, se elimina el tanque y si solo queda un tanque, se muestra el ganador
             for indice, tanque in enumerate(Tanque.tanques):
-                if Tanque.tanques[indice].vida <=0:
+                if Tanque.tanques[indice].vida <= 0:
+                    if Datos.turnos == indice:
+                        # Suicidio
+                        Jugador.jugadores[Datos.turnos].suicidios += 1
+                        Tanque.tanques[Datos.turnos].creditos = -3000
                     del Tanque.tanques[indice]
                     if Datos.turnos == len(Tanque.tanques):
                         Datos.turnos = 0
-                if len(Tanque.tanques) == 1:
-                    Juego.muestra_ganador(Tanque.tanques[0].num, screen, fuente, Tanque.tanques[0].color)
-                    salirJuego = True
-                    Datos.reiniciar = True
+
+            if len(Tanque.tanques) == 1:
+                # Mostrar el ganador si solo queda un tanque
+                Juego.mostrar_tabla_jugadores(screen, fuente, Jugador.jugadores)
+                Juego.muestra_ganador(Tanque.tanques[0].num, screen, fuente, Tanque.tanques[0].color)
+                salirJuego = True
+                Datos.reiniciar = True
+
+            # comprobaciones de balas antes de disparar
             if Datos.tecla_espacio_presionada:
                 if Datos.bala_tanque is None:
                     Datos.mostrar_altura = Tanque.tanques[Datos.turnos].indice
@@ -651,28 +672,37 @@ class Juego:
                         Datos.tecla_espacio_presionada = False
                         Datos.tiempo_transcurrido = 0
                     else:
-                        #si pasa las comprobaciones se dispara la bala
                         if primera_iteracion:
-                            primera_iteracion=False
+                            primera_iteracion = False
                         else:
-                            if Datos.turnos==0:
-                                Tanque.tanques[len(Tanque.tanques)-1].mostrar_datos = False
+                            if Datos.turnos == 0:
+                                Tanque.tanques[len(Tanque.tanques) - 1].mostrar_datos = False
                                 Tanque.tanques[Datos.turnos].mostrar_datos = True
                             else:
-                                Tanque.tanques[Datos.turnos-1].mostrar_datos = False
+                                Tanque.tanques[Datos.turnos - 1].mostrar_datos = False
                                 Tanque.tanques[Datos.turnos].mostrar_datos = True
-                        Datos.bala_tanque = Tanque.tanques[Datos.turnos].disparar(Tanque.tanques[Datos.turnos].extremo_canonx, Tanque.tanques[Datos.turnos].extremo_canony, Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo], Tanque.tanques[Datos.turnos].velocidad, Datos.tiempo_transcurrido, screen, Datos.BLACK, Tanque.tanques[Datos.turnos].tipo_bala)
+                        Datos.bala_tanque = Tanque.tanques[Datos.turnos].disparar(
+                            Tanque.tanques[Datos.turnos].extremo_canonx,
+                            Tanque.tanques[Datos.turnos].extremo_canony,
+                            Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo],
+                            Tanque.tanques[Datos.turnos].velocidad,
+                            Datos.tiempo_transcurrido,
+                            screen,
+                            Datos.BLACK,
+                            Tanque.tanques[Datos.turnos].tipo_bala
+                        )
 
                 else:
                     Datos.altura_maxima = Datos.bala_tanque.punto_maximo(Datos.altura_maxima)
                     Datos.bala_tanque.verificacion(Datos.tiempo_transcurrido, screen, Datos.BLACK)
-                    Datos.distancia_maxima = Datos.bala_tanque.distancia_maxima(Tanque.tanques[Datos.turnos].x, Datos.distancia_maxima)
+                    Datos.distancia_maxima = Datos.bala_tanque.distancia_maxima(Tanque.tanques[Datos.turnos].x,
+                                                                            Datos.distancia_maxima)
                     for indice, tanque in enumerate(Tanque.tanques):
                         if Datos.bala_tanque.verificar_impacto_ancho(Datos.PANT_ANCHO):
                             Datos.bala_tanque = None
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
-                            if Datos.turnos < len(Tanque.tanques)-1:
+                            if Datos.turnos < len(Tanque.tanques) - 1:
                                 Datos.turnos += 1
                             else:
                                 Datos.turnos = 0
@@ -683,43 +713,68 @@ class Juego:
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
                             terreno.modificar_terreno(terreno, Tanque.tanques[Datos.turnos])
-                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
+                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(
+                                terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
                             for indice, tanque in enumerate(Tanque.tanques):
-                                if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice], puntosExplosionX, puntosExplosionY):
+                                if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice],puntosExplosionX, puntosExplosionY):
+                                    # Contar kills y suicidios
+                                    if Tanque.tanques[indice].vida <= 0:
+                                        if Datos.turnos == indice:
+                                            Jugador.jugadores[Datos.turnos].suicidios += 1
+                                            Tanque.tanques[Datos.turnos].creditos = -3000
+                                        else:
+                                            Jugador.jugadores[Datos.turnos].kills += 1
+                                            
+                                            
                                     if Tanque.tanques[Datos.turnos].tipo_bala == 1:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala105mm
                                     elif Tanque.tanques[Datos.turnos].tipo_bala == 2:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
                                     elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
+
                             Datos.bala_tanque = None
-                            if Datos.turnos < len(Tanque.tanques)-1:
+                            if Datos.turnos < len(Tanque.tanques) - 1:
                                 Datos.turnos += 1
                             else:
                                 Datos.turnos = 0
                                 Datos.rondas += 1
                             break
                         elif Datos.bala_tanque.verificar_impacto_tanque(Tanque.tanques[indice]):
+                            # Contar kills y suicidios
+                            if Tanque.tanques[indice].vida <=0:
+                                if Datos.turnos == indice:
+                                    # Suicidio
+                                    Jugador.jugadores[Datos.turnos].suicidios += 1
+                                    Tanque.tanques[Datos.turnos].creditos = -3000
+                                else: # kill
+                                    Jugador.jugadores[Datos.turnos].kills += 1
+
                             if Tanque.tanques[Datos.turnos].tipo_bala == 1:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala105mm
                             elif Tanque.tanques[Datos.turnos].tipo_bala == 2:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
                             elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
+
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
-                            terreno.modificar_terreno(terreno, Tanque.tanques[Datos.turnos]) 
-                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
+                            terreno.modificar_terreno(terreno, Tanque.tanques[Datos.turnos])
+                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(
+                                terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
                             for indice, tanque in enumerate(Tanque.tanques):
-                                if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice], puntosExplosionX, puntosExplosionY):
-                                    if Tanque.tanques[Datos.turnos].tipo_bala == 1:
-                                        Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala105mm
-                                    elif Tanque.tanques[Datos.turnos].tipo_bala == 2:
-                                        Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
-                                    elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
-                                        Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
+                                if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice],puntosExplosionX, puntosExplosionY):
+                                    # Contar kills y suicidios
+                                    if Tanque.tanques[indice].vida <=0:
+                                        if Datos.turnos == indice:
+                                            # Suicidio
+                                            Jugador.jugadores[Datos.turnos].suicidios += 1
+                                            Tanque.tanques[Datos.turnos].creditos = -3000
+                                        else: # kill
+                                            Jugador.jugadores[Datos.turnos].kills += 1
+
                             Datos.bala_tanque = None
-                            if Datos.turnos < len(Tanque.tanques)-1:
+                            if Datos.turnos < len(Tanque.tanques) - 1:
                                 Datos.turnos += 1
                             else:
                                 Datos.turnos = 0
