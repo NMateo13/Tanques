@@ -1,7 +1,6 @@
 import pygame, Datos, Terreno
 import math
 
-
 class Bala:
     def __init__(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tipo):
         self.pos_inicial_x = pos_inicial_x

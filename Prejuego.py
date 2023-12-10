@@ -1,9 +1,9 @@
-import pygame, imagenes, Datos, sys, Pantalla
+import pygame, Imagenes, Datos, sys, Pantalla
 from Juego import Juego
 
 # Se inicializa pygame
 pygame.init()
-pygame.display.set_icon(imagenes.IMG_Explosion) 
+pygame.display.set_icon(Imagenes.IMG_Explosion) 
 pygame.display.set_caption("PROYECTO TANQUE")
 pygame.mixer.music.load('Assets/musica.mp3')
 pygame.mixer.music.set_volume(Datos.volumen)

@@ -1,8 +1,6 @@
-import pygame, Datos, imagenes, Pantalla
+import pygame, Datos, Pantalla
 import random
 from Bala import Bala
-
-
 
 class Tanque:
 

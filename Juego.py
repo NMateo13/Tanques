@@ -1,4 +1,4 @@
-import pygame, sys, Terreno, Pantalla, imagenes, random, math, Datos
+import pygame, sys, Terreno, Pantalla, Imagenes, random, math, Datos
 from Bala import Bala
 from Tanque import Tanque
 from Terreno import Terreno
@@ -229,7 +229,7 @@ class Juego:
                 for i, jugador in enumerate(jugadores):
                     if i < len(jugadores):
                         #screen.blit(imagenes.Tanque_HUDs[aux[i].color], (50, 150 + i * 60))
-                        screen.blit(imagenes.Tanque_HUDs[jugadores[i].color_tanque], (50, 150 + i * 60))
+                        screen.blit(Imagenes.Tanque_HUDs[jugadores[i].color_tanque], (50, 150 + i * 60))
         
             
     
@@ -277,14 +277,14 @@ class Juego:
             Juego.draw_button(salir_button,'Siguiente', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
 
             #mostrar el color del tanque
-            screen.blit(imagenes.Tanque_HUDs[Tanque.tanques[Datos.turnos].color], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
+            screen.blit(Imagenes.Tanque_HUDs[Tanque.tanques[Datos.turnos].color], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
 
             #mostrar la cantidad de balas de 105mm, 80mm y 60mm con sus respectivas imagenes
-            screen.blit(imagenes.Bala105, (Datos.PANT_ANCHO / 2 + 100, Datos.PANT_ALTO / 2))
+            screen.blit(Imagenes.Bala105, (Datos.PANT_ANCHO / 2 + 100, Datos.PANT_ALTO / 2))
             Juego.draw_text(f"x{Tanque.tanques[Datos.turnos].cantBala105mm}", fuente, Datos.PANT_ANCHO / 2 + 125, Datos.PANT_ALTO / 2 + 10, Datos.BLACK, screen)
-            screen.blit(imagenes.Bala80, (Datos.PANT_ANCHO / 2 + 100, Datos.PANT_ALTO / 2 + 60))
+            screen.blit(Imagenes.Bala80, (Datos.PANT_ANCHO / 2 + 100, Datos.PANT_ALTO / 2 + 60))
             Juego.draw_text(f"x{Tanque.tanques[Datos.turnos].cantBala80mm}", fuente, Datos.PANT_ANCHO / 2 + 125, Datos.PANT_ALTO / 2 + 70, Datos.BLACK, screen)
-            screen.blit(imagenes.Bala60, (Datos.PANT_ANCHO / 2 + 100, Datos.PANT_ALTO / 2 + 120))
+            screen.blit(Imagenes.Bala60, (Datos.PANT_ANCHO / 2 + 100, Datos.PANT_ALTO / 2 + 120))
             Juego.draw_text(f"x{Tanque.tanques[Datos.turnos].cantBala60mm}", fuente, Datos.PANT_ANCHO / 2 + 125, Datos.PANT_ALTO / 2 + 130, Datos.BLACK, screen)
             pygame.display.update()
 
@@ -332,7 +332,7 @@ class Juego:
         
         texto_ganador = fuente.render(f"Ganador ronda: Jugador {winner}", True, Datos.BLACK) 
         screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
-        screen.blit(imagenes.Tanque_HUDs[color], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
+        screen.blit(Imagenes.Tanque_HUDs[color], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
 
         Datos.partida_actual += 1
         pygame.display.flip() 
@@ -361,7 +361,7 @@ class Juego:
         else:
             texto_ganador = fuente.render(f"Ganador: Jugador {jugador_ganador.color_tanque}", True, Datos.BLACK)
             screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
-            screen.blit(imagenes.Tanque_HUDs[jugador_ganador.color_tanque], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
+            screen.blit(Imagenes.Tanque_HUDs[jugador_ganador.color_tanque], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
         pygame.display.flip()
         pygame.time.delay(3000)
         sys.exit()
@@ -497,7 +497,7 @@ class Juego:
 
     def mostrar_tooltip(tanque, screen, x, y): # Función tooltip (muestra la vida de cada tanque con el mouse)
         pygame.draw.rect(screen, Datos.WHITE, (x, y, 100, 75))
-        screen.blit(imagenes.Tanque_Tooltip[tanque.color], (x + 20, y + 10))
+        screen.blit(Imagenes.Tanque_Tooltip[tanque.color], (x + 20, y + 10))
         fuente = pygame.font.Font(None, 30)
         Juego.draw_text(f"Vida: {tanque.vida}", fuente, x + 10, y + 50, Datos.BLACK, screen)
         pygame.display.update()
@@ -547,8 +547,8 @@ class Juego:
 
         incremento = 0.035
 
-        salir = screen.blit(imagenes.Exit, (Datos.PANT_ANCHO / 2.5, 10)) 
-        reset = screen.blit(imagenes.Restart, (Datos.PANT_ANCHO / 2, 10)) 
+        salir = screen.blit(Imagenes.Exit, (Datos.PANT_ANCHO / 2.5, 10)) 
+        reset = screen.blit(Imagenes.Restart, (Datos.PANT_ANCHO / 2, 10)) 
         #antes de comenzar el juego se baraja el orden de los jugadores haciendo shuffle al arraylist de tanques
         
         listas_combinadas = list(zip(Tanque.tanques, Jugador.jugadores))

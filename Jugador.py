@@ -1,5 +1,3 @@
-
-
 class Jugador:
 
     seleccionJugadores = [0, 2, 2, 0, 2, 2]

@@ -1,4 +1,4 @@
-import pygame, Datos, os, random, imagenes, sys
+import pygame, Datos, os, random, Imagenes, sys
 
 class Pantalla:
     offset = pygame.math.Vector2(0, -10)
@@ -39,7 +39,7 @@ class Pantalla:
         cant_balas = font.render(bala_texto, True, Datos.WHITE)
         salud_texto = font.render(f"Vida: {tanque.vida}%", True, Datos.WHITE)
         #Funcion para dibujar el color del tanque que corresponda en el turno
-        screen.blit(imagenes.Tanque_HUDs[tanque.color],  (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - imagenes.Tanque_HUDs[tanque.color].get_height() - 15))
+        screen.blit(Imagenes.Tanque_HUDs[tanque.color],  (Datos.PANT_ANCHO / 1.75, Datos.PANT_ALTO - Imagenes.Tanque_HUDs[tanque.color].get_height() - 15))
         screen.blit(salud_texto, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 85))
         potencia_texto = font.render(f"Potencia: {int(tanque.velocidad/2)}", True, Datos.WHITE)
         screen.blit(potencia_texto, (Datos.PANT_ANCHO / 3.2, Datos.PANT_ALTO - 57))
@@ -62,20 +62,20 @@ class Pantalla:
     
     def muestra_imagen(self, screen, tanques, turno): # Muestra imagenes del juego
         for indice, tanque in enumerate(tanques):
-            screen.blit(imagenes.Tanque[tanque.color], (tanque.x, tanque.y-10))
+            screen.blit(Imagenes.Tanque[tanque.color], (tanque.x, tanque.y-10))
             
-        screen.blit(imagenes.Exit, (Datos.PANT_ANCHO / 2.5, 10)) 
-        screen.blit(imagenes.Restart, (Datos.PANT_ANCHO / 2, 10)) 
+        screen.blit(Imagenes.Exit, (Datos.PANT_ANCHO / 2.5, 10)) 
+        screen.blit(Imagenes.Restart, (Datos.PANT_ANCHO / 2, 10)) 
         
         if tanques[turno].tipo_bala == 1:
             #cambiar imagen a bala 105mm
-            screen.blit(imagenes.Bala105, (50, Datos.PANT_ALTO - 75))
+            screen.blit(Imagenes.Bala105, (50, Datos.PANT_ALTO - 75))
         elif tanques[turno].tipo_bala == 2:
             #cambiar imagen a bala 80mm
-            screen.blit(imagenes.Bala80, (60, Datos.PANT_ALTO - 75))
+            screen.blit(Imagenes.Bala80, (60, Datos.PANT_ALTO - 75))
         elif tanques[turno].tipo_bala == 3:
             #cambiar imagen a bala 60mm
-            screen.blit(imagenes.Bala60, (70, Datos.PANT_ALTO - 75))
+            screen.blit(Imagenes.Bala60, (70, Datos.PANT_ALTO - 75))
 
     def muestra_datos(self, screen, font, altura_maxima, distancia_maxima, tanques):
         for indice, tanque in enumerate(tanques):
@@ -86,7 +86,7 @@ class Pantalla:
                 screen.blit(distancia_texto, (10, Datos.PANT_ALTO - 150))
             
     def prerotate(self, screen, num, angle, pivote):
-        img, rect, x, y = Pantalla.rotate(imagenes.Canon[num], angle, pivote)
+        img, rect, x, y = Pantalla.rotate(Imagenes.Canon[num], angle, pivote)
         screen.blit(img, rect)
         return x, y
     
@@ -103,66 +103,66 @@ class Pantalla:
 
     def muestra_bala(self, screen, tipo_bala, pos_x): # Muestra la bala en el juego
         if tipo_bala == 1:
-            screen.blit(imagenes.Prebala105, (pos_x, 0))
+            screen.blit(Imagenes.Prebala105, (pos_x, 0))
         elif tipo_bala == 2:
-            screen.blit(imagenes.Prebala80, (pos_x, 0))
+            screen.blit(Imagenes.Prebala80, (pos_x, 0))
         elif tipo_bala == 3:
-            screen.blit(imagenes.Prebala60, (pos_x, 0))
+            screen.blit(Imagenes.Prebala60, (pos_x, 0))
 
     #Las siguientes 5 funciones consisten en cambiar el tamaño de las imagenes para que se adapten a la resolución de la pantalla
     def background(self, screen):
         if Datos.PANT_ALTO == 600: #Default 1200x600
-            screen.blit(imagenes.Background, (0, 0))
+            screen.blit(Imagenes.Background, (0, 0))
         elif Datos.PANT_ALTO == 1080: #1920x1080
-            screen.blit(imagenes.Background1080, (0, 0))
+            screen.blit(Imagenes.Background1080, (0, 0))
         elif Datos.PANT_ALTO == 800: #800x800
-            screen.blit(imagenes.Background800, (0, 0))
+            screen.blit(Imagenes.Background800, (0, 0))
         elif Datos.PANT_ALTO == 768: #1366x768
-            screen.blit(imagenes.Background768, (0, 0))
+            screen.blit(Imagenes.Background768, (0, 0))
 
     def hud(self, screen):
         if Datos.PANT_ALTO == 600: #Default 1200x600
-            screen.blit(imagenes.HUD, (0, Datos.PANT_ALTO - 120))
+            screen.blit(Imagenes.HUD, (0, Datos.PANT_ALTO - 120))
         elif Datos.PANT_ALTO == 1080: #1920x1080
-            screen.blit(imagenes.HUD1080, (0, Datos.PANT_ALTO - 120))
+            screen.blit(Imagenes.HUD1080, (0, Datos.PANT_ALTO - 120))
         elif Datos.PANT_ALTO == 800: #800x800
-            screen.blit(imagenes.HUD800, (0, Datos.PANT_ALTO - 120))
+            screen.blit(Imagenes.HUD800, (0, Datos.PANT_ALTO - 120))
         elif Datos.PANT_ALTO == 768: #1366x768
-            screen.blit(imagenes.HUD768, (0, Datos.PANT_ALTO - 120))        
+            screen.blit(Imagenes.HUD768, (0, Datos.PANT_ALTO - 120))        
 
     def fondomenu(self, screen):
         if Datos.PANT_ALTO == 600: #Default 1200x600
-            screen.blit(imagenes.FondoMenu, (0, 0))
+            screen.blit(Imagenes.FondoMenu, (0, 0))
         elif Datos.PANT_ALTO == 800: #800x800
-            screen.blit(imagenes.FondoMenu800, (0, 0))
+            screen.blit(Imagenes.FondoMenu800, (0, 0))
         elif Datos.PANT_ALTO == 1080: #1920x1080    
-            screen.blit(imagenes.FondoMenu1080, (0, 0))
+            screen.blit(Imagenes.FondoMenu1080, (0, 0))
         elif Datos.PANT_ALTO == 768: #1366x768
-            screen.blit(imagenes.FondoMenu768, (0, 0))
+            screen.blit(Imagenes.FondoMenu768, (0, 0))
 
     def fondoseleccion(self, screen):
         if Datos.PANT_ALTO == 600: #Default 1200x600
-            screen.blit(imagenes.FondoMenu_seleccion, (0, 0))
+            screen.blit(Imagenes.FondoMenu_seleccion, (0, 0))
         elif Datos.PANT_ALTO == 800: #800x800
-            screen.blit(imagenes.FondoMenu_seleccion800, (0, 0))
+            screen.blit(Imagenes.FondoMenu_seleccion800, (0, 0))
         elif Datos.PANT_ALTO == 1080: #1920x1080
-            screen.blit(imagenes.FondoMenu_seleccion1080, (0, 0))
+            screen.blit(Imagenes.FondoMenu_seleccion1080, (0, 0))
         elif Datos.PANT_ALTO == 768: #1366x768
-            screen.blit(imagenes.FondoMenu_seleccion768, (0, 0))
+            screen.blit(Imagenes.FondoMenu_seleccion768, (0, 0))
 
     def fondocontroles(self, screen):
         if Datos.PANT_ALTO == 600: #Default 1200x600
-            screen.blit(imagenes.FondoControles, (0, 0))
+            screen.blit(Imagenes.FondoControles, (0, 0))
         elif Datos.PANT_ALTO == 800: #800x800
-            screen.blit(imagenes.FondoControles800, (0, 0))
+            screen.blit(Imagenes.FondoControles800, (0, 0))
         elif Datos.PANT_ALTO == 1080: #1920x1080
-            screen.blit(imagenes.FondoControles1080, (0, 0))
+            screen.blit(Imagenes.FondoControles1080, (0, 0))
         elif Datos.PANT_ALTO == 768: #1366x768
-            screen.blit(imagenes.FondoControles768, (0, 0))
+            screen.blit(Imagenes.FondoControles768, (0, 0))
 
     def muestra_seleccion(self, screen, fuente): # Muestra la pantalla de seleccion de tanques
         for i in range (1,7):
-            screen.blit(imagenes.TanqueSeleccion[i], (Datos.PANT_ANCHO / Datos.Tanque_sele_ancho[i], Datos.PANT_ALTO / Datos.Tanque_sele_alto[i], 100, 100))
+            screen.blit(Imagenes.TanqueSeleccion[i], (Datos.PANT_ANCHO / Datos.Tanque_sele_ancho[i], Datos.PANT_ALTO / Datos.Tanque_sele_alto[i], 100, 100))
 
         #Divisiones necesarias para cuadros separados independiente la resolución
         Pantalla.draw_text('1', fuente, Datos.PANT_ANCHO / 10, Datos.PANT_ALTO / 10, Datos.WHITE, screen)
