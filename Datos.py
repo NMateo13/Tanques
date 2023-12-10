@@ -12,6 +12,7 @@ mostrar_altura = 0
 tecla_espacio_presionada = False
 tiempo_transcurrido = 0
 numero_jugadores = 0
+coordenadaCorrecta = True
 
 # Variables y Constantes
 FPS = 60

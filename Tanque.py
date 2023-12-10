@@ -90,48 +90,55 @@ class Tanque:
 
     def spawnTanques(terreno):
 
+        Xcoordenadas = []
+
         for indice,tanque in enumerate(Tanque.tanques):
         
             tanque.x = random.randint(0, Datos.PANT_ANCHO - 50)
+            Xcoordenadas.append(tanque.x)
+
+            if indice > 0:
+
+                reset_for = False
+                while True:
+
+                    for coordenadas in Xcoordenadas:
+
+                        if coordenadas == tanque.x:
+                            break
+                        else:
+                            rango = list(range(coordenadas-100, coordenadas+100))
+                            Datos.coordenadaCorrecta = True
+
+                            while Datos.coordenadaCorrecta:
+
+                                for i in rango:
+                                    if tanque.x == i:
+                                        tanque.x = random.randint(0, Datos.PANT_ANCHO - 50)
+                                        Xcoordenadas[indice] = tanque.x
+                                        reset_for = True
+                                        break
+                                    else:
+                                        Datos.coordenadaCorrecta = False
+
+                                if reset_for:
+                                        break
+                            if reset_for:
+                                break
+                    if reset_for:
+                        reset_for = False
+                        continue
+                    break
+
+                                
+                        
+                        
             tanque.indice = tanque.x
             tanque.y = terreno.alto - terreno.terreno[indice] - 26
             tanque.num = Pantalla.pantalla.tank1
 
 
-    def compobarSpawn():
 
-        for indice,tanque in enumerate(Tanque.tanques):
 
-            tanqueSig = Tanque.tanques[indice+1]
 
-            if tanque.x > tanqueSig.x:
-                tanque.x = tanque.x + 100
 
-            elif tanque.x < tanqueSig.x:
-                tanque.x = tanque.x - 100
-
-            elif tanque.x == tanqueSig.x:
-                tanque.x = tanque.x + 150
-
-    
-    '''def crearTanques(terreno, bandera):
-
-        if bandera:
-
-            posX_Tanque = random.randint(0, Datos.PANT_ANCHO // 2)
-            indice = posX_Tanque
-            posY_Tanque = terreno.alto - terreno.terreno[indice] - 26
-            tank1 = Pantalla.pantalla.tank1
-            tanque = Tanque(posX_Tanque - 10, posY_Tanque + 10, tank1, indice)
-            Datos.bandera_tanque = False
-
-            return tanque
-
-        else:
-            posX_Tanque = random.randint(0, (Datos.PANT_ANCHO // 2 - 50))
-            indice = ((Datos.PANT_ANCHO - 1) - posX_Tanque)    
-            posY_Tanque = terreno.alto -  terreno.terreno[indice] - 24
-            tank2 = Pantalla.pantalla.tank2
-            tanque = Tanque(Datos.PANT_ANCHO - imagenes.Tanque2.get_width() - posX_Tanque + 20, posY_Tanque + 10, tank2, indice)
-
-            return tanque'''

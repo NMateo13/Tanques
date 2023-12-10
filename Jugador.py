@@ -2,7 +2,7 @@
 
 class Jugador:
 
-    seleccionJugadores = [0, 2, 2, 0, 2, 2]
+    seleccionJugadores = [0, 0, 0, 0, 0, 0]
     jugadores= []
     color_jugadores = []
 
