@@ -103,17 +103,45 @@ class Tanque:
 
     def spawnTanques(terreno):
 
-        for indice,tanque in enumerate(Tanque.tanques):
-            
-            Datos.bandera_tanque = random.choice([True, False])
-            
-            if Datos.bandera_tanque:
+            Xcoordenadas = []
 
-                tanque.x = random.randint(0, Datos.PANT_ANCHO // 2)
+            for indice,tanque in enumerate(Tanque.tanques):
+            
+                tanque.x = random.randint(0, Datos.PANT_ANCHO - 50)
+                Xcoordenadas.append(tanque.x)
+
+                if indice > 0:
+
+                    reset_for = False
+                    while True:
+
+                        for coordenadas in Xcoordenadas:
+
+                            if coordenadas == tanque.x:
+                                break
+                            else:
+                                rango = list(range(coordenadas-100, coordenadas+100))
+                                Datos.coordenadaCorrecta = True
+
+                                while Datos.coordenadaCorrecta:
+
+                                    for i in rango:
+                                        if tanque.x == i:
+                                            tanque.x = random.randint(0, Datos.PANT_ANCHO - 50)
+                                            Xcoordenadas[indice] = tanque.x
+                                            reset_for = True
+                                            break
+                                        else:
+                                            Datos.coordenadaCorrecta = False
+
+                                    if reset_for:
+                                            break
+                                if reset_for:
+                                    break
+                        if reset_for:
+                            reset_for = False
+                            continue
+                        break
+
                 tanque.indice = tanque.x
                 tanque.y = terreno.alto - terreno.terreno[indice] - 26
-
-            else:
-                tanque.x = random.randint(0, (Datos.PANT_ANCHO // 2 - 50))
-                tanque.indice = ((Datos.PANT_ANCHO - 1) - tanque.x)    
-                tanque.y = terreno.alto -  terreno.terreno[indice] - 24
