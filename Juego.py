@@ -657,23 +657,17 @@ class Juego:
                             else:
                                 Tanque.tanques[Datos.turnos-1].mostrar_datos = False
                                 Tanque.tanques[Datos.turnos].mostrar_datos = True
-                        Datos.bala_tanque = Bala(Tanque.tanques[Datos.turnos].extremo_canonx,Tanque.tanques[Datos.turnos].extremo_canony,Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo],Tanque.tanques[Datos.turnos].velocidad,Tanque.tanques[Datos.turnos].tipo_bala)
+                        Datos.bala_tanque = Tanque.tanques[Datos.turnos].disparar( 
+                            Tanque.tanques[Datos.turnos].extremo_canonx, 
+                            Tanque.tanques[Datos.turnos].extremo_canony, 
+                            Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo], 
+                            Tanque.tanques[Datos.turnos].velocidad, 
+                            Datos.tiempo_transcurrido, 
+                            screen, 
+                            Datos.BLACK, 
+                            Tanque.tanques[Datos.turnos].tipo_bala 
+                        )   
                         
-                        
-                        # En tu código principal
-                        # Obtén la velocidad del viento en m/s
-                        velocidad_viento_m_s = Datos.velocidad_viento
-
-                        # Convierte la velocidad a km/h
-                        velocidad_viento_kmh = velocidad_viento_m_s * 1000
-
-                        # Determina la dirección del viento
-                        direccion_viento_x = 'Derecha' if Datos.viento_x > 0 else 'Izquierda'
-                        direccion_viento_y = 'Arriba' if Datos.viento_y < 0 else 'Abajo'
-
-                        # Imprime la información
-                        print(f"Velocidad del viento: {velocidad_viento_kmh:.2f} m/s, Dirección X: {direccion_viento_x}, Dirección Y: {direccion_viento_y}")
-
                 else:
                     Datos.altura_maxima = Datos.bala_tanque.punto_maximo(Datos.altura_maxima)
                     Datos.bala_tanque.verificacion(Datos.tiempo_transcurrido, screen, Datos.BLACK)
