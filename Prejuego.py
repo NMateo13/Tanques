@@ -28,7 +28,7 @@ def draw_button(rect, text, font, text_color, button_color, hover_color, screen)
 while True:
     if Datos.reiniciar == True:   
         Datos.reiniciar = False
-        screen.fill(Datos.WHITE)
+        Pantalla.pantalla.fondoblanco(screen)
         texto_espera = fuente.render("Cargando...", True, Datos.BLACK)
         screen.blit(texto_espera, (Datos.PANT_ANCHO / 2 - texto_espera.get_width() / 2, Datos.PANT_ALTO / 2 - texto_espera.get_height() / 2))
         pygame.display.flip()

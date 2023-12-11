@@ -26,8 +26,8 @@ IMG_fondo_controles = pygame.image.load(os.path.join("Assets", "fondo_controles.
 IMG_Prebala_105 = pygame.image.load(os.path.join("Assets", "prebala105.png"))
 IMG_Prebala_80 = pygame.image.load(os.path.join("Assets", "prebala80.png"))
 IMG_Prebala_60 = pygame.image.load(os.path.join("Assets", "prebala60.png"))
-IMG_Tienda = pygame.image.load(os.path.join("Assets", "tienda.png"))
 IMG_Background_seleccion = pygame.image.load(os.path.join("Assets", "fondo_menu.png"))
+IMG_FondoBlanco = pygame.image.load(os.path.join("Assets", "fondoblanco.jpg"))
 
 #Reescalado de imagenes
 TanqueSeleccion = {
@@ -85,7 +85,6 @@ Prebala80 = pygame.transform.scale(IMG_Prebala_80, (IMG_Prebala_80.get_width() /
 Prebala60 = pygame.transform.scale(IMG_Prebala_60, (IMG_Prebala_60.get_width() // 6, IMG_Prebala_60.get_height() // 6))
 FondoMenu = pygame.transform.scale(IMG_FondoMenu, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
 FondoControles = pygame.transform.scale(IMG_fondo_controles, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
-Tienda = pygame.transform.scale(IMG_Tienda, (IMG_Tienda.get_width() // 1.25, IMG_Tienda.get_height() // 1.25))
 FondoMenu_seleccion = pygame.transform.scale(IMG_Background_seleccion, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
 
 #Reescalado de imagenes de fondo para diferentes resoluciones 
@@ -104,3 +103,7 @@ FondoControles768 = pygame.transform.scale(IMG_fondo_controles, (1366, 768))
 FondoMenu_seleccion800 = pygame.transform.scale(IMG_Background_seleccion, (800, 800)) 
 FondoMenu_seleccion1080 = pygame.transform.scale(IMG_Background_seleccion, (1920, 1080)) 
 FondoMenu_seleccion768 = pygame.transform.scale(IMG_Background_seleccion, (1366, 768)) 
+FondoBlanco = pygame.transform.scale(IMG_FondoBlanco, (Datos.PANT_ANCHO, Datos.PANT_ALTO))
+FondoBlanco800 = pygame.transform.scale(IMG_FondoBlanco, (800, 800))
+FondoBlanco1080 = pygame.transform.scale(IMG_FondoBlanco, (1920, 1080))
+FondoBlanco768 = pygame.transform.scale(IMG_FondoBlanco, (1366, 768))

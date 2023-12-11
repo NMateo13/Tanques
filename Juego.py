@@ -187,7 +187,7 @@ class Juego:
         tab_presionada = False
 
         while tabla_abierta:
-            screen.fill(Datos.WHITE)
+            Pantalla.pantalla.fondoblanco(screen)
 
             # Título de la tabla
             Juego.draw_text('Tabla de Jugadores', fuente, Datos.PANT_ANCHO / 2 - 200, 20, Datos.BLACK, screen)
@@ -233,7 +233,7 @@ class Juego:
         tienda_abierta = True
 
         while tienda_abierta:
-            screen.fill(Datos.WHITE)
+            Pantalla.pantalla.fondoblanco(screen)
             fuente = pygame.font.Font(None, 36)
 
             # Botón de Tienda (título)
@@ -306,7 +306,7 @@ class Juego:
 
     def muestra_ganador(Ganador, screen, fuente, color): #Función para mostrar el ganador del juego
         
-        screen.fill(Datos.WHITE) 
+        Pantalla.pantalla.fondoblanco(screen)
         for indice, jugador in enumerate(Jugador.jugadores):
             if color == Jugador.jugadores[indice].color_tanque:
                 Jugador.jugadores[indice].partidas_ganadas += 1
@@ -323,7 +323,7 @@ class Juego:
             Juego.muestra_ganador_final(screen, fuente)
 
     def muestra_ganador_final(screen, fuente): #Función para mostrar el ganador final del juego
-        screen.fill(Datos.WHITE)
+        Pantalla.pantalla.fondoblanco(screen)
         jugador_ganador = None
         jugador_auxiliar = None
         empate = 0
@@ -349,7 +349,7 @@ class Juego:
         sys.exit()
         
     def sin_balas(screen, fuente): #Función para mostrar el mensaje de que todos los jugadores se quedaron sin balas
-        screen.fill(Datos.WHITE)
+        Pantalla.pantalla.fondoblanco(screen)
         texto_ganador = fuente.render("Todos se quedaron sin balas", True, Datos.BLACK)
         screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
         pygame.display.flip()
