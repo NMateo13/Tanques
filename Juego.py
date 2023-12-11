@@ -187,7 +187,7 @@ class Juego:
         tab_presionada = False
 
         while tabla_abierta:
-            screen.fill(Datos.WHITE)
+            Pantalla.pantalla.fondoblanco(screen)
 
             # Título de la tabla
             Juego.draw_text('Tabla de Jugadores', fuente, Datos.PANT_ANCHO / 2 - 200, 20, Datos.BLACK, screen)
@@ -233,7 +233,7 @@ class Juego:
         tienda_abierta = True
 
         while tienda_abierta:
-            screen.fill(Datos.WHITE)
+            Pantalla.pantalla.fondoblanco(screen)
             fuente = pygame.font.Font(None, 36)
 
             # Botón de Tienda (título)
@@ -306,7 +306,7 @@ class Juego:
 
     def muestra_ganador(Ganador, screen, fuente, color): #Función para mostrar el ganador del juego
         
-        screen.fill(Datos.WHITE) 
+        Pantalla.pantalla.fondoblanco(screen)
         for indice, jugador in enumerate(Jugador.jugadores):
             if color == Jugador.jugadores[indice].color_tanque:
                 Jugador.jugadores[indice].partidas_ganadas += 1
@@ -323,7 +323,7 @@ class Juego:
             Juego.muestra_ganador_final(screen, fuente)
 
     def muestra_ganador_final(screen, fuente): #Función para mostrar el ganador final del juego
-        screen.fill(Datos.WHITE)
+        Pantalla.pantalla.fondoblanco(screen)
         jugador_ganador = None
         jugador_auxiliar = None
         empate = 0
@@ -349,7 +349,7 @@ class Juego:
         sys.exit()
         
     def sin_balas(screen, fuente): #Función para mostrar el mensaje de que todos los jugadores se quedaron sin balas
-        screen.fill(Datos.WHITE)
+        Pantalla.pantalla.fondoblanco(screen)
         texto_ganador = fuente.render("Todos se quedaron sin balas", True, Datos.BLACK)
         screen.blit(texto_ganador, (Datos.PANT_ANCHO / 2 - texto_ganador.get_width() / 2, Datos.PANT_ALTO / 2 - texto_ganador.get_height() / 2))
         pygame.display.flip()
@@ -383,6 +383,8 @@ class Juego:
             j6 = pygame.draw.rect(screen, Datos.PURPLE, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 1.457, 100, 20))
 
             num_partidas_texto = fuente.render(f"Numero de partidas: {Datos.num_partidas}", True, Datos.WHITE)
+            aviso_texto = fuente.render(f"Usa las flechas para ajustar las partidas", True, Datos.WHITE)
+
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
                 if pygame.time.get_ticks() - key_repeat_timer > key_repeat_delay:
@@ -399,7 +401,9 @@ class Juego:
                     else:
                         Datos.num_partidas -= 1
 
-            screen.blit(num_partidas_texto, (Datos.PANT_ANCHO / 4, Datos.PANT_ALTO / 1.2))
+            screen.blit(num_partidas_texto, (Datos.PANT_ANCHO / 1.5, Datos.PANT_ALTO / 1.2))
+            screen.blit(aviso_texto, (Datos.PANT_ANCHO / 1.8, Datos.PANT_ALTO / 1.3))
+
             for indice,jugador in enumerate(Jugador.seleccionJugadores):
                 if jugador == 0:
                         text = 'Jugador'

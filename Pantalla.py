@@ -124,7 +124,7 @@ class Pantalla:
         elif tipo_bala == 3:
             screen.blit(Imagenes.Prebala60, (pos_x, 0))
 
-    #Las siguientes 5 funciones consisten en cambiar el tamaño de las imagenes para que se adapten a la resolución de la pantalla
+    #Las siguientes 6 funciones consisten en cambiar el tamaño de las imagenes para que se adapten a la resolución de la pantalla
     def background(self, screen):
         if Datos.PANT_ALTO == 600: #Default 1200x600
             screen.blit(Imagenes.Background, (0, 0))
@@ -174,6 +174,16 @@ class Pantalla:
             screen.blit(Imagenes.FondoControles1080, (0, 0))
         elif Datos.PANT_ALTO == 768: #1366x768
             screen.blit(Imagenes.FondoControles768, (0, 0))
+    
+    def fondoblanco(self, screen):
+        if Datos.PANT_ALTO == 600: #Default 1200x600
+            screen.blit(Imagenes.FondoBlanco, (0, 0))
+        elif Datos.PANT_ALTO == 800: #800x800
+            screen.blit(Imagenes.FondoBlanco, (0, 0))
+        elif Datos.PANT_ALTO == 1080: #1920x1080
+            screen.blit(Imagenes.FondoBlanco, (0, 0))
+        elif Datos.PANT_ALTO == 768: #1366x768
+            screen.blit(Imagenes.FondoBlanco, (0, 0))
 
     def muestra_seleccion(self, screen, fuente): # Muestra la pantalla de seleccion de tanques
         for i in range (1,7):
