@@ -383,6 +383,8 @@ class Juego:
             j6 = pygame.draw.rect(screen, Datos.PURPLE, (Datos.PANT_ANCHO / 1.764, Datos.PANT_ALTO / 1.457, 100, 20))
 
             num_partidas_texto = fuente.render(f"Numero de partidas: {Datos.num_partidas}", True, Datos.WHITE)
+            aviso_texto = fuente.render(f"Usa las flechas para ajustar las partidas", True, Datos.WHITE)
+
             keys = pygame.key.get_pressed()
             if keys[pygame.K_UP]:
                 if pygame.time.get_ticks() - key_repeat_timer > key_repeat_delay:
@@ -399,7 +401,9 @@ class Juego:
                     else:
                         Datos.num_partidas -= 1
 
-            screen.blit(num_partidas_texto, (Datos.PANT_ANCHO / 4, Datos.PANT_ALTO / 1.2))
+            screen.blit(num_partidas_texto, (Datos.PANT_ANCHO / 1.5, Datos.PANT_ALTO / 1.2))
+            screen.blit(aviso_texto, (Datos.PANT_ANCHO / 1.8, Datos.PANT_ALTO / 1.3))
+
             for indice,jugador in enumerate(Jugador.seleccionJugadores):
                 if jugador == 0:
                         text = 'Jugador'
