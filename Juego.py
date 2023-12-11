@@ -186,53 +186,100 @@ class Juego:
         tabla_abierta = True
         tab_presionada = False
 
+
         if finalpartida:
             for indice, jugadores in enumerate(jugadores_2):
                 #por cada kill el jugador recibe 5000 creditos y por cada suicido pierde 5000 creditos
                 Jugador.jugadores[indice].creditos += Jugador.jugadores[indice].kills * 5000
                 Jugador.jugadores[indice].creditos -= Jugador.jugadores[indice].suicidios * 5000
-        while tabla_abierta:
-            Pantalla.pantalla.fondoblanco(screen)
+                Jugador.jugadores[indice].ktotales += Jugador.jugadores[indice].kills
+                Jugador.jugadores[indice].mtotales += Jugador.jugadores[indice].muertes
+                Jugador.jugadores[indice].stotales += Jugador.jugadores[indice].suicidios
+            while tabla_abierta:
+                Pantalla.pantalla.fondoblanco(screen)
 
-            # Título de la tabla
-            Juego.draw_text('Tabla de Jugadores', fuente, Datos.PANT_ANCHO / 2 - 200, 20, Datos.BLACK, screen)
+                # Título de la tabla
+                Juego.draw_text('Tabla de Jugadores', fuente, Datos.PANT_ANCHO / 2 - 200, 20, Datos.BLACK, screen)
 
-            # Encabezados de las columnas
-            Juego.draw_text('Jugador', fuente, 250, 80, Datos.BLACK, screen)
-            Juego.draw_text('Kills', fuente, 400, 80, Datos.BLACK, screen)
-            Juego.draw_text('Muertes', fuente, 550, 80, Datos.BLACK, screen)
-            Juego.draw_text('Suicidios', fuente, 700, 80, Datos.BLACK, screen)
+                # Encabezados de las columnas
+                Juego.draw_text('Jugador', fuente, 250, 80, Datos.BLACK, screen)
+                Juego.draw_text('Kills', fuente, 400, 80, Datos.BLACK, screen)
+                Juego.draw_text('Muertes', fuente, 550, 80, Datos.BLACK, screen)
+                Juego.draw_text('Suicidios', fuente, 700, 80, Datos.BLACK, screen)
 
-            salir_button = pygame.Rect(40, Datos.PANT_ALTO - 60, 120, 30)
-            Juego.draw_button(salir_button, 'Cerrar', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
+                salir_button = pygame.Rect(40, Datos.PANT_ALTO - 60, 120, 30)
+                Juego.draw_button(salir_button, 'Cerrar', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
 
-            # Mostrar información de cada jugador en la tabla
-            for i, jugador in enumerate(jugadores_2):
-                Juego.draw_text(f'Jugador {jugador.indice + 1}', fuente, 250, 170 + i * 60, Datos.BLACK, screen)
-                Juego.draw_text(str(jugador.kills), fuente, 400, 170 + i * 60, Datos.BLACK, screen)
-                Juego.draw_text(str(jugador.muertes), fuente, 550, 170 + i * 60, Datos.BLACK, screen)
-                Juego.draw_text(str(jugador.suicidios), fuente, 700, 170 + i * 60, Datos.BLACK, screen)
-
-                # Muestra la imagen del tanque asociado al jugador
+                # Mostrar información de cada jugador en la tabla
                 for i, jugador in enumerate(jugadores_2):
-                    if i < len(jugadores_2):
-                        #screen.blit(imagenes.Tanque_HUDs[aux[i].color], (50, 150 + i * 60))
-                        screen.blit(Imagenes.Tanque_HUDs[jugadores_2[i].color_tanque], (50, 150 + i * 60))
-            
-    
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    tabla_abierta = False
+                    Juego.draw_text(f'Jugador {jugador.indice + 1}', fuente, 250, 170 + i * 60, Datos.BLACK, screen)
+                    Juego.draw_text(str(jugador.ktotales), fuente, 400, 170 + i * 60, Datos.BLACK, screen)
+                    Juego.draw_text(str(jugador.mtotales), fuente, 550, 170 + i * 60, Datos.BLACK, screen)
+                    Juego.draw_text(str(jugador.stotales), fuente, 700, 170 + i * 60, Datos.BLACK, screen)
 
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if salir_button.collidepoint(event.pos):
+                    # Muestra la imagen del tanque asociado al jugador
+                    for i, jugador in enumerate(jugadores_2):
+                        if i < len(jugadores_2):
+                            #screen.blit(imagenes.Tanque_HUDs[aux[i].color], (50, 150 + i * 60))
+                            screen.blit(Imagenes.Tanque_HUDs[jugadores_2[i].color_tanque], (50, 150 + i * 60))
+                
+        
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
                         tabla_abierta = False
 
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_TAB:
-                    tabla_abierta = False
-                    tab_presionada = True
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if salir_button.collidepoint(event.pos):
+                            tabla_abierta = False
 
-            pygame.display.flip()
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_TAB:
+                        tabla_abierta = False
+                        tab_presionada = True
+
+                pygame.display.flip()
+        else:
+            while tabla_abierta:
+                Pantalla.pantalla.fondoblanco(screen)
+
+                # Título de la tabla
+                Juego.draw_text('Tabla de Jugadores', fuente, Datos.PANT_ANCHO / 2 - 200, 20, Datos.BLACK, screen)
+
+                # Encabezados de las columnas
+                Juego.draw_text('Jugador', fuente, 250, 80, Datos.BLACK, screen)
+                Juego.draw_text('Kills', fuente, 400, 80, Datos.BLACK, screen)
+                Juego.draw_text('Muertes', fuente, 550, 80, Datos.BLACK, screen)
+                Juego.draw_text('Suicidios', fuente, 700, 80, Datos.BLACK, screen)
+
+                salir_button = pygame.Rect(40, Datos.PANT_ALTO - 60, 120, 30)
+                Juego.draw_button(salir_button, 'Cerrar', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
+
+                # Mostrar información de cada jugador en la tabla
+                for i, jugador in enumerate(jugadores_2):
+                    Juego.draw_text(f'Jugador {jugador.indice + 1}', fuente, 250, 170 + i * 60, Datos.BLACK, screen)
+                    Juego.draw_text(str(jugador.kills), fuente, 400, 170 + i * 60, Datos.BLACK, screen)
+                    Juego.draw_text(str(jugador.muertes), fuente, 550, 170 + i * 60, Datos.BLACK, screen)
+                    Juego.draw_text(str(jugador.suicidios), fuente, 700, 170 + i * 60, Datos.BLACK, screen)
+
+                    # Muestra la imagen del tanque asociado al jugador
+                    for i, jugador in enumerate(jugadores_2):
+                        if i < len(jugadores_2):
+                            #screen.blit(imagenes.Tanque_HUDs[aux[i].color], (50, 150 + i * 60))
+                            screen.blit(Imagenes.Tanque_HUDs[jugadores_2[i].color_tanque], (50, 150 + i * 60))
+                
+        
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        tabla_abierta = False
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if salir_button.collidepoint(event.pos):
+                            tabla_abierta = False
+
+                    if event.type == pygame.KEYDOWN and event.key == pygame.K_TAB:
+                        tabla_abierta = False
+                        tab_presionada = True
+
+                pygame.display.flip()
 
     def shop(screen): # Función que maneja la pestaña de la tienda del juego
         tienda_abierta = True
@@ -351,10 +398,10 @@ class Juego:
             jugador_auxiliar = Jugador.jugadores[indice]
             if indice == 0:
                 jugador_ganador = jugador_auxiliar
-            elif jugador_auxiliar.kills > jugador_ganador.kills:
+            elif jugador_auxiliar.ktotales > jugador_ganador.ktotales:
                 jugador_ganador = jugador_auxiliar
                 empate = 0
-            elif jugador_auxiliar.kills == jugador_ganador.kills:
+            elif jugador_auxiliar.ktotales == jugador_ganador.ktotales:
                 empate = 1
         if empate == 1:
             texto_ganador = fuente.render("Empate entre 2 o más jugadores", True, Datos.BLACK)
@@ -660,32 +707,42 @@ class Juego:
 
 
             #VERIFICA LA VIDA 
+            colorTanque = Tanque.tanques[Datos.turnos].color
             for indice, tanque in enumerate(Tanque.tanques):
                 #KILL Y SUICIDIO
                 if Tanque.tanques[indice].vida <= 0:
                     Tanque.tanques[indice].muertes += 1                    
                     for indice2, jugador in enumerate(Jugador.jugadores):
                         if Tanque.tanques[indice].color == Jugador.jugadores[indice2].color_tanque:
-                            Jugador.jugadores[indice2].muertes = Tanque.tanques[indice].muertes
+                            Jugador.jugadores[indice2].muertes += Tanque.tanques[indice].muertes
                             Jugador.jugadores[indice2].cantBala105mm = Tanque.tanques[indice].cantBala105mm
                             Jugador.jugadores[indice2].cantBala80mm = Tanque.tanques[indice].cantBala80mm
                             Jugador.jugadores[indice2].cantBala60mm = Tanque.tanques[indice].cantBala60mm
+                    if Tanque.tanques[indice].color == colorTanque:
+                        if Datos.turnos+1 >= len(Tanque.tanques):
+                            colorTanque = Tanque.tanques[0].color
+                        else:
+                            colorTanque = Tanque.tanques[Datos.turnos+1].color
                     del Tanque.tanques[indice]
-                    if Datos.turnos == len(Tanque.tanques):
-                        Datos.turnos -=1 
                         
                 if len(Tanque.tanques) == 1:
                     for indice2, jugador in enumerate(Jugador.jugadores):
-                        if Tanque.tanques[indice].color == Jugador.jugadores[indice2].color_tanque:
-                            Jugador.jugadores[indice2].cantBala105mm = Tanque.tanques[indice].cantBala105mm
-                            Jugador.jugadores[indice2].cantBala80mm = Tanque.tanques[indice].cantBala80mm
-                            Jugador.jugadores[indice2].cantBala60mm = Tanque.tanques[indice].cantBala60mm
+                        if Tanque.tanques[0].color == Jugador.jugadores[indice2].color_tanque:
+                            Jugador.jugadores[indice2].cantBala105mm = Tanque.tanques[0].cantBala105mm
+                            Jugador.jugadores[indice2].cantBala80mm = Tanque.tanques[0].cantBala80mm
+                            Jugador.jugadores[indice2].cantBala60mm = Tanque.tanques[0].cantBala60mm
                     
                     Juego.mostrar_tabla_jugadores(screen, fuente, Jugador.jugadores, True)
                     Juego.muestra_ganador(Tanque.tanques[0].num, screen, fuente, Tanque.tanques[0].color)
                     salirJuego = True
                     Datos.reiniciar = True
                     
+            while True:
+                if Datos.turnos >= len(Tanque.tanques):
+                    Datos.turnos = 0
+                if Tanque.tanques[Datos.turnos].color == colorTanque:
+                    break
+                Datos.turnos += 1
             if Datos.tecla_espacio_presionada:
                 if Datos.bala_tanque is None:
                     Datos.mostrar_altura = Tanque.tanques[Datos.turnos].indice
