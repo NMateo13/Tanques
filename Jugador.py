@@ -13,6 +13,10 @@ class Jugador:
         self.kills = 0
         self.muertes = 0
         self.suicidios = 0
+        self.cantBala60mm = 0
+        self.cantBala80mm = 0
+        self.cantBala105mm = 0
+        self.creditos = 10000
         pass
 
     def crearJugador(indice, ia):

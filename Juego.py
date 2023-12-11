@@ -158,34 +158,39 @@ class Juego:
     
     def verificar_creditos(boton, fuente, screen): # Función que verifica si el jugador tiene los créditos suficientes para comprar una bala
         if boton == 1:
-            if Tanque.tanques[Datos.turnos].creditos < 4000:
+            if Jugador.jugadores[Datos.turnos].creditos < 4000:
                 Juego.draw_text('No te alcanzan los creditos', fuente, Datos.PANT_ANCHO / 2, Datos.PANT_ALTO / 2 -100, Datos.BLACK, screen)
                 pygame.display.flip()
                 pygame.time.delay(1000)
             else:
-                Tanque.tanques[Datos.turnos].cantBala105mm += 1
-                Tanque.tanques[Datos.turnos].creditos -= 4000
+                Jugador.jugadores[Datos.turnos].cantBala105mm += 1
+                Jugador.jugadores[Datos.turnos].creditos -= 4000
         if boton == 2:
-            if Tanque.tanques[Datos.turnos].creditos < 2500:
+            if Jugador.jugadores[Datos.turnos].creditos < 2500:
                 Juego.draw_text('No te alcanzan los creditos', fuente, Datos.PANT_ANCHO / 2, Datos.PANT_ALTO / 2 -100, Datos.BLACK, screen)
                 pygame.display.flip()
                 pygame.time.delay(1000)
             else:
-                Tanque.tanques[Datos.turnos].cantBala80mm += 1
-                Tanque.tanques[Datos.turnos].creditos -= 2500
+                Jugador.jugadores[Datos.turnos].cantBala80mm += 1
+                Jugador.jugadores[Datos.turnos].creditos -= 2500
         if boton == 3:
-            if Tanque.tanques[Datos.turnos].creditos < 1000:
+            if Jugador.jugadores[Datos.turnos].creditos < 1000:
                 Juego.draw_text('No te alcanzan los creditos', fuente, Datos.PANT_ANCHO / 2, Datos.PANT_ALTO / 2-100, Datos.BLACK, screen)
                 pygame.display.flip()
                 pygame.time.delay(1000)
             else:
-                Tanque.tanques[Datos.turnos].cantBala60mm += 1
-                Tanque.tanques[Datos.turnos].creditos -= 1000
+                Jugador.jugadores[Datos.turnos].cantBala60mm += 1
+                Jugador.jugadores[Datos.turnos].creditos -= 1000
 
-    def mostrar_tabla_jugadores(screen, fuente, jugadores): # Función que muestra el leaderboard
+    def mostrar_tabla_jugadores(screen, fuente, jugadores_2, finalpartida): # Función que muestra el leaderboard
         tabla_abierta = True
         tab_presionada = False
 
+        if finalpartida:
+            for indice, jugadores in enumerate(jugadores_2):
+                #por cada kill el jugador recibe 5000 creditos y por cada suicido pierde 5000 creditos
+                Jugador.jugadores[indice].creditos += Jugador.jugadores[indice].kills * 5000
+                Jugador.jugadores[indice].creditos -= Jugador.jugadores[indice].suicidios * 5000
         while tabla_abierta:
             Pantalla.pantalla.fondoblanco(screen)
 
@@ -202,17 +207,17 @@ class Juego:
             Juego.draw_button(salir_button, 'Cerrar', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
 
             # Mostrar información de cada jugador en la tabla
-            for i, jugador in enumerate(jugadores):
+            for i, jugador in enumerate(jugadores_2):
                 Juego.draw_text(f'Jugador {jugador.indice + 1}', fuente, 250, 170 + i * 60, Datos.BLACK, screen)
                 Juego.draw_text(str(jugador.kills), fuente, 400, 170 + i * 60, Datos.BLACK, screen)
                 Juego.draw_text(str(jugador.muertes), fuente, 550, 170 + i * 60, Datos.BLACK, screen)
                 Juego.draw_text(str(jugador.suicidios), fuente, 700, 170 + i * 60, Datos.BLACK, screen)
 
                 # Muestra la imagen del tanque asociado al jugador
-                for i, jugador in enumerate(jugadores):
-                    if i < len(jugadores):
+                for i, jugador in enumerate(jugadores_2):
+                    if i < len(jugadores_2):
                         #screen.blit(imagenes.Tanque_HUDs[aux[i].color], (50, 150 + i * 60))
-                        screen.blit(Imagenes.Tanque_HUDs[jugadores[i].color_tanque], (50, 150 + i * 60))
+                        screen.blit(Imagenes.Tanque_HUDs[jugadores_2[i].color_tanque], (50, 150 + i * 60))
             
     
             for event in pygame.event.get():
@@ -231,10 +236,17 @@ class Juego:
 
     def shop(screen): # Función que maneja la pestaña de la tienda del juego
         tienda_abierta = True
-
+        #guardamos la cantidad de balas y el dinero del tanque en variables auxiliares
+        cantBala105mm = Jugador.jugadores[Datos.turnos].cantBala105mm
+        cantBala80mm = Jugador.jugadores[Datos.turnos].cantBala80mm
+        cantBala60mm = Jugador.jugadores[Datos.turnos].cantBala60mm
+        creditos = Jugador.jugadores[Datos.turnos].creditos
         while tienda_abierta:
             Pantalla.pantalla.fondoblanco(screen)
             fuente = pygame.font.Font(None, 36)
+            # Botón de devolver compras
+            devolver_button = pygame.Rect(200, Datos.PANT_ALTO - 60, 120, 30)
+            Juego.draw_button(devolver_button, 'Devolver', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
 
             # Botón de Tienda (título)
             Juego.draw_text('Tienda', fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 150, Datos.BLACK, screen)
@@ -243,7 +255,7 @@ class Juego:
             Juego.draw_text('Tipos de Bala', fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 50, Datos.BLACK, screen)
 
             # Mostrar creditos
-            Juego.draw_text(f"creditos: {Tanque.tanques[Datos.turnos].creditos}", fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 100, Datos.BLACK, screen)
+            Juego.draw_text(f"creditos: {Jugador.jugadores[Datos.turnos].creditos}", fuente, Datos.PANT_ANCHO / 2 - 200, Datos.PANT_ALTO / 2 - 100, Datos.BLACK, screen)
 
             bala1_button = pygame.Rect(Datos.PANT_ANCHO / 2 - 250, Datos.PANT_ALTO / 2, 100, 50)
             Juego.draw_button(bala1_button, 'Bala 1', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
@@ -259,18 +271,18 @@ class Juego:
             Juego.draw_button(salir_button,'Siguiente', fuente, Datos.BLACK, Datos.WHITE, Datos.GREEN, screen)
 
             #mostrar el color del tanque
-            screen.blit(Imagenes.Tanque_HUDs[Tanque.tanques[Datos.turnos].color], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
+            screen.blit(Imagenes.Tanque_HUDs[Jugador.jugadores[Datos.turnos].color_tanque], (Datos.PANT_ANCHO / 2 - 50, Datos.PANT_ALTO / 2 + 50))
 
             #mostrar la cantidad de balas de 105mm, 80mm y 60mm con sus respectivas imagenes
             screen.blit(Imagenes.Bala105, (Datos.PANT_ANCHO / 2 + 100, Datos.PANT_ALTO / 2))
-            Juego.draw_text(f"x{Tanque.tanques[Datos.turnos].cantBala105mm}", fuente, Datos.PANT_ANCHO / 2 + 125, Datos.PANT_ALTO / 2 + 10, Datos.BLACK, screen)
+            Juego.draw_text(f"x{Jugador.jugadores[Datos.turnos].cantBala105mm}", fuente, Datos.PANT_ANCHO / 2 + 125, Datos.PANT_ALTO / 2 + 10, Datos.BLACK, screen)
             screen.blit(Imagenes.Bala80, (Datos.PANT_ANCHO / 2 + 100, Datos.PANT_ALTO / 2 + 60))
-            Juego.draw_text(f"x{Tanque.tanques[Datos.turnos].cantBala80mm}", fuente, Datos.PANT_ANCHO / 2 + 125, Datos.PANT_ALTO / 2 + 70, Datos.BLACK, screen)
+            Juego.draw_text(f"x{Jugador.jugadores[Datos.turnos].cantBala80mm}", fuente, Datos.PANT_ANCHO / 2 + 125, Datos.PANT_ALTO / 2 + 70, Datos.BLACK, screen)
             screen.blit(Imagenes.Bala60, (Datos.PANT_ANCHO / 2 + 100, Datos.PANT_ALTO / 2 + 120))
-            Juego.draw_text(f"x{Tanque.tanques[Datos.turnos].cantBala60mm}", fuente, Datos.PANT_ANCHO / 2 + 125, Datos.PANT_ALTO / 2 + 130, Datos.BLACK, screen)
+            Juego.draw_text(f"x{Jugador.jugadores[Datos.turnos].cantBala60mm}", fuente, Datos.PANT_ANCHO / 2 + 125, Datos.PANT_ALTO / 2 + 130, Datos.BLACK, screen)
             pygame.display.update()
 
-            if Tanque.tanques[Datos.turnos].esIA == False:
+            if Jugador.jugadores[Datos.turnos].IA == False:
                 for event in pygame.event.get():
                     if event.type == pygame.QUIT:
                         tienda_abierta = False
@@ -287,18 +299,25 @@ class Juego:
 
                         elif bala3_button.collidepoint(event.pos):
                             Juego.verificar_creditos(3, fuente,screen)
-            elif Tanque.tanques[Datos.turnos].esIA == True:
-                if Tanque.tanques[Datos.turnos].creditos >= 4000:
-                    Tanque.tanques[Datos.turnos].cantBala105mm += 1
-                    Tanque.tanques[Datos.turnos].creditos -= 4000
+                        
+                        elif devolver_button.collidepoint(event.pos):
+                            Jugador.jugadores[Datos.turnos].cantBala105mm = cantBala105mm
+                            Jugador.jugadores[Datos.turnos].cantBala80mm = cantBala80mm
+                            Jugador.jugadores[Datos.turnos].cantBala60mm = cantBala60mm
+                            Jugador.jugadores[Datos.turnos].creditos = creditos
+                            
+            elif Jugador.jugadores[Datos.turnos].IA == True:
+                if Jugador.jugadores[Datos.turnos].creditos >= 4000:
+                    Jugador.jugadores[Datos.turnos].cantBala105mm += 1
+                    Jugador.jugadores[Datos.turnos].creditos -= 4000
                     pygame.time.delay(1000)
-                elif Tanque.tanques[Datos.turnos].creditos >= 2500:
-                    Tanque.tanques[Datos.turnos].cantBala80mm += 1
-                    Tanque.tanques[Datos.turnos].creditos -= 2500
+                elif Jugador.jugadores[Datos.turnos].creditos >= 2500:
+                    Jugador.jugadores[Datos.turnos].cantBala80mm += 1
+                    Jugador.jugadores[Datos.turnos].creditos -= 2500
                     pygame.time.delay(1000)
-                elif Tanque.tanques[Datos.turnos].creditos >= 1000:
-                    Tanque.tanques[Datos.turnos].cantBala60mm += 1
-                    Tanque.tanques[Datos.turnos].creditos -= 1000
+                elif Jugador.jugadores[Datos.turnos].creditos >= 1000:
+                    Jugador.jugadores[Datos.turnos].cantBala60mm += 1
+                    Jugador.jugadores[Datos.turnos].creditos -= 1000
                     pygame.time.delay(1000)
                 else:
                     pygame.time.delay(1000)
@@ -332,10 +351,10 @@ class Juego:
             jugador_auxiliar = Jugador.jugadores[indice]
             if indice == 0:
                 jugador_ganador = jugador_auxiliar
-            elif jugador_auxiliar.partidas_ganadas > jugador_ganador.partidas_ganadas:
+            elif jugador_auxiliar.kills > jugador_ganador.kills:
                 jugador_ganador = jugador_auxiliar
                 empate = 0
-            elif jugador_auxiliar.partidas_ganadas == jugador_ganador.partidas_ganadas:
+            elif jugador_auxiliar.kills == jugador_ganador.kills:
                 empate = 1
         if empate == 1:
             texto_ganador = fuente.render("Empate entre 2 o más jugadores", True, Datos.BLACK)
@@ -482,6 +501,8 @@ class Juego:
                     salir = True       
 
     def mostrar_tooltip(tanque, screen, x, y): # Función tooltip (muestra la vida de cada tanque con el mouse)
+        if x + 100 > Datos.PANT_ANCHO:
+            x -= 100
         pygame.draw.rect(screen, Datos.WHITE, (x, y, 100, 75))
         screen.blit(Imagenes.Tanque_Tooltip[tanque.color], (x + 20, y + 10))
         fuente = pygame.font.Font(None, 30)
@@ -496,6 +517,7 @@ class Juego:
     
     def comprobar_sin_balas():
         if Tanque.tanques[Datos.turnos].sin_balas == True and Datos.bala_tanque is None:
+                Datos.comprobar_viento = False
                 if Datos.turnos < len(Tanque.tanques)-1:
                     Datos.turnos += 1
                 else:
@@ -506,10 +528,14 @@ class Juego:
                 Datos.tiempo_transcurrido = 0
 
     def juego(screen, fuente): # Función que maneja el juego en sí
+        #Compra de cada partida
+        for indice, jugador in enumerate(Jugador.jugadores):
+            Juego.shop(screen)
+            Datos.turnos += 1
+        Datos.turnos = 0
         primera_iteracion = True
         #Creacion clases (Terreno y tanques)
         salirJuego = False
-
         terreno = Terreno(Datos.PANT_ANCHO, Datos.PANT_ALTO)
         Tanque.tanques.clear()
         Tanque.creaTanques(Jugador.jugadores)
@@ -550,11 +576,6 @@ class Juego:
         #Para mostrar correctamente los datos de la primera iteración se crea un nuevo booleando
         
 
-        #Compra de cada partida
-        for indice, tanque in enumerate(Tanque.tanques):
-            Juego.shop(screen)
-            Datos.turnos += 1
-        Datos.turnos = 0
         
         tab_presionada = False
         mostrando_tabla = False
@@ -583,12 +604,21 @@ class Juego:
                     if reset.collidepoint(pygame.mouse.get_pos()):
                         salirJuego = True
                         Datos.reiniciar = True  # Reiniciar el juego
+                        for indice, jugador in enumerate(Jugador.jugadores):
+                            Jugador.jugadores[indice].partidas_ganadas = 0
+                            Jugador.jugadores[indice].kills = 0
+                            Jugador.jugadores[indice].muertes = 0
+                            Jugador.jugadores[indice].suicidios = 0
+                            Jugador.jugadores[indice].cantBala60mm = 0
+                            Jugador.jugadores[indice].cantBala80mm = 0
+                            Jugador.jugadores[indice].cantBala105mm = 0
+                            Jugador.jugadores[indice].creditos = 10000
                     if salir.collidepoint(pygame.mouse.get_pos()):
                         salirJuego = True  # Volver al menú principal
                         
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_TAB:
-                        Juego.mostrar_tabla_jugadores(screen, fuente, Jugador.jugadores)
+                        Juego.mostrar_tabla_jugadores(screen, fuente, Jugador.jugadores, False)
                         tab_presionada = True
 
                 if event.type == pygame.KEYUP:
@@ -620,17 +650,38 @@ class Juego:
             for indice, tanque in enumerate(Tanque.tanques):
                 Tanque.tanques[indice].dibujar(screen)
 
+            #PASAR DATOS DE KILLS, MUERTES Y SUICIDIOS DE TANQUE A JUGADOR CON EL COLOR DEL TANQUE
+            for indice, tanque in enumerate(Tanque.tanques):
+                for indice2, jugador in enumerate(Jugador.jugadores):
+                    if Tanque.tanques[indice].color == Jugador.jugadores[indice2].color_tanque:
+                        Jugador.jugadores[indice2].kills = Tanque.tanques[indice].kills
+                        Jugador.jugadores[indice2].muertes = Tanque.tanques[indice].muertes
+                        Jugador.jugadores[indice2].suicidios = Tanque.tanques[indice].suicidios
+
+
             #VERIFICA LA VIDA 
             for indice, tanque in enumerate(Tanque.tanques):
                 #KILL Y SUICIDIO
                 if Tanque.tanques[indice].vida <= 0:
-        
+                    Tanque.tanques[indice].muertes += 1                    
+                    for indice2, jugador in enumerate(Jugador.jugadores):
+                        if Tanque.tanques[indice].color == Jugador.jugadores[indice2].color_tanque:
+                            Jugador.jugadores[indice2].muertes = Tanque.tanques[indice].muertes
+                            Jugador.jugadores[indice2].cantBala105mm = Tanque.tanques[indice].cantBala105mm
+                            Jugador.jugadores[indice2].cantBala80mm = Tanque.tanques[indice].cantBala80mm
+                            Jugador.jugadores[indice2].cantBala60mm = Tanque.tanques[indice].cantBala60mm
                     del Tanque.tanques[indice]
                     if Datos.turnos == len(Tanque.tanques):
-                        Datos.turnos = 0
+                        Datos.turnos -=1 
                         
                 if len(Tanque.tanques) == 1:
-                    Juego.mostrar_tabla_jugadores(screen, fuente, Jugador.jugadores)
+                    for indice2, jugador in enumerate(Jugador.jugadores):
+                        if Tanque.tanques[indice].color == Jugador.jugadores[indice2].color_tanque:
+                            Jugador.jugadores[indice2].cantBala105mm = Tanque.tanques[indice].cantBala105mm
+                            Jugador.jugadores[indice2].cantBala80mm = Tanque.tanques[indice].cantBala80mm
+                            Jugador.jugadores[indice2].cantBala60mm = Tanque.tanques[indice].cantBala60mm
+                    
+                    Juego.mostrar_tabla_jugadores(screen, fuente, Jugador.jugadores, True)
                     Juego.muestra_ganador(Tanque.tanques[0].num, screen, fuente, Tanque.tanques[0].color)
                     salirJuego = True
                     Datos.reiniciar = True
@@ -681,6 +732,7 @@ class Juego:
                             Datos.bala_tanque = None
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
+                            Datos.comprobar_viento = False
                             if Datos.turnos < len(Tanque.tanques)-1:
                                 Datos.turnos += 1
                             else:
@@ -692,7 +744,11 @@ class Juego:
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
                             terreno.modificar_terreno(terreno, Tanque.tanques[Datos.turnos])
-                            puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
+                            puntosExplosionX, puntosExplosionY = terreno.obtener_puntos_circulo(Tanque.tanques[Datos.turnos].radioExplosion, terreno.calcular_centro_explosion() )
+                            #dibujamos los puntosExplosionx y puntosExplosionY para ver si estan bien
+                            for i in range(len(puntosExplosionX)):
+                                pygame.draw.circle(screen, Datos.BLACK, (puntosExplosionX[i], puntosExplosionY[i]), 2)
+                            pygame.display.flip()
                             for indice, tanque in enumerate(Tanque.tanques):
                                 if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice], puntosExplosionX, puntosExplosionY):
                                     if Tanque.tanques[Datos.turnos].tipo_bala == 1:
@@ -701,18 +757,19 @@ class Juego:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
                                     elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
                                         Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
-                                    
+                                    Tanque.acomodarTanque(screen, terreno, primera_iteracion) 
                                     #KILL Y SUICIDIO
                                     if Tanque.tanques[indice].vida <= 0:
-                                        print("vida 1")
+                                        print("vida del tanque " + Datos.color_tanque[Tanque.tanques[indice].color] + " llegó a 0 por daño de explosion al terreno")
                                         if Datos.turnos == indice:
-                                            Jugador.jugadores[Datos.turnos].suicidios += 1
-                                            print("suicidio 1")
+                                            Tanque.tanques[Datos.turnos].suicidios += 1
+                                            print("suicidio del tanque " + Datos.color_tanque[Tanque.tanques[Datos.turnos].color])
                                         else:
-                                            Jugador.jugadores[Datos.turnos].kills += 1
-                                            print("kill 1 ")
+                                            Tanque.tanques[Datos.turnos].kills += 1
+                                            print("Tanque " + Datos.color_tanque[Tanque.tanques[Datos.turnos].color] + " mató a tanque " + Datos.color_tanque[Tanque.tanques[indice].color])
                                             
                             Datos.bala_tanque = None
+                            Datos.comprobar_viento = False
                             if Datos.turnos < len(Tanque.tanques)-1:
                                 Datos.turnos += 1
                             else:
@@ -722,46 +779,41 @@ class Juego:
                         elif Datos.bala_tanque.verificar_impacto_tanque(Tanque.tanques[indice]):
                             if Tanque.tanques[Datos.turnos].tipo_bala == 1:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala105mm
+                                Datos.impacto_tanque = Tanque.tanques[indice].color
                             elif Tanque.tanques[Datos.turnos].tipo_bala == 2:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
+                                Datos.impacto_tanque = Tanque.tanques[indice].color
                             elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
                                 Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
+                                Datos.impacto_tanque = Tanque.tanques[indice].color
                                 
-                            #KILL Y SUICIDIO
-                            if Tanque.tanques[indice].vida <= 0:
-                                print("vida 2")
-                                if Datos.turnos == indice:
-                                    Jugador.jugadores[Datos.turnos].suicidios += 1
-                                    print("suicidio 2")
-                                else:
-                                    Jugador.jugadores[Datos.turnos].kills += 1
-                                    print("kill 2")
+
                                 
                             Datos.tecla_espacio_presionada = False
                             Datos.tiempo_transcurrido = 0
-                            terreno.modificar_terreno(terreno, Tanque.tanques[Datos.turnos]) 
+                            terreno.modificar_terreno(terreno, Tanque.tanques[Datos.turnos])
                             puntosExplosionX, puntosExplosionY = terreno.calcular_puntos_explosion(terreno.calcular_centro_explosion(), Tanque.tanques[Datos.turnos])
-                            #for indice, tanque in enumerate(Tanque.tanques):
                             if Datos.bala_tanque.verificar_impacto_tanque_explosion(Tanque.tanques[indice], puntosExplosionX, puntosExplosionY):
                                 #KILL Y SUICIDIO
-                                
-                                if Tanque.tanques[Datos.turnos].tipo_bala == 1:
-                                    Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala105mm
-                                elif Tanque.tanques[Datos.turnos].tipo_bala == 2:
-                                    Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
-                                elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
-                                    Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
-                                    
-                                if Tanque.tanques[indice].vida <= 0:
-                                    print("vida 3")
-                                    if Datos.turnos == indice:
-                                        Jugador.jugadores[Datos.turnos].suicidios += 1
-                                        print("suicidio 3")
-                                    else:
-                                        Jugador.jugadores[Datos.turnos].kills += 1
-                                        print("kill 3")
-                                            
+                                if Datos.impacto_tanque != Tanque.tanques[indice].color:
+                                    if Tanque.tanques[Datos.turnos].tipo_bala == 1:
+                                        Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala105mm
+                                    elif Tanque.tanques[Datos.turnos].tipo_bala == 2:
+                                        Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala80mm
+                                    elif Tanque.tanques[Datos.turnos].tipo_bala == 3:
+                                        Tanque.tanques[indice].vida -= Tanque.tanques[Datos.turnos].Bala60mm
+                                Tanque.acomodarTanque(screen, terreno, primera_iteracion) 
+                            if Tanque.tanques[indice].vida <= 0:
+                                print("vida del tanque " + Datos.color_tanque[Tanque.tanques[indice].color] + " llegó a 0 por daño de explosion al tanque o impacto directo")
+                                if Datos.turnos == indice:
+                                    Tanque.tanques[Datos.turnos].suicidios += 1
+                                    print("suicidio del tanque " + Datos.color_tanque[Tanque.tanques[Datos.turnos].color])
+                                else:
+                                    Tanque.tanques[Datos.turnos].kills += 1
+                                    print("Tanque " + Datos.color_tanque[Tanque.tanques[Datos.turnos].color] + " mató a tanque " + Datos.color_tanque[Tanque.tanques[indice].color])
+                            Datos.impacto_tanque = 0
                             Datos.bala_tanque = None
+                            Datos.comprobar_viento = False
                             if Datos.turnos < len(Tanque.tanques)-1:
                                 Datos.turnos += 1
                             else:
@@ -771,7 +823,7 @@ class Juego:
               
                 Datos.tiempo_transcurrido += incremento
 
-            Tanque.acomodarTanque(screen, terreno, primera_iteracion)
+            Tanque.acomodarTanque(screen, terreno, primera_iteracion) 
 
             # Representacion gráfica de los Datos
             Pantalla.pantalla.muestra_texto(screen, fuente ,Tanque.tanques[Datos.turnos], Datos.ang_tank[Tanque.tanques[Datos.turnos].angulo-30],Datos.bala_tanque)
@@ -793,6 +845,9 @@ class Juego:
             #mostrar si no quedan balas
             if Datos.anima_quedan_balas:
                 Pantalla.pantalla.muestra_no_balas(screen, fuente, Tanque.tanques[Datos.turnos])
+            if Datos.viento_habilitado and Datos.tecla_espacio_presionada == False and Datos.comprobar_viento == False:
+                Datos.comprobar_viento = True
+                Bala.actualizar_direccion_viento()
             pygame.display.flip()
             if salirJuego:
                 break

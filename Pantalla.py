@@ -59,12 +59,11 @@ class Pantalla:
         # Obtén la velocidad del viento en m/s
         velocidad_viento_m_s = Datos.velocidad_viento
         # Convierte la velocidad a km/h
-        velocidad_viento_kmh = velocidad_viento_m_s * 1000
+        velocidad_viento_kmh = velocidad_viento_m_s * 100
         # Determina la dirección del viento
         direccion_viento_x = 'Derecha' if Datos.viento_x > 0 else 'Izquierda'
-        direccion_viento_y = 'Arriba' if Datos.viento_y < 0 else 'Abajo'
         
-        viento_texto = font.render(f"Viento: {velocidad_viento_kmh:.2f} m/s",True, Datos.WHITE)
+        viento_texto = font.render(f"Viento: {velocidad_viento_kmh:.5f} m/s",True, Datos.WHITE)
         Direccion_viento = font.render(f"Direccion: {direccion_viento_x}",True, Datos.WHITE)
         if Datos.viento_habilitado:
             screen.blit(viento_texto, (10, Datos.PANT_ALTO / 100))

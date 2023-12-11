@@ -13,8 +13,18 @@ rondas = 1
 viento_habilitado = False
 velocidad_viento = 0
 viento_x = 0
-viento_y = 0
 tanque_sin_balas = 0
+comprobar_viento = False
+impacto_tanque = 0
+
+color_tanque = {
+    1: "verde",
+    2: "rojo",
+    3: "azul",
+    4: "amarillo",
+    5: "rosa",
+    6: "celeste"
+}
 
 # Variables y Constantes
 FPS = 60

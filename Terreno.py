@@ -102,10 +102,31 @@ class Terreno:
             if self.es_punto_valido(x):
                 y = Datos.PANT_ALTO - y
                 if x < Datos.PANT_ANCHO and x > 0 and terreno.terreno[x] > y:
+                    #el terreno no puede ser menor a 130
+                    if y < 125:
+                        y = 125
                     terreno.terreno[x] = y
 
     def es_punto_valido(self, x):
         return x < Datos.PANT_ANCHO and x > 0
+    
+    def obtener_puntos_circulo(self, radio, centro):
+        num_puntos = 0
+        radio2 = radio
+        while radio > 0:
+            num_puntos += int(2 * math.pi * radio)
+            radio -= 4
+        puntos_circulo = []
+        while radio2 > 0:
+            for i in range(num_puntos):
+                angulo = 2 * math.pi * i / num_puntos
+                x = centro[0] + radio2 * math.cos(angulo)
+                y = centro[1] + radio2 * math.sin(angulo)
+                puntos_circulo.append((x, y))
+            radio2 -= 4
+        puntos_x = [x for x, _ in puntos_circulo]
+        puntos_y = [y for _, y in puntos_circulo]
+        return puntos_x, puntos_y
     
     
 

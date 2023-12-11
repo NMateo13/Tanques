@@ -6,16 +6,16 @@ class Tanque:
 
     tanques = []
 
-    def __init__(self, x, y, num, indice, color):
+    def __init__(self, x, y, num, indice, color, c60mm, c80mm, c105mm, creditosActuales):
         self.x = x
         self.y = y
         self.ancho = 60
         self.altura = 10 
         self.num = num
         self.vida = 100 # vida tanque
-        self.cantBala60mm = 0 #cantidad de balas 
-        self.cantBala80mm = 0
-        self.cantBala105mm = 0
+        self.cantBala60mm = c60mm #cantidad de balas 
+        self.cantBala80mm = c80mm
+        self.cantBala105mm = c105mm
         self.Bala60mm = 30 # daño de las balas
         self.Bala80mm = 40
         self.Bala105mm = 50
@@ -29,7 +29,7 @@ class Tanque:
         self.velocidad = 50
         self.tipo_bala = 1
         self.radioExplosion = 75
-        self.creditos = 10000
+        self.creditos = creditosActuales
         self.mostrar_datos = False
         self.esIA = False
         self.sin_balas = False
@@ -97,7 +97,7 @@ class Tanque:
         
         for indice, jugador in enumerate(jugadores):
             jugadorActual = jugadores[indice]
-            tanque = Tanque(0, 0, jugadorActual.indice+1, 0, jugadorActual.color_tanque)
+            tanque = Tanque(0, 0, jugadorActual.indice+1, 0, jugadorActual.color_tanque, jugadorActual.cantBala60mm, jugadorActual.cantBala80mm, jugadorActual.cantBala105mm, jugadorActual.creditos)
             tanque.esIA = jugadorActual.IA
             Tanque.tanques.append(tanque)
 

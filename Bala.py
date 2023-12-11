@@ -17,9 +17,6 @@ class Bala:
         #self.viento_x = 0
         #self.viento_y = 0
 
-        # Si el viento está habilitado, inicializa su dirección de forma aleatoria
-        if Datos.viento_habilitado:
-            self.actualizar_direccion_viento()
 
         if tipo == 1:
             self.imagen = pygame.image.load(f"Assets/bala105.png")
@@ -40,13 +37,11 @@ class Bala:
         self.xanterior = pos_inicial_x
         self.yanterior = pos_inicial_y
 
-    def actualizar_direccion_viento(self):
+    def actualizar_direccion_viento():
         # Actualiza la dirección del viento de forma aleatoria
         # Puedes ajustar la magnitud del viento modificando estos valores
         Datos.viento_x = random.uniform(-0.1, 0.1)
-        Datos.viento_y = random.uniform(-0.1, 0.1)
-        escala_pixeles_a_metros = 0.1
-        Datos.velocidad_viento = math.sqrt(Datos.viento_x**2 + Datos.viento_y**2) * escala_pixeles_a_metros
+        Datos.velocidad_viento = math.sqrt(Datos.viento_x**2)
 
     def calcular_posiciones(self, time):
         if Datos.viento_habilitado:
