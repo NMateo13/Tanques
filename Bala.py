@@ -1,6 +1,8 @@
-import pygame, datos
+import pygame
+import Datos
+import Terreno
 import math
-
+import random
 
 class Bala:
     def __init__(self, pos_inicial_x, pos_inicial_y, angulo, velocidad_inicial, tipo):
@@ -12,6 +14,10 @@ class Bala:
         self.trayectoria = []
         self.pretrayectoria = []
         self.tipo = tipo
+        #self.viento_x = 0
+        #self.viento_y = 0
+
+
         if tipo == 1:
             self.imagen = pygame.image.load(f"Assets/bala105.png")
             self.imagen = pygame.transform.scale(self.imagen, (self.imagen.get_width() // 7, self.imagen.get_height() // 7))
@@ -31,9 +37,22 @@ class Bala:
         self.xanterior = pos_inicial_x
         self.yanterior = pos_inicial_y
 
+    def actualizar_direccion_viento():
+        # Actualiza la dirección del viento de forma aleatoria
+        # Puedes ajustar la magnitud del viento modificando estos valores
+        Datos.viento_x = random.uniform(-0.1, 0.1)
+        Datos.velocidad_viento = math.sqrt(Datos.viento_x**2)
+
     def calcular_posiciones(self, time):
+        if Datos.viento_habilitado:
+            # Aplica el efecto del viento a la posición en el eje x
+            viento_x = Datos.viento_x * time
+            self.pos_inicial_x += viento_x
+
+        # Calcula las nuevas posiciones teniendo en cuenta el tiempo y la velocidad
         x = self.pos_inicial_x + self.velocidad_inicial * math.cos(self.angulo) * time
-        y = self.pos_inicial_y - (self.velocidad_inicial * math.sin(self.angulo) * time - 0.5 * datos.gravedad * time ** 2)
+        y = self.pos_inicial_y - (self.velocidad_inicial * math.sin(self.angulo) * time - 0.5 * Datos.gravedad * time ** 2)
+
         return x, y
 
     def verificacion(self, tiempo, screen, color):
@@ -57,13 +76,6 @@ class Bala:
         for punto in self.trayectoria:
             x, y = punto
             if (tanque.x <= x <= (tanque.x + tanque.ancho)) and (tanque.y <= y <= (tanque.y + tanque.altura)):
-                return True
-        return False
-    
-    def verificar_impacto_terreno(self, terreno):
-        for punto in self.trayectoria:
-            x, y = punto
-            if 0 <= x < len(terreno.terreno) and y >= terreno.terreno[int(x)]:
                 return True
         return False
     
@@ -105,6 +117,16 @@ class Bala:
                 return True
         return False
     
+    def calcular_puntos_explosion(self, bala, radioExplosion):
+        centroExplosion = Terreno.calcular_centro_explosion(bala)
+        puntox = []
+        puntoy = []
+        for x in range(centroExplosion[0] - radioExplosion, centroExplosion[0] + radioExplosion + 1):
+            for y in range(centroExplosion[1] - radioExplosion, centroExplosion[1] + radioExplosion + 1):
+                if (x - centroExplosion[0])**2 + (y - centroExplosion[1])**2 <= radioExplosion**2:
+                    puntox.append(x)
+                    puntoy.append(y)
+        return puntox, puntoy
     
 
 
